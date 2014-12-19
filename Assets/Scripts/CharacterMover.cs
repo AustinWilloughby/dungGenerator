@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CharacterMover : MonoBehaviour {
     //Fields
-    private float speed = 1.0f;
+    private float speed = .05f;
 	
 	// Update is called once per frame
 	void Update () 
