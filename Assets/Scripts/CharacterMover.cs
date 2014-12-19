@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMover : MonoBehaviour {
+public class CharacterMover : MonoBehaviour 
+{
     //Fields
     private float speed = .05f;
 	
