@@ -12,7 +12,7 @@ public class CharacterMover : MonoBehaviour
         float xMovement = Input.GetAxis("Horizontal") * speed;
         float yMovement = Input.GetAxis("Vertical") * speed;
 
-        Vector3 translate = transform.position;
+        Vector2 translate = transform.position;
         translate.x += xMovement;
         translate.y += yMovement;
 

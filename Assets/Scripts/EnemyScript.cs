@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : Vehicle
 {
     public float viewDistance = 10f;
-    public float speed = .05f;
     private GameObject player;
 
     // Use this for initialization
@@ -16,30 +15,13 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < viewDistance)
+        if (Vector2.Distance(transform.position, player.transform.position) < viewDistance)
         {
-            transform.position += Arrive(player, 3);
+            transform.position += (Vector3)Arrive(player.transform.position, 1.5f);
         }
-    }
-
-    Vector3 Seek(GameObject target) //Basic Seeking Behavior
-    {
-        Vector3 seek = Vector3.zero;
-        seek = target.transform.position - transform.position;
-        seek = Vector3.Normalize(seek);
-        seek = seek * speed;
-        return seek;
-    }
-
-    Vector3 Arrive(GameObject target, float slowRadius) //Advanced seeking with slow down at target
-    {
-        Vector3 arrive = Seek(target);
-        if (Vector3.Distance(transform.position, target.transform.position) < slowRadius)
+        else
         {
-            arrive = Vector3.Normalize(arrive);
-            arrive = arrive * speed;
-            arrive = arrive * ((Vector3.Distance(transform.position, player.transform.position) - 1.5f) / slowRadius);
+            transform.position += (Vector3)Wander();
         }
-        return arrive;
     }
 }
