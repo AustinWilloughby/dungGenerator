@@ -38,7 +38,6 @@ public class Vehicle : MonoBehaviour
                 wanderTarget.y = Random.Range(transform.position.y - 15, transform.position.y + 15);
             } while (Vector2.Distance(wanderTarget, transform.position) < 10);
 
-            print(wanderTarget);
             wanderTimer = Random.Range(1f, 2f);
         }
         wanderTimer -= Time.deltaTime;

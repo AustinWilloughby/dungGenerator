@@ -5,11 +5,13 @@ public class EnemyScript : Vehicle
 {
     public float viewDistance = 10f;
     private GameObject player;
+    private StatTracker stats;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        stats = this.GetComponent<StatTracker>();
     }
 
     // Update is called once per frame
