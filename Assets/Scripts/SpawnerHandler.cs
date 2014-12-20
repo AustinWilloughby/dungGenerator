@@ -20,13 +20,13 @@ public class SpawnerHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (timeUntilSpawn <= 0)
+        if (timeUntilSpawn <= 0) //If its time to spawn
         {
             timeUntilSpawn = Random.Range(spawnRate, spawnRate * 1.1f);
 
             GameObject tempEnemy = (GameObject)Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             enemies.Add(tempEnemy);
         }
-        timeUntilSpawn -= Time.deltaTime;
+        timeUntilSpawn -= Time.deltaTime; //Counts down till time to spawn
 	}
 }

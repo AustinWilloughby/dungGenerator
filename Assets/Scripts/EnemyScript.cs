@@ -15,10 +15,12 @@ public class EnemyScript : Vehicle
     // Update is called once per frame
     void Update()
     {
+        //If the player is nearby
         if (Vector2.Distance(transform.position, player.transform.position) < viewDistance)
         {
             transform.position += (Vector3)Arrive(player.transform.position, 1.5f);
         }
+        //Otherwise
         else
         {
             transform.position += (Vector3)Wander();

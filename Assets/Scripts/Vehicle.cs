@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Vehicle : MonoBehaviour 
 {
-    public float speed = .05f;
-    private float wanderTimer = 0f;
-    private Vector2 wanderTarget = Vector2.zero;
+    public float speed = .05f; //Movement speed
+    private float wanderTimer = 0f; // Time that keeps track of current wander time
+    protected Vector2 wanderTarget = Vector2.zero; //Target of wandering
 
     protected Vector2 Seek(Vector2 target) //Basic Seeking Behavior
     {
@@ -28,9 +28,9 @@ public class Vehicle : MonoBehaviour
         return arrive;
     }
 
-    protected Vector2 Wander()
+    protected Vector2 Wander() //Advanced arrival that targets a random point within a specified range from the vehicle
     {
-        if (wanderTimer >= 0)
+        if (wanderTimer <= 0)
         {
             do
             {
@@ -39,9 +39,9 @@ public class Vehicle : MonoBehaviour
             } while (Vector2.Distance(wanderTarget, transform.position) < 10);
 
             print(wanderTarget);
-            wanderTimer = Random.Range(10f, 20f);
+            wanderTimer = Random.Range(1f, 2f);
         }
         wanderTimer -= Time.deltaTime;
-        return Arrive(wanderTarget, 1);
+        return Arrive(wanderTarget, 1)/5;
     }
 }
