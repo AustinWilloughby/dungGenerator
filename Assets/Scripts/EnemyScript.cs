@@ -22,7 +22,7 @@ public class EnemyScript : Vehicle
         //If the player is nearby
         if (Vector2.Distance(transform.position, player.transform.position) < viewDistance)
         {
-            transform.position += (Vector3)Arrive(player.transform.position, 1.5f);
+            transform.position += (Vector3)Arrive(player.transform.position, 1.2f);
         }
         //Otherwise
         else

@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     //Fields
     private float speed = .05f;
-    private float attackRange = 3f;
+    private float attackRange = 2f;
     private int attackDamage = 2;
 	
 	// Update is called once per frame

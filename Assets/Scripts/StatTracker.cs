@@ -6,17 +6,4 @@ public class StatTracker : MonoBehaviour
     //Fields
     public int health = 10;
     public int energy = 10;
-
-    //Attributes
-
-	// Use this for initialization
-	void Start () 
-    {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	}
 }
