@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyScript : Vehicle
 {
     public float viewDistance = 10f;
     private GameObject player;
     private StatTracker stats;
+    public SpawnerHandler spawner;
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,13 @@ public class EnemyScript : Vehicle
         else
         {
             transform.position += (Vector3)Wander();
+        }
+
+        //If their health drops to 0 or below, kill them
+        if (stats.health <= 0)
+        {
+            spawner.KillSpawn();
+            GameObject.Destroy(gameObject);
         }
     }
 }

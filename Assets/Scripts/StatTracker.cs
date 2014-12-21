@@ -18,9 +18,5 @@ public class StatTracker : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (health <= 0)
-        {
-            GameObject.Destroy(this);
-        }
 	}
 }
