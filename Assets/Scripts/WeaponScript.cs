@@ -26,7 +26,7 @@ public class WeaponScript : MonoBehaviour
         {
             attackTimer -= Time.deltaTime;
             //Rotates sword in an arc in front of player
-            transform.RotateAround(player.transform.position, Vector3.forward, (360 * Time.deltaTime));
+            transform.RotateAround(player.transform.position, Vector3.forward, (720 * Time.deltaTime));
             if (attackTimer < 0)
             {
                 attacking = false;
@@ -46,7 +46,7 @@ public class WeaponScript : MonoBehaviour
         {
             attacking = true;
             gameObject.renderer.enabled = true;
-            attackTimer = .334f;
+            attackTimer = .167f;
         }
     }
 
