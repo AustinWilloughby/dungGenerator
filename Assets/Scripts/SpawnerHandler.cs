@@ -24,7 +24,7 @@ public class SpawnerHandler : MonoBehaviour
         {
             if (timeUntilSpawn <= 0) //If its time to spawn
             {
-                timeUntilSpawn = Random.Range(spawnRate, spawnRate * 1.1f);
+                timeUntilSpawn = Random.Range(spawnRate, spawnRate * 1f);
 
                 liveSpawns++;
                 GameObject tempEnemy = (GameObject)Instantiate(enemyPrefab, transform.position, Quaternion.identity);

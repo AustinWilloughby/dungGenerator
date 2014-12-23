@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     private float speed = .05f;
     private float attackRange = 2f;
     private int attackDamage = 2;
+    private bool goingRight = false;
+    private bool goingUp = false;
 	
 	// Update is called once per frame
 	void Update () 
@@ -16,10 +18,10 @@ public class PlayerController : MonoBehaviour
         float yMovement = Input.GetAxis("Vertical") * speed;
 
         //Edit the players transform
-        Vector2 translate = transform.position;
-        translate.x += xMovement;
-        translate.y += yMovement;
-        transform.position = translate;
+        Vector2 translate = new Vector2(xMovement, yMovement);
+        transform.position = transform.position + (Vector3)translate;
+
+        SpriteRotator(translate);
 
         if (Input.GetKeyDown("space"))
         {
@@ -37,6 +39,19 @@ public class PlayerController : MonoBehaviour
             {
                 enemy.GetComponent<StatTracker>().health -= attackDamage;
             }
+        }
+    }
+
+    void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
+    {
+        if (moveDirection.magnitude != 0)
+        {
+            float angleFromUp = Vector2.Angle(Vector2.up, moveDirection);
+            if (moveDirection.x < 0)
+            {
+                angleFromUp *= -1;
+            }
+            transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
         }
     }
 }

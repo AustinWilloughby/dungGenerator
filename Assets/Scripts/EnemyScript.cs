@@ -28,18 +28,26 @@ public class EnemyScript : Vehicle
     {
         if (Vector2.Distance(transform.position, player.transform.position) < viewDistance)
         {
-            //Cast a ray towards the player
-            RaycastHit2D sightLine = Physics2D.Raycast(transform.position, player.transform.position - transform.position, viewDistance);
-
-            //If the ray doesnt hit a wall, chase the player
-            if (sightLine.collider.gameObject.tag != "Wall")
+            //Prevents enemies bumping the player and moving him
+            if (Vector2.Distance(transform.position, player.transform.position) > 1.1f)
             {
-                transform.position += (Vector3)Arrive(player.transform.position, 1.2f);
+                //Cast a ray towards the player
+                RaycastHit2D sightLine = Physics2D.Raycast(transform.position, player.transform.position - transform.position, viewDistance);
+
+                //If the ray doesnt hit a wall, chase the player
+                if (sightLine.collider.gameObject.tag != "Wall")
+                {
+                    transform.position += (Vector3)Arrive(player.transform.position, 1.1f);
+                }
+                //Otherwise wander
+                else
+                {
+                    transform.position += (Vector3)Wander();
+                }
             }
-            //Otherwise wander
             else
             {
-                transform.position += (Vector3)Wander();
+                transform.position -= (Vector3)Seek(player.transform.position) * 2;
             }
         }
         //Otherwise

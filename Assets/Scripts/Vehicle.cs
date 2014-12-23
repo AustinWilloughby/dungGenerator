@@ -23,7 +23,7 @@ public class Vehicle : MonoBehaviour
         {
             arrive = Vector2.ClampMagnitude(arrive, 1);
             arrive = arrive * speed;
-            arrive = arrive * ((Vector2.Distance(transform.position, target) - 1f) / slowRadius);
+            arrive = arrive * ((Vector2.Distance(transform.position, target) - 1.5f) / slowRadius);
         }
         return arrive;
     }
