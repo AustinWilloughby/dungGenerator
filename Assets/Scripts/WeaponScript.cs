@@ -4,18 +4,17 @@ using System.Collections;
 public class WeaponScript : MonoBehaviour
 {
     //Fields
+    private GameObject player;
     private float attackTimer = .01f;
     private bool attacking;
     public int damage = 2;
-    GameObject rotator;
-    Vector3 defaultAngle;
 
     // Use this for initialization
     void Start()
     {
         gameObject.renderer.enabled = false;
         attacking = false;
-        rotator = GameObject.Find("PlayerWeaponRotator");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -24,6 +23,7 @@ public class WeaponScript : MonoBehaviour
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
+            transform.RotateAround(player.transform.position, Vector3.forward, -(360 * Time.deltaTime));
             if (attackTimer < 0)
             {
                 gameObject.renderer.enabled = false;
@@ -38,7 +38,7 @@ public class WeaponScript : MonoBehaviour
     {
         attacking = true;
         gameObject.renderer.enabled = true;
-        attackTimer = .3f;
+        attackTimer = .334f;
     }
 
     void OnTriggerEnter2D(Collider2D other) //Triggers when a 2D collider intersects weapon collider
