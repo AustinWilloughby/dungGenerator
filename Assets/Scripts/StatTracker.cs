@@ -8,6 +8,7 @@ public class StatTracker : MonoBehaviour
     public int energy = 10;
     public int purseValue = 0;
 
+    //Appropriately removes player health
     public void TakeDamage(int damage)
     {
         health -= damage;
