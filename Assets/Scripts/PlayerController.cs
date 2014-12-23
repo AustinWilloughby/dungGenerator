@@ -5,11 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     //Fields
     private float speed = .05f;
-    private float attackRange = 2f;
-    private int attackDamage = 2;
-    private bool goingRight = false;
-    private bool goingUp = false;
-	
+    private GameObject weapon;
+
+    // Use this for initialization
+    void Start()
+    {
+        weapon = GameObject.FindGameObjectWithTag("Weapon");
+    }
+
 	// Update is called once per frame
 	void Update () 
     {
@@ -25,22 +28,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            Attack();
+            weapon.SetActive(true);
+            weapon.GetComponent<WeaponScript>().Attack();
         }
 	}
-
-    void Attack()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject enemy in enemies)
-        {
-            if (Vector2.Distance(enemy.transform.position, transform.position) < attackRange)
-            {
-                enemy.GetComponent<StatTracker>().health -= attackDamage;
-            }
-        }
-    }
 
     void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
     {

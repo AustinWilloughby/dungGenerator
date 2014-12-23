@@ -7,4 +7,9 @@ public class StatTracker : MonoBehaviour
     public int health = 10;
     public int energy = 10;
     public int purseValue = 0;
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
 }
