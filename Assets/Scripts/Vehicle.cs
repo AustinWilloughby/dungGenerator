@@ -3,10 +3,18 @@ using System.Collections;
 
 public class Vehicle : MonoBehaviour 
 {
+    //Fields
+    //Public 
     public float speed = .05f; //Movement speed
+
+    //Private
     private float wanderTimer = 0f; // Time that keeps track of current wander time
+
+    //Protected
     protected Vector2 wanderTarget = Vector2.zero; //Target of wandering
 
+
+    //Methods
     protected Vector2 Seek(Vector2 target) //Basic Seeking Behavior
     {
         Vector2 seek = Vector2.zero;

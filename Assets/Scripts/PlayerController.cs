@@ -4,8 +4,10 @@ using System.Collections;
 public class PlayerController : MonoBehaviour 
 {
     //Fields
+    //Private
     private float speed = .05f;
     private GameObject weapon;
+
 
     // Use this for initialization
     void Start()
@@ -25,21 +27,19 @@ public class PlayerController : MonoBehaviour
         transform.position = transform.position + (Vector3)translate;
 
         SpriteRotator(translate);
-
-        if (Input.GetKeyDown("space"))
-        {
-            weapon.SetActive(true);
-            weapon.GetComponent<SwordScript>().Attack();
-        }
+        HandleInput();
         DeathCheck();
 	}
 
+
+    //Methods
     void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
     {
+        //If moving
         if (moveDirection.magnitude != 0)
         {
             float angleFromUp = Vector2.Angle(Vector2.up, moveDirection);
-            if (moveDirection.x < 0)
+            if (moveDirection.x < 0) //Allows for 360 rotation
             {
                 angleFromUp *= -1;
             }
@@ -54,6 +54,15 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<StatTracker>().TakeDamage(-10);
             GameObject playerSpawn = GameObject.Find("PlayerSpawn");
             transform.position = playerSpawn.transform.position;
+        }
+    }
+
+    void HandleInput() //Handles all player input
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            weapon.SetActive(true);
+            weapon.GetComponent<SwordScript>().Attack();
         }
     }
 }

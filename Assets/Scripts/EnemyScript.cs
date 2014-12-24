@@ -4,14 +4,18 @@ using System.Collections.Generic;
 
 public class EnemyScript : Vehicle
 {
+    //Fields
+    //Public
     public float viewDistance = 10f;
     public float attackDistance = 2f;
-    private GameObject player;
-    private StatTracker stats;
+    public float attackTimer = 2f;
     public SpawnerHandler spawner;
     public Vector2 direction;
+
+    //Private
+    private GameObject player;
+    private StatTracker stats;
     private GameObject weapon;
-    public float attackTimer = 2f;
 
     // Use this for initialization
     void Start()
@@ -31,6 +35,7 @@ public class EnemyScript : Vehicle
         DeathCheck();
     }
 
+    //Methods
     void MovementHandler() //Handles all movements made by the enemy
     {
         if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < viewDistance)
@@ -56,14 +61,12 @@ public class EnemyScript : Vehicle
             {
                 direction = (Vector3)Wander();
             }
-
         }
         //Otherwise
         else
         {
             direction = (Vector3)Wander();
         }
-
         transform.position += (Vector3)direction;
     }
 
@@ -77,7 +80,7 @@ public class EnemyScript : Vehicle
         }
     }
 
-    void Attack()
+    void Attack() //Handles attacking
     {
         if (attackTimer < 0)
         {

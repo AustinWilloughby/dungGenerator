@@ -5,11 +5,15 @@ using System.Collections.Generic;
 public class SpawnerHandler : MonoBehaviour 
 {
     //Fields
+    //Public
     public GameObject enemyPrefab; //The enemy the spawner will spawn
     public float spawnRate = 1; //The minimum time between enemy spawns
-    private float timeUntilSpawn; //A timer counting down until the next spawn
     public int maxSpawns = 1; //Maximum number of enemies alive from one spawner at a time
+
+    //Private
+    private float timeUntilSpawn; //A timer counting down until the next spawn
     private int liveSpawns = 0; //Current number of enemies alive from the spawner
+
 
     //Use this for instantiation
     void Start()
@@ -34,7 +38,9 @@ public class SpawnerHandler : MonoBehaviour
         }
 	}
 
-    public void KillSpawn()
+
+    //Methods
+    public void KillSpawn() //Removes one from spawn count
     {
         if (liveSpawns > 0)
         {

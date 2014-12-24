@@ -4,10 +4,13 @@ using System.Collections;
 public class SwordScript : MonoBehaviour
 {
     //Fields
+    //Public
+    public int damage = 2;
+
+    //Private
     private GameObject player;
     private float attackTimer = .01f;
     private bool attacking;
-    public int damage = 2;
     private GameObject sheath;
 
     // Use this for initialization
@@ -39,7 +42,17 @@ public class SwordScript : MonoBehaviour
         }
 
     }
+    //Events
+    void OnTriggerEnter2D(Collider2D other) //Triggers when a 2D collider intersects weapon collider
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
+        }
+    }
 
+
+    //Methods
     public void Attack() //Handles using weapon
     {
         if (attacking == false)
@@ -47,14 +60,6 @@ public class SwordScript : MonoBehaviour
             attacking = true;
             gameObject.renderer.enabled = true;
             attackTimer = .167f;
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other) //Triggers when a 2D collider intersects weapon collider
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
         }
     }
 }

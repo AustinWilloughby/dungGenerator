@@ -27,6 +27,8 @@ public class SmoothCameraFollow : MonoBehaviour
         }
     }
 
+
+    //Methods
     public void ChangeCamTarget(GameObject target) //Changes what the camera follows
     {
         followTarget = target;
