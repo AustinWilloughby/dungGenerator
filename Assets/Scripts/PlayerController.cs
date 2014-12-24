@@ -29,8 +29,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             weapon.SetActive(true);
-            weapon.GetComponent<WeaponScript>().Attack();
+            weapon.GetComponent<SwordScript>().Attack();
         }
+        DeathCheck();
 	}
 
     void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
@@ -43,6 +44,16 @@ public class PlayerController : MonoBehaviour
                 angleFromUp *= -1;
             }
             transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
+        }
+    }
+
+    void DeathCheck() //Checks if player dies, and handles accordingly
+    {
+        if (gameObject.GetComponent<StatTracker>().health <= 0)
+        {
+            gameObject.GetComponent<StatTracker>().TakeDamage(-10);
+            GameObject playerSpawn = GameObject.Find("PlayerSpawn");
+            transform.position = playerSpawn.transform.position;
         }
     }
 }

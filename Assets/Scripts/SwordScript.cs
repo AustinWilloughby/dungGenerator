@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponScript : MonoBehaviour
+public class SwordScript : MonoBehaviour
 {
     //Fields
     private GameObject player;

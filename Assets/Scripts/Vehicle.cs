@@ -23,7 +23,7 @@ public class Vehicle : MonoBehaviour
         {
             arrive = Vector2.ClampMagnitude(arrive, 1);
             arrive = arrive * speed;
-            arrive = arrive * ((Vector2.Distance(transform.position, target) - 2f) / slowRadius);
+            arrive = arrive * ((Vector2.Distance(transform.position, target) - 1.5f) / slowRadius);
         }
         return arrive;
     }
@@ -42,5 +42,18 @@ public class Vehicle : MonoBehaviour
         }
         wanderTimer -= Time.deltaTime;
         return Arrive(wanderTarget, 1)/5;
+    }
+
+    protected void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
+    {
+        if (moveDirection.magnitude != 0)
+        {
+            float angleFromUp = Vector2.Angle(Vector2.up, moveDirection);
+            if (moveDirection.x < 0)
+            {
+                angleFromUp *= -1;
+            }
+            transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
+        }
     }
 }

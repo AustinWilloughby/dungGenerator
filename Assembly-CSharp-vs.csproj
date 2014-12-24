@@ -51,9 +51,10 @@
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\SmoothCameraFollow.cs" />
      <Compile Include="Assets\Scripts\SpawnerHandler.cs" />
+     <Compile Include="Assets\Scripts\SpearScript.cs" />
      <Compile Include="Assets\Scripts\StatTracker.cs" />
+     <Compile Include="Assets\Scripts\SwordScript.cs" />
      <Compile Include="Assets\Scripts\Vehicle.cs" />
-     <Compile Include="Assets\Scripts\WeaponScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
