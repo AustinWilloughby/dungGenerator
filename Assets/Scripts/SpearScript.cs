@@ -8,7 +8,6 @@ public class SpearScript : MonoBehaviour
     public int damage = 2;
 
     //Private
-    private GameObject enemy;
     private float attackLength = .01f;
     private bool attacking;
 
@@ -18,7 +17,6 @@ public class SpearScript : MonoBehaviour
     {
         gameObject.renderer.enabled = false;
         attacking = false;
-        enemy = transform.parent.gameObject;
     }
 
     // Update is called once per frame
