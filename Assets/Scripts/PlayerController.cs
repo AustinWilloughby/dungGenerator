@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.GetComponent<StatTracker>().TakeDamage(-10);
             GameObject playerSpawn = GameObject.Find("PlayerSpawn");
+            gameObject.GetComponent<StatTracker>().ApplyHealing(100000);
             transform.position = playerSpawn.transform.position;
         }
     }
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         {
             weapon.SetActive(true);
             weapon.GetComponent<SwordScript>().Attack();
+            print(weapon.GetComponent<SwordScript>().damage);
         }
     }
 }
