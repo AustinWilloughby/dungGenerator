@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerController : MonoBehaviour
 {
     //Fields
     //Private
@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
         weapon = GameObject.FindGameObjectWithTag("Weapon");
     }
 
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    void Update()
     {
         //Calculates movement in x and y directions based on input
         float xMovement = Input.GetAxis("Horizontal") * speed;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         SpriteRotator(translate);
         HandleInput();
         DeathCheck();
-	}
+    }
 
 
     //Methods
@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
         {
             weapon.SetActive(true);
             weapon.GetComponent<SwordScript>().Attack();
-            print(weapon.GetComponent<SwordScript>().damage);
         }
     }
 }

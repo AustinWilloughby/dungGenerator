@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatTracker : MonoBehaviour 
+public class StatTracker : MonoBehaviour
 {
     //Fields
     //Public
@@ -12,7 +12,7 @@ public class StatTracker : MonoBehaviour
     //Private
     private int maxHealth;
 
-    
+
     //Attributes
     public int MaxHealth
     {
@@ -30,7 +30,7 @@ public class StatTracker : MonoBehaviour
     //Methods
     public void TakeDamage(int damage) //Appropriately removes player health
     {
-        if(damage <0)
+        if (damage < 0)
         {
             damage *= -1;
         }

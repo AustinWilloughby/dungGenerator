@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CollectableScript : MonoBehaviour 
+public class CollectableScript : MonoBehaviour
 {
     //Fields
     //Public
@@ -11,11 +11,11 @@ public class CollectableScript : MonoBehaviour
     private GameObject player;
 
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-	}
+    }
 
 
     //Events
