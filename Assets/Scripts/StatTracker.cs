@@ -7,7 +7,6 @@ public class StatTracker : MonoBehaviour
     //Public
     public int health = 10;
     public int energy = 10;
-    public int purseValue = 0;
 
     //Private
     private int maxHealth;

@@ -5,7 +5,7 @@ public class CollectWeaponScript : MonoBehaviour
 {
     //Fields
     //Public
-    public int attackDamage = 3; //Attack damage of the collectable weapon
+    public int attackDamage = 3;//Attack damage of the collectable weapon
 
     //Private
     private GameObject player;
