@@ -4,14 +4,22 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     //Fields
+    public GameObject arrowPrefab;
+
     //Private
     private float speed = .05f;
     private GameObject weapon;
+    private float arrowTimer;
+    private float lastAngle;
+    private Vector2 lastDirection;
 
 
     // Use this for initialization
     void Start()
     {
+        lastDirection = Vector2.up;
+        lastAngle = 0f;
+        arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
     }
 
@@ -29,6 +37,7 @@ public class PlayerController : MonoBehaviour
         SpriteRotator(translate);
         HandleInput();
         DeathCheck();
+        arrowTimer -= Time.deltaTime;
     }
 
 
@@ -43,6 +52,8 @@ public class PlayerController : MonoBehaviour
             {
                 angleFromUp *= -1;
             }
+            lastAngle = angleFromUp;
+            lastDirection = moveDirection;
             transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
         }
     }
@@ -58,12 +69,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void FireArrow()
+    {
+        GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        arrow.GetComponent<ProjectileScript>().Setup(gameObject, lastAngle, lastDirection);
+        arrowTimer = 5f;
+    }
+
     void HandleInput() //Handles all player input
     {
         if (Input.GetKeyDown("space"))
         {
             weapon.SetActive(true);
             weapon.GetComponent<SwordScript>().Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (arrowTimer < 0)
+            {
+                FireArrow();
+            }
         }
     }
 }
