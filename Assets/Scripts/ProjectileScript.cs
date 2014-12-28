@@ -8,7 +8,6 @@ public class ProjectileScript : MonoBehaviour
     private GameObject player;
     private GameObject playerForward;
     private Vector2 direction;
-    private float angleFromUp;
     private float speed = .5f;
     private float timer = 1.5f;
     private int damage = 5;
@@ -34,8 +33,9 @@ public class ProjectileScript : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
-        if (timer > 0)
+        if (timer > 0) //If there is time left
         {
+            //Move, and slow down speed
             transform.position += (Vector3)Vector2.ClampMagnitude(direction, speed);
             if (speed > 0)
             {
@@ -46,23 +46,25 @@ public class ProjectileScript : MonoBehaviour
                 speed = 0;
             }
         }
-        else
+        else //If out of time, destroy arrow
         {
-            speed = .5f;
             GameObject.Destroy(gameObject);
         }
     }
 
 
-    void OnTriggerEnter2D(Collider2D other) //Triggers when a 2D collider intersects weapon collider
+    void OnTriggerEnter2D(Collider2D other) //Triggers when a 2D collider intersects arrow collider
     {
+        //Damage if its an enemy
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
-        }
-        if (other.gameObject.tag != "Player")
-        {
             GameObject.Destroy(gameObject);
+        }
+        //Ignore if it is on layer9 "Entity"
+        if (other.gameObject.layer != 9)
+        {
+            speed = 0;
         }
     }
 }
