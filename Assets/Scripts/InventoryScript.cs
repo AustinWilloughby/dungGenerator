@@ -18,7 +18,7 @@ public class InventoryScript : MonoBehaviour
     void Start()
     {
         bagInventory = new GameObject[initialSlots];
-        wearInventory = new GameObject[5];
+        wearInventory = new GameObject[6];
     }
 
     //Methods
@@ -85,6 +85,12 @@ public class InventoryScript : MonoBehaviour
                     if (wearInventory[4] == null)
                     {
                         wearInventory[4] = equipItem;
+                    }
+                    return null;
+                case EquipSlots.Ranged:
+                    if (wearInventory[5] == null)
+                    {
+                        wearInventory[5] = equipItem;
                     }
                     return null;
                 default: return equipItem;

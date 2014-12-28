@@ -49,6 +49,7 @@ public class EnemyScript : Vehicle
                 //If the player is in attack range, hit them. Otherwise go after them
                 if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
                 {
+                    SpriteRotator(player.transform.position - transform.position);
                     Attack();
                 }
                 else

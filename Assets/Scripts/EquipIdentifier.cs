@@ -8,7 +8,8 @@ public enum EquipSlots
     Shoulder,
     Chest,
     Pants,
-    Weapon
+    Weapon,
+    Ranged
 };
 
 
