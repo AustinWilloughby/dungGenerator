@@ -72,8 +72,7 @@ public class PlayerController : MonoBehaviour
     void FireArrow()
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-        arrow.GetComponent<ProjectileScript>().Setup(gameObject, lastAngle, lastDirection);
-        arrowTimer = 5f;
+        arrowTimer = 3f;
     }
 
     void HandleInput() //Handles all player input
