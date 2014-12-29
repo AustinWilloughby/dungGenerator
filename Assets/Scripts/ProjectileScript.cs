@@ -9,7 +9,7 @@ public class ProjectileScript : MonoBehaviour
     private GameObject playerForward;
     private Vector2 direction;
     private float speed = .5f;
-    private float timer = 1.5f;
+    private float timer = 10f;
     private int damage = 5;
 
     // Use this for initialization
@@ -18,7 +18,9 @@ public class ProjectileScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerForward = GameObject.Find("PlayerForward");
 
-        direction = playerForward.transform.position - player.transform.position;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        direction = mousePos - player.transform.position;
         direction = Vector2.ClampMagnitude(direction, 1f);
 
         float angleFromUp = Vector2.Angle(Vector2.up, direction);
@@ -58,8 +60,11 @@ public class ProjectileScript : MonoBehaviour
         //Damage if its an enemy
         if (other.gameObject.tag == "Enemy")
         {
-            other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
-            GameObject.Destroy(gameObject);
+            if (speed != 0) //Non moving arrows aren't harmful
+            {
+                other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
+                gameObject.transform.parent = other.gameObject.transform;
+            }
         }
         //Ignore if it is on layer9 "Entity"
         if (other.gameObject.layer != 9)

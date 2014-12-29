@@ -72,18 +72,18 @@ public class PlayerController : MonoBehaviour
     void FireArrow()
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-        arrowTimer = 3f;
+        arrowTimer = 2f;
     }
 
     void HandleInput() //Handles all player input
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetMouseButtonDown(0))
         {
             weapon.SetActive(true);
             weapon.GetComponent<SwordScript>().Attack();
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetMouseButtonDown(1))
         {
             if (arrowTimer < 0)
             {
