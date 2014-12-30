@@ -63,11 +63,12 @@ public class ProjectileScript : MonoBehaviour
             if (speed != 0) //Non moving arrows aren't harmful
             {
                 other.gameObject.GetComponent<StatTracker>().TakeDamage(damage);
+                speed = 0;
                 gameObject.transform.parent = other.gameObject.transform;
             }
         }
         //Ignore if it is on layer9 "Entity"
-        if (other.gameObject.layer != 9)
+        if (other.gameObject.layer == 11)
         {
             speed = 0;
         }
