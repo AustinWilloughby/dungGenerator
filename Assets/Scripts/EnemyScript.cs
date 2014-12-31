@@ -11,14 +11,12 @@ public class EnemyScript : Vehicle
     public float attackTimer = 2f;
     public SpawnerHandler spawner;
     public Vector2 direction;
-    public LayerMask ignoreLayers;
+    public LayerMask visibleLayers;
 
     //Private
     private GameObject player;
     private StatTracker stats;
     private GameObject weapon;
-    private bool willDropItem;
-    private GameObject dropItem;
 
     // Use this for initialization
     void Start()
@@ -44,7 +42,7 @@ public class EnemyScript : Vehicle
         if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < viewDistance)
         {
             //Cast a ray towards the player
-            RaycastHit2D sightLine = Physics2D.Raycast((Vector2)transform.position, (Vector2)player.transform.position - (Vector2)transform.position, viewDistance, ignoreLayers);
+            RaycastHit2D sightLine = Physics2D.Raycast((Vector2)transform.position, (Vector2)player.transform.position - (Vector2)transform.position, viewDistance, visibleLayers);
 
             //If the ray doesnt hit a wall, know about the player
             if (sightLine.collider.gameObject.tag != "Wall")
