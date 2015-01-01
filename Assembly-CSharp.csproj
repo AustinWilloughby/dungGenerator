@@ -48,6 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CollectWeaponScript.cs" />
      <Compile Include="Assets\Scripts\CollectableScript.cs" />
+     <Compile Include="Assets\Scripts\Dungeon.cs" />
+     <Compile Include="Assets\Scripts\DungeonCell.cs" />
+     <Compile Include="Assets\Scripts\DungeonGeneration.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />
      <Compile Include="Assets\Scripts\InventoryScript.cs" />
