@@ -5,13 +5,12 @@ public class Dungeon : MonoBehaviour
 {
     //Fields
     //Public
-    public int xSize;
-    public int ySize;
-    public float cellScale;
+    public IntVector2 size;
     public DungeonCell cellPrefab;
 
     //Private
     private DungeonCell[,] cells;
+
 
     //Events
     // Use this for initialization
@@ -26,26 +25,49 @@ public class Dungeon : MonoBehaviour
 
     }
 
+
     //Methods
+    public DungeonCell GetCell(IntVector2 coords)
+    {
+        return cells[coords.x, coords.y];
+    }
+
     public void Generate()
     {
-        cells = new DungeonCell[xSize, ySize];
-        print("yolo");
-        for (int x = 0; x < xSize; x++)
+        cells = new DungeonCell[size.x, size.y];
+
+        IntVector2 coords = RandomCoordinates();
+        while (ContainsCoords(coords) && GetCell(coords) == null)
         {
-            for (int y = 0; y < ySize; y++)
-            {
-                CreateCell(x, y);
-            }
+            CreateCell(coords);
+            coords += MazeDirections.RandValue.ToIntVec2();
         }
     }
 
-    public void CreateCell(int x, int y)
+    public void CreateCell(IntVector2 coords)
     {
         DungeonCell tempCell = Instantiate(cellPrefab) as DungeonCell;
-        cells[x, y] = tempCell;
-        tempCell.name = "Maze Cell " + x + ", " + y;
+        cells[coords.x, coords.y] = tempCell;
+        tempCell.coordinates = coords;
+        tempCell.name = "Maze Cell " + coords.x + ", " + coords.y;
         tempCell.transform.parent = transform;
-        tempCell.transform.localPosition = new Vector3(x * cellScale, y * cellScale, 0);
+        tempCell.transform.localPosition = new Vector3(coords.x, coords.y, 0);
+    }
+
+    public IntVector2 RandomCoordinates()
+    {
+        return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.y) );
+    }
+
+    public bool ContainsCoords(IntVector2 coords)
+    {
+        if (coords.x >= 0 && coords.x < size.x)
+        {
+            if (coords.y >= 0 && coords.y < size.y )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
