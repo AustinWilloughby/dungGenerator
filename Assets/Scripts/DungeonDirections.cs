@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum MazeDirection
+public enum DungeonDirection
 {
     North,
     East,
@@ -10,15 +10,15 @@ public enum MazeDirection
 };
 
 
-public static class MazeDirections
+public static class DungeonDirections
 {
     public const int Count = 4;
 
-    public static MazeDirection RandValue
+    public static DungeonDirection RandValue
     {
         get
         {
-            return (MazeDirection)Random.Range(0, Count);
+            return (DungeonDirection)Random.Range(0, Count);
         }
     }
 
@@ -30,7 +30,7 @@ public static class MazeDirections
         new IntVector2(-1,0)
     };
 
-    public static IntVector2 ToIntVec2(this MazeDirection direction)
+    public static IntVector2 ToIntVec2(this DungeonDirection direction)
     {
         return vectors[(int)direction];
     }

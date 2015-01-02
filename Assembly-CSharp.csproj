@@ -50,12 +50,13 @@
      <Compile Include="Assets\Scripts\CollectableScript.cs" />
      <Compile Include="Assets\Scripts\Dungeon.cs" />
      <Compile Include="Assets\Scripts\DungeonCell.cs" />
+     <Compile Include="Assets\Scripts\DungeonCellEdge.cs" />
+     <Compile Include="Assets\Scripts\DungeonDirections.cs" />
      <Compile Include="Assets\Scripts\DungeonGeneration.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />
      <Compile Include="Assets\Scripts\IntVector2.cs" />
      <Compile Include="Assets\Scripts\InventoryScript.cs" />
-     <Compile Include="Assets\Scripts\MazeDirections.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PotionScript.cs" />
      <Compile Include="Assets\Scripts\ProjectileScript.cs" />
