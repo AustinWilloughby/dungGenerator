@@ -53,6 +53,8 @@
      <Compile Include="Assets\Scripts\DungeonCellEdge.cs" />
      <Compile Include="Assets\Scripts\DungeonDirections.cs" />
      <Compile Include="Assets\Scripts\DungeonGeneration.cs" />
+     <Compile Include="Assets\Scripts\DungeonPassage.cs" />
+     <Compile Include="Assets\Scripts\DungeonWall.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />
      <Compile Include="Assets\Scripts\IntVector2.cs" />

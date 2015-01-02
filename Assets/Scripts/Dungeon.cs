@@ -8,6 +8,8 @@ public class Dungeon : MonoBehaviour
     //Public
     public IntVector2 size;
     public DungeonCell cellPrefab;
+    public DungeonPassage passagePrefab;
+    public DungeonWall wallPrefab;
 
     //Private
     private DungeonCell[,] cells;
@@ -87,13 +89,45 @@ public class Dungeon : MonoBehaviour
         DungeonCell current = activeCells[currentIndex];
         DungeonDirection direction = DungeonDirections.RandValue;
         IntVector2 coords = current.coordinates + direction.ToIntVec2();
-        if (ContainsCoords(coords) && GetCell(coords) == null)
+        if (ContainsCoords(coords))
         {
-            activeCells.Add(CreateCell(coords));
+            DungeonCell neighbor = GetCell(coords);
+            if (neighbor == null)
+            {
+                neighbor = CreateCell(coords);
+                CreatePassage(current, neighbor, direction);
+                activeCells.Add(neighbor);
+            }
+            else
+            {
+                CreateWall(current, neighbor, direction);
+                activeCells.RemoveAt(currentIndex);
+            }
         }
         else
         {
+            CreateWall(current, null, direction);
             activeCells.RemoveAt(currentIndex);
+        }
+    }
+
+    private void CreatePassage(DungeonCell cell, DungeonCell otherCell, DungeonDirection direction)
+    {
+        DungeonPassage passage = Instantiate(passagePrefab) as DungeonPassage;
+        passage.Initialize(cell, otherCell, direction);
+        passage = Instantiate(passagePrefab) as DungeonPassage;
+        passage.Initialize(otherCell, cell, direction.GetOpposite());
+    }
+
+
+    private void CreateWall(DungeonCell cell, DungeonCell otherCell, DungeonDirection direction)
+    {
+        DungeonWall wall = Instantiate(wallPrefab) as DungeonWall;
+        wall.Initialize(cell, otherCell, direction);
+        if(otherCell!= null)
+        {
+            wall = Instantiate(wallPrefab) as DungeonWall;
+            wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }
 

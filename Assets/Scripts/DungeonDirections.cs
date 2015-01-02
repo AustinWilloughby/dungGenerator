@@ -30,8 +30,22 @@ public static class DungeonDirections
         new IntVector2(-1,0)
     };
 
+    private static DungeonDirection[] opposites =
+    {
+        DungeonDirection.South,
+        DungeonDirection.West,
+        DungeonDirection.North,
+        DungeonDirection.East
+    };
+
     public static IntVector2 ToIntVec2(this DungeonDirection direction)
     {
         return vectors[(int)direction];
     }
+
+    public static DungeonDirection GetOpposite(this DungeonDirection direction)
+    {
+        return opposites[(int)direction];
+    }
+    
 }
