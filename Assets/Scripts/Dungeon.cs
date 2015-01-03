@@ -87,7 +87,12 @@ public class Dungeon : MonoBehaviour
     {
         int currentIndex = activeCells.Count - 1;
         DungeonCell current = activeCells[currentIndex];
-        DungeonDirection direction = DungeonDirections.RandValue;
+        if (current.IsFullyInitialized)
+        {
+            activeCells.RemoveAt(currentIndex);
+            return;
+        }
+        DungeonDirection direction = current.RandomUninitializedDirection;
         IntVector2 coords = current.coordinates + direction.ToIntVec2();
         if (ContainsCoords(coords))
         {
@@ -101,13 +106,11 @@ public class Dungeon : MonoBehaviour
             else
             {
                 CreateWall(current, neighbor, direction);
-                activeCells.RemoveAt(currentIndex);
             }
         }
         else
         {
             CreateWall(current, null, direction);
-            activeCells.RemoveAt(currentIndex);
         }
     }
 

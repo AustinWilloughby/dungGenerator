@@ -38,6 +38,14 @@ public static class DungeonDirections
         DungeonDirection.East
     };
 
+    private static Quaternion[] rotations = 
+    {
+        Quaternion.identity,
+        Quaternion.Euler(0f, 0f, 90f),
+        Quaternion.Euler(0f, 0f, 180f),
+        Quaternion.Euler(0f, 0f, 270f)
+    };
+
     public static IntVector2 ToIntVec2(this DungeonDirection direction)
     {
         return vectors[(int)direction];
@@ -46,6 +54,11 @@ public static class DungeonDirections
     public static DungeonDirection GetOpposite(this DungeonDirection direction)
     {
         return opposites[(int)direction];
+    }
+
+    public static Quaternion ToRotation(this DungeonDirection direction)
+    {
+        return rotations[(int)direction];
     }
     
 }

@@ -19,5 +19,6 @@ public abstract class DungeonCellEdge : MonoBehaviour
         cell.SetEdge(direction, this);
         transform.parent = cell.transform;
         transform.localPosition = Vector2.zero;
+        transform.localRotation = direction.ToRotation();
     }
 }
