@@ -15,20 +15,6 @@ public class Dungeon : MonoBehaviour
     private DungeonCell[,] cells;
 
 
-    //Events
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     //Methods
     public DungeonCell GetCell(IntVector2 coords)
     {
@@ -53,7 +39,7 @@ public class Dungeon : MonoBehaviour
         DungeonCell tempCell = Instantiate(cellPrefab) as DungeonCell;
         cells[coords.x, coords.y] = tempCell;
         tempCell.coordinates = coords;
-        tempCell.name = "Maze Cell " + coords.x + ", " + coords.y;
+        tempCell.name = "Dungeon Cell " + coords.x + ", " + coords.y;
         tempCell.transform.parent = transform;
         tempCell.transform.localPosition = new Vector3(coords.x, coords.y, 0);
         return tempCell;
@@ -123,7 +109,6 @@ public class Dungeon : MonoBehaviour
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
-            wall = Instantiate(wallPrefab) as DungeonWall;
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }
