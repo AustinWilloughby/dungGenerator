@@ -47,7 +47,7 @@ public class DungeonCell : MonoBehaviour
                     skips -= 1;
                 }
             }
-            throw new System.InvalidOperationException("DungeonCell has no uninitialized directions left.");
+            throw new System.InvalidOperationException("The cell is fully initialized");
         }
     }
 }

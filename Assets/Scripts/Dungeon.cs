@@ -45,6 +45,7 @@ public class Dungeon : MonoBehaviour
         {
             DoNextGenStep(activeCells);
         }
+        transform.localScale = new Vector3(5, 5, 1);
     }
 
     public DungeonCell CreateCell(IntVector2 coords)
@@ -68,14 +69,7 @@ public class Dungeon : MonoBehaviour
 
     public bool ContainsCoords(IntVector2 coords)
     {
-        if (coords.x >= 0 && coords.x < size.x)
-        {
-            if (coords.y >= 0 && coords.y < size.y )
-            {
-                return true;
-            }
-        }
-        return false;
+        return coords.x >= 0 && coords.x < size.x && coords.y >= 0 && coords.y < size.y;
     }
 
     private void DoFirstGenStep(List<DungeonCell> activeCells)
@@ -86,31 +80,31 @@ public class Dungeon : MonoBehaviour
     private void DoNextGenStep(List<DungeonCell> activeCells)
     {
         int currentIndex = activeCells.Count - 1;
-        DungeonCell current = activeCells[currentIndex];
-        if (current.IsFullyInitialized)
+        DungeonCell currentCell = activeCells[currentIndex];
+        if (currentCell.IsFullyInitialized)
         {
             activeCells.RemoveAt(currentIndex);
             return;
         }
-        DungeonDirection direction = current.RandomUninitializedDirection;
-        IntVector2 coords = current.coordinates + direction.ToIntVec2();
-        if (ContainsCoords(coords))
+        DungeonDirection direction = currentCell.RandomUninitializedDirection;
+        IntVector2 coordinates = currentCell.coordinates + direction.ToIntVec2();
+        if (ContainsCoords(coordinates))
         {
-            DungeonCell neighbor = GetCell(coords);
+            DungeonCell neighbor = GetCell(coordinates);
             if (neighbor == null)
             {
-                neighbor = CreateCell(coords);
-                CreatePassage(current, neighbor, direction);
+                neighbor = CreateCell(coordinates);
+                CreatePassage(currentCell, neighbor, direction);
                 activeCells.Add(neighbor);
             }
             else
             {
-                CreateWall(current, neighbor, direction);
+                CreateWall(currentCell, neighbor, direction);
             }
         }
         else
         {
-            CreateWall(current, null, direction);
+            CreateWall(currentCell, null, direction);
         }
     }
 
@@ -127,7 +121,7 @@ public class Dungeon : MonoBehaviour
     {
         DungeonWall wall = Instantiate(wallPrefab) as DungeonWall;
         wall.Initialize(cell, otherCell, direction);
-        if(otherCell!= null)
+        if (otherCell != null)
         {
             wall = Instantiate(wallPrefab) as DungeonWall;
             wall.Initialize(otherCell, cell, direction.GetOpposite());
