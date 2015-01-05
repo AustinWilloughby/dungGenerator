@@ -52,8 +52,11 @@
      <Compile Include="Assets\Scripts\DungeonCell.cs" />
      <Compile Include="Assets\Scripts\DungeonCellEdge.cs" />
      <Compile Include="Assets\Scripts\DungeonDirections.cs" />
+     <Compile Include="Assets\Scripts\DungeonDoor.cs" />
      <Compile Include="Assets\Scripts\DungeonGeneration.cs" />
      <Compile Include="Assets\Scripts\DungeonPassage.cs" />
+     <Compile Include="Assets\Scripts\DungeonRoom.cs" />
+     <Compile Include="Assets\Scripts\DungeonRoomSettings.cs" />
      <Compile Include="Assets\Scripts\DungeonWall.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />

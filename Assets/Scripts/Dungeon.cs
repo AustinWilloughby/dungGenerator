@@ -10,9 +10,15 @@ public class Dungeon : MonoBehaviour
     public DungeonCell cellPrefab;
     public DungeonPassage passagePrefab;
     public DungeonWall wallPrefab;
+    public DungeonDoor doorPrefab;
+    public DungeonRoomSettings[] roomSettings;
+
+    [Range(0f, 1f)]
+    public float doorProbability;
 
     //Private
     private DungeonCell[,] cells;
+    private List<DungeonRoom> rooms = new List<DungeonRoom>();
 
 
     //Methods
@@ -60,7 +66,9 @@ public class Dungeon : MonoBehaviour
 
     private void DoFirstGenStep(List<DungeonCell> activeCells)
     {
-        activeCells.Add(CreateCell(RandomCoordinates));
+        DungeonCell cell = CreateCell(RandomCoordinates);
+        cell.Initialize(CreateRoom(-1));
+        activeCells.Add(cell);
     }
 
     private void DoNextGenStep(List<DungeonCell> activeCells)
@@ -83,6 +91,10 @@ public class Dungeon : MonoBehaviour
                 CreatePassage(currentCell, neighbor, direction);
                 activeCells.Add(neighbor);
             }
+            else if (currentCell.room = neighbor.room)
+            {
+                CreatePassageInSameRoom(currentCell, neighbor, direction);
+            }
             else
             {
                 CreateWall(currentCell, neighbor, direction);
@@ -95,6 +107,24 @@ public class Dungeon : MonoBehaviour
     }
 
     private void CreatePassage(DungeonCell cell, DungeonCell otherCell, DungeonDirection direction)
+    {
+        DungeonPassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
+        DungeonPassage passage = Instantiate(prefab) as DungeonPassage;
+        passage.Initialize(cell, otherCell, direction);
+        passage = Instantiate(prefab) as DungeonPassage;
+        if (passage is DungeonDoor)
+        {
+            otherCell.Initialize(CreateRoom(cell.room.settingIndex));
+        }
+        else
+        {
+            otherCell.Initialize(cell.room);
+        }
+        passage.Initialize(otherCell, cell, direction.GetOpposite());
+    }
+
+
+    private void CreatePassageInSameRoom(DungeonCell cell, DungeonCell otherCell, DungeonDirection direction)
     {
         DungeonPassage passage = Instantiate(passagePrefab) as DungeonPassage;
         passage.Initialize(cell, otherCell, direction);
@@ -109,8 +139,21 @@ public class Dungeon : MonoBehaviour
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
+            wall = Instantiate(wallPrefab) as DungeonWall;
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }
 
+    private DungeonRoom CreateRoom(int indexToExclude)
+    {
+        DungeonRoom newRoom = ScriptableObject.CreateInstance<DungeonRoom>();
+        newRoom.settingIndex = Random.Range(0, roomSettings.Length);
+        if (newRoom.settingIndex == indexToExclude)
+        {
+            newRoom.settingIndex = (newRoom.settingIndex + 1) % roomSettings.Length;
+        }
+        newRoom.setting = roomSettings[newRoom.settingIndex];
+        rooms.Add(newRoom);
+        return newRoom;
+    }
 }

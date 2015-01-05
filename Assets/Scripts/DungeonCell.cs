@@ -6,12 +6,19 @@ public class DungeonCell : MonoBehaviour
     //Fields
     //Public
     public IntVector2 coordinates;
+    public DungeonRoom room;
 
     //Private
     private DungeonCellEdge[] edges = new DungeonCellEdge[DungeonDirections.Count];
     private int initializedEdgeCount;
 
     //Methods
+    public void Initialize(DungeonRoom room)
+    {
+        room.Add(this);
+        transform.GetChild(0).GetComponent<Renderer>().material = room.setting.floorMaterial;
+    }
+
     public DungeonCellEdge GetEdge(DungeonDirection direction)
     {
         return edges[(int)direction];
