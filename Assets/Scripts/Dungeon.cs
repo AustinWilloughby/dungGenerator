@@ -91,7 +91,7 @@ public class Dungeon : MonoBehaviour
                 CreatePassage(currentCell, neighbor, direction);
                 activeCells.Add(neighbor);
             }
-            else if (currentCell.room = neighbor.room)
+            else if (currentCell.room.settingIndex == neighbor.room.settingIndex)
             {
                 CreatePassageInSameRoom(currentCell, neighbor, direction);
             }
@@ -111,7 +111,6 @@ public class Dungeon : MonoBehaviour
         DungeonPassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
         DungeonPassage passage = Instantiate(prefab) as DungeonPassage;
         passage.Initialize(cell, otherCell, direction);
-        passage = Instantiate(prefab) as DungeonPassage;
         if (passage is DungeonDoor)
         {
             otherCell.Initialize(CreateRoom(cell.room.settingIndex));
@@ -128,8 +127,14 @@ public class Dungeon : MonoBehaviour
     {
         DungeonPassage passage = Instantiate(passagePrefab) as DungeonPassage;
         passage.Initialize(cell, otherCell, direction);
-        passage = Instantiate(passagePrefab) as DungeonPassage;
         passage.Initialize(otherCell, cell, direction.GetOpposite());
+        if (cell.room != otherCell.room)
+        {
+            DungeonRoom roomToCombine = otherCell.room;
+            cell.room.Combine(roomToCombine);
+            rooms.Remove(roomToCombine);
+            Destroy(roomToCombine);
+        }
     }
 
 
@@ -139,7 +144,6 @@ public class Dungeon : MonoBehaviour
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
-            wall = Instantiate(wallPrefab) as DungeonWall;
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }

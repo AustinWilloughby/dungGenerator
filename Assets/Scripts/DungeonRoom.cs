@@ -19,4 +19,12 @@ public class DungeonRoom : ScriptableObject
         cell.room = this;
         cells.Add(cell);
     }
+
+    public void Combine(DungeonRoom room)
+    {
+        for (int i = 0; i < room.cells.Count; i++)
+        {
+            Add(room.cells[i]);
+        }
+    }
 }
