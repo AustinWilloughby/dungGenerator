@@ -17,12 +17,6 @@ public class DungeonGeneration : MonoBehaviour
         Begin();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     //Methods
     private void Begin()
     {

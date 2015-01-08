@@ -58,7 +58,7 @@ public class DungeonCell : MonoBehaviour
         }
     }
 
-    public IntVector2[] GetNeighborCoords()
+    public IntVector2[] GetNeighborCoords() //Gets the coordinates of the 4 surrounding potential cells
     {
         IntVector2[] neighbors =
         {
@@ -70,7 +70,7 @@ public class DungeonCell : MonoBehaviour
         return neighbors;
     }
 
-    public void CombineIntoRoom()
+    public void CombineIntoRoom() //Sets cells material to match the rooms
     {
         transform.GetChild(0).GetComponent<Renderer>().material = room.setting.floorMaterial;
     }

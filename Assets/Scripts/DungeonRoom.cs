@@ -10,7 +10,7 @@ public class DungeonRoom : ScriptableObject
     public DungeonRoomSettings setting;
 
     //Private
-    private List<DungeonCell> cells = new List<DungeonCell>();
+    private List<DungeonCell> cells = new List<DungeonCell>(); //cells contained in the dungeon
 
     //Attributes
     public List<DungeonCell> Cells

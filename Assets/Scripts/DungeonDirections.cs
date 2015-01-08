@@ -22,6 +22,7 @@ public static class DungeonDirections
         }
     }
 
+    //Intvector2 representations of the 4 directions
     private static IntVector2[] vectors = 
     {
         new IntVector2(0,1),
@@ -30,6 +31,7 @@ public static class DungeonDirections
         new IntVector2(-1,0)
     };
 
+    //Opposite directions
     private static DungeonDirection[] opposites =
     {
         DungeonDirection.South,
@@ -38,6 +40,7 @@ public static class DungeonDirections
         DungeonDirection.East
     };
 
+    //Rotations from the identity representing the directions
     private static Quaternion[] rotations = 
     {
         Quaternion.identity,
@@ -46,16 +49,19 @@ public static class DungeonDirections
         Quaternion.Euler(0f, 0f, 90f)
     };
 
+    //Converts a given direction to its respective intvect2
     public static IntVector2 ToIntVec2(this DungeonDirection direction)
     {
         return vectors[(int)direction];
     }
 
+    //Gets the opposite direction
     public static DungeonDirection GetOpposite(this DungeonDirection direction)
     {
         return opposites[(int)direction];
     }
 
+    //Gets the rotation
     public static Quaternion ToRotation(this DungeonDirection direction)
     {
         return rotations[(int)direction];
