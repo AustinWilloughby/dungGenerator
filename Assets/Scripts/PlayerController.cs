@@ -10,15 +10,14 @@ public class PlayerController : MonoBehaviour
     private float speed = .05f;
     private GameObject weapon;
     private float arrowTimer;
-    private float lastAngle;
-    private Vector2 lastDirection;
+    private float lastAngle = 0f;
+    Vector2 lastDirection;
 
 
     // Use this for initialization
     void Start()
     {
         lastDirection = Vector2.up;
-        lastAngle = 0f;
         arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
     }

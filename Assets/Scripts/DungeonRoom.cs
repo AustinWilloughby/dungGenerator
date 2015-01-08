@@ -12,15 +12,20 @@ public class DungeonRoom : ScriptableObject
     //Private
     private List<DungeonCell> cells = new List<DungeonCell>();
 
+    //Attributes
+    public List<DungeonCell> Cells
+    {
+        get { return cells; }
+    }
 
     //Methods
-    public void Add(DungeonCell cell)
+    public void Add(DungeonCell cell) //Add a cell to the room
     {
         cell.room = this;
         cells.Add(cell);
     }
 
-    public void Combine(DungeonRoom room)
+    public void Combine(DungeonRoom room) //Combines two rooms
     {
         for (int i = 0; i < room.cells.Count; i++)
         {

@@ -6,7 +6,6 @@ public class ProjectileScript : MonoBehaviour
     //Fields
     //Private
     private GameObject player;
-    private GameObject playerForward;
     private Vector2 direction;
     private float speed = .5f;
     private float timer = 10f;
@@ -16,7 +15,6 @@ public class ProjectileScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerForward = GameObject.Find("PlayerForward");
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

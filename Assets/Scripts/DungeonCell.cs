@@ -32,13 +32,13 @@ public class DungeonCell : MonoBehaviour
 
     public bool IsFullyInitialized
     {
-        get 
+        get
         {
             return initializedEdgeCount == DungeonDirections.Count;
         }
     }
 
-    public DungeonDirection RandomUninitializedDirection
+    public DungeonDirection RandomUninitializedDirection //Returns a random direction that hasnt been initialized
     {
         get
         {
@@ -56,5 +56,22 @@ public class DungeonCell : MonoBehaviour
             }
             throw new System.InvalidOperationException("The cell is fully initialized");
         }
+    }
+
+    public IntVector2[] GetNeighborCoords()
+    {
+        IntVector2[] neighbors =
+        {
+            new IntVector2(coordinates.x + 1, coordinates.y),
+            new IntVector2(coordinates.x - 1, coordinates.y),
+            new IntVector2(coordinates.x, coordinates.y + 1),
+            new IntVector2(coordinates.x, coordinates.y - 1)
+        };
+        return neighbors;
+    }
+
+    public void CombineIntoRoom()
+    {
+        transform.GetChild(0).GetComponent<Renderer>().material = room.setting.floorMaterial;
     }
 }

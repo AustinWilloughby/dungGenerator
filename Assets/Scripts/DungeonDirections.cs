@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum DungeonDirection
+public enum DungeonDirection //Possible generation directions
 {
     North,
     East,
@@ -14,7 +14,7 @@ public static class DungeonDirections
 {
     public const int Count = 4;
 
-    public static DungeonDirection RandValue
+    public static DungeonDirection RandValue //Random direction
     {
         get
         {
