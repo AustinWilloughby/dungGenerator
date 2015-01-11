@@ -14,65 +14,67 @@ public class DungeonPopulator : MonoBehaviour
 
 
     //Methods
-    public void Populate()
+    public void Populate() //Main method for populating every entity into the dungeon
+    {
+        GetInfo();
+        PlaceRopeAndHole();
+    }
+
+    private void GetInfo() //Gets field info in place of a start event
     {
         player = GameObject.FindGameObjectWithTag("Player");
         ropelessHole = GameObject.Find("EmptyDungeonHole");
         dungeon = gameObject.GetComponent<Dungeon>();
-
-        PlaceRopeAndHole();
     }
 
-
-    private void PlaceRopeAndHole()
+    private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
     {
-        do
-        {
-            int xLoc = (int)Random.Range(0, dungeon.size.x) * dungeon.cellScale;
-            int yLoc = (int)Random.Range(0, dungeon.size.y) * dungeon.cellScale;
-            ropelessHole.transform.position = new Vector3(xLoc, yLoc, 30);
-        } while (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) < 75);
-
+        EnsureHoleSpace();
         bool looper = true;
         GameObject rope = (GameObject)Instantiate(ropePrefab);
-        do
+        do //Make a random location, and ensure it is far from player and hole
         {
             int xLoc = (int)Random.Range(0, dungeon.size.x) * dungeon.cellScale;
             int yLoc = (int)Random.Range(0, dungeon.size.y) * dungeon.cellScale;
-            rope.transform.position = new Vector3(xLoc, yLoc);
-
-            bool playerDist = false;
-            bool holeDist = false;
+            rope.transform.position = new Vector3(xLoc, yLoc, 29);
             if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
             {
-                playerDist = true;
-            }
-            if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)ropelessHole.transform.position) > 50)
-            {
-                holeDist = true;
-            }
-            if (holeDist && playerDist)
-            {
-                looper = false;
+                if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)ropelessHole.transform.position) > 50)
+                {
+                    looper = false;
+                }
             }
         } while (looper);
     }
 
-
-
-    private DungeonCell GetPlayerCell()
+    private void EnsureHoleSpace() //Places the dungeon hole, ensuring it is not blocking a passage
     {
-        IntVector2 playerCoords = new IntVector2(((int)player.transform.position.x) / dungeon.cellScale,
-                ((int)player.transform.position.y) / dungeon.cellScale);
-
-        DungeonCell playerCell = null;
-        if (dungeon.ContainsCoords(playerCoords))
+        bool looper = true;
+        do
         {
-            playerCell = dungeon.GetCell(playerCoords);
-        }
+            IntVector2 holeCoords = new IntVector2((int)Random.Range(0, dungeon.size.x), (int)Random.Range(0, dungeon.size.y));
+            ropelessHole.transform.position = new Vector3(holeCoords.x * dungeon.cellScale, holeCoords.y * dungeon.cellScale, 30);
 
-        return playerCell;
+            //Get all nearby colliders
+            Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll((Vector2)ropelessHole.transform.position, 6f);
+            bool wallCheck = true;
+            for (int i = 0; i < nearbyColliders.Length; i++)
+            {
+                //If one is a wall, break and make a new position
+                if (nearbyColliders[i].tag == "Wall")
+                {
+                    wallCheck = false;
+                    break;
+                }
+            }
+
+            if (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) > 75)
+            {
+                if (wallCheck)
+                {
+                    looper = false;
+                }
+            }
+        } while (looper);
     }
-
-
 }
