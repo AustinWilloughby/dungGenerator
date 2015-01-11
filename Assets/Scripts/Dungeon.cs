@@ -12,6 +12,7 @@ public class Dungeon : MonoBehaviour
     public DungeonWall wallPrefab;
     public DungeonDoor doorPrefab;
     public DungeonRoomSettings[] roomSettings;
+    public int cellScale = 5;
 
     [Range(0f, 1f)]
     public float doorProbability;
@@ -19,7 +20,7 @@ public class Dungeon : MonoBehaviour
     //Private
     private DungeonCell[,] cells;
     private List<DungeonRoom> rooms = new List<DungeonRoom>();
-
+    private DungeonPopulator populator;
 
     //Methods
     public void Generate() //Main method for dungeon generation
@@ -32,7 +33,9 @@ public class Dungeon : MonoBehaviour
             DoNextGenStep(activeCells);
         }
         CleanDungeon();
-        transform.localScale = new Vector3(5, 5, 1);
+        transform.localScale = new Vector3(cellScale, cellScale, 1);
+        populator = gameObject.GetComponent<DungeonPopulator>();
+        populator.Populate();
     }
 
     public DungeonCell GetCell(IntVector2 coords) //Returns the cell at the given coordinates
