@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DungeonHoleScript : MonoBehaviour
 {
@@ -16,6 +17,18 @@ public class DungeonHoleScript : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             transform.position = hidingSpot;
+            //Collects all level specific things and removes them
+            List<GameObject> deleteThese = new List<GameObject>();
+            deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Equipable")); 
+            deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Collectable"));
+            deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+            deleteThese.AddRange(GameObject.FindGameObjectsWithTag("DeletePerLevel"));
+            GameObject[] delete = deleteThese.ToArray();
+            for(int i = 0; i < delete.Length; i++)
+            {
+                GameObject.Destroy(delete[i]);
+                delete[i] = null;
+            }
             dungeonGenerator.NewLevel();
         }
     }

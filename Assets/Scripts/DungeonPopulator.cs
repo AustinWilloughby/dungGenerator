@@ -32,24 +32,37 @@ public class DungeonPopulator : MonoBehaviour
         EnsureHoleSpace();
         bool looper = true;
         GameObject rope = (GameObject)Instantiate(ropePrefab);
+        int failCounter = 0; //Prevents program from getting stuck
         do //Make a random location, and ensure it is far from player and hole
         {
             int xLoc = (int)Random.Range(0, dungeon.size.x) * dungeon.cellScale;
             int yLoc = (int)Random.Range(0, dungeon.size.y) * dungeon.cellScale;
             rope.transform.position = new Vector3(xLoc, yLoc, 29);
-            if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
+            if (failCounter < 5)
             {
-                if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)ropelessHole.transform.position) > 50)
+                if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
+                {
+                    if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)ropelessHole.transform.position) > 50)
+                    {
+                        looper = false;
+                    }
+                }
+            }
+            else
+            {
+                if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)ropelessHole.transform.position) > 5)
                 {
                     looper = false;
                 }
             }
+            failCounter++;
         } while (looper);
     }
 
     private void EnsureHoleSpace() //Places the dungeon hole, ensuring it is not blocking a passage
     {
         bool looper = true;
+        int failCounter = 0; //Prevents program from getting stuck
         do
         {
             IntVector2 holeCoords = new IntVector2((int)Random.Range(0, dungeon.size.x), (int)Random.Range(0, dungeon.size.y));
@@ -67,14 +80,27 @@ public class DungeonPopulator : MonoBehaviour
                     break;
                 }
             }
-
-            if (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) > 75)
+            if (failCounter < 5)
             {
-                if (wallCheck)
+                if (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) > 75)
                 {
-                    looper = false;
+                    if (wallCheck)
+                    {
+                        looper = false;
+                    }
                 }
             }
+            else
+            {
+                if (wallCheck || failCounter > 2000)
+                {
+                    if (Vector2.Distance((Vector2)player.transform.position, (Vector2)ropelessHole.transform.position) > 5)
+                    {
+                        looper = false;
+                    }
+                }
+            }
+            failCounter++;
         } while (looper);
     }
 }
