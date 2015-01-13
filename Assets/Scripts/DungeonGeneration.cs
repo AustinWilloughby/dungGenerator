@@ -23,4 +23,10 @@ public class DungeonGeneration : MonoBehaviour
         dungeonInstance = Instantiate(dungeonPrefab) as Dungeon;
         dungeonInstance.Generate();
     }
+
+    public void NewLevel()
+    {
+        Destroy(dungeonInstance.gameObject);
+        Begin();
+    }
 }
