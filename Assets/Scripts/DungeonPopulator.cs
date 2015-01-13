@@ -6,11 +6,13 @@ public class DungeonPopulator : MonoBehaviour
     //Fields
     //Public
     public GameObject ropePrefab;
+    public GameObject[] collectables;
 
     //Private
     private Dungeon dungeon;
     private GameObject player; 
     private GameObject ropelessHole;
+    private GameObject collectableHolder;
 
 
     //Methods
@@ -18,6 +20,7 @@ public class DungeonPopulator : MonoBehaviour
     {
         GetInfo();
         PlaceRopeAndHole();
+        PlaceCollectables();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -25,6 +28,7 @@ public class DungeonPopulator : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         ropelessHole = GameObject.Find("EmptyDungeonHole");
         dungeon = gameObject.GetComponent<Dungeon>();
+        collectableHolder = GameObject.Find("Collectables");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
@@ -102,5 +106,22 @@ public class DungeonPopulator : MonoBehaviour
             }
             failCounter++;
         } while (looper);
+    }
+
+    private void PlaceCollectables()
+    {
+        for (int i = 0; i < 25 + (dungeon.DungeonLevel - 1); i++)
+        {
+            GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            collectable.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
+            collectable.transform.parent = collectableHolder.transform;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .16f);
+            if (colliders.Length > 1)
+            {
+                GameObject.Destroy(collectable);
+                i--;
+            }
+        }
     }
 }

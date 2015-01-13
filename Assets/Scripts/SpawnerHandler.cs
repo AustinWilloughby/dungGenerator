@@ -33,6 +33,7 @@ public class SpawnerHandler : MonoBehaviour
                 liveSpawns++;
                 GameObject tempEnemy = (GameObject)Instantiate(enemyPrefab, transform.position, Quaternion.identity);
                 tempEnemy.GetComponent<EnemyScript>().spawner = this;
+                tempEnemy.transform.parent = transform;
             }
             timeUntilSpawn -= Time.deltaTime; //Counts down till time to spawn
         }

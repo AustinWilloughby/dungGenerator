@@ -21,10 +21,18 @@ public class Dungeon : MonoBehaviour
     private DungeonCell[,] cells;
     private List<DungeonRoom> rooms = new List<DungeonRoom>();
     private DungeonPopulator populator;
+    private int dungeonLevel = 0;
+
+    //Properties
+    public int DungeonLevel
+    {
+        get { return dungeonLevel; }
+    }
 
     //Methods
     public void Generate() //Main method for dungeon generation
     {
+        dungeonLevel++;
         cells = new DungeonCell[size.x, size.y];
         List<DungeonCell> activeCells = new List<DungeonCell>();
         DoFirstGenStep(activeCells);
