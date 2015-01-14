@@ -7,11 +7,12 @@ public class DungeonPopulator : MonoBehaviour
     //Public
     public GameObject ropePrefab;
     public GameObject potionPrefab;
+    public GameObject swordPrefab;
     public GameObject[] collectables;
 
     //Private
     private Dungeon dungeon;
-    private GameObject player; 
+    private GameObject player;
     private GameObject ropelessHole;
     private GameObject collectableHolder;
 
@@ -23,6 +24,7 @@ public class DungeonPopulator : MonoBehaviour
         PlaceRopeAndHole();
         PlaceCollectables();
         PlacePotions();
+        PlaceWeapon();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -41,9 +43,8 @@ public class DungeonPopulator : MonoBehaviour
         int failCounter = 0; //Prevents program from getting stuck
         do //Make a random location, and ensure it is far from player and hole
         {
-            int xLoc = (int)Random.Range(0, dungeon.size.x) * dungeon.cellScale;
-            int yLoc = (int)Random.Range(0, dungeon.size.y) * dungeon.cellScale;
-            rope.transform.position = new Vector3(xLoc, yLoc, 29);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            rope.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 29);
             if (failCounter < 5)
             {
                 if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
@@ -71,7 +72,7 @@ public class DungeonPopulator : MonoBehaviour
         int failCounter = 0; //Prevents program from getting stuck
         do
         {
-            IntVector2 holeCoords = new IntVector2((int)Random.Range(0, dungeon.size.x), (int)Random.Range(0, dungeon.size.y));
+            IntVector2 holeCoords = dungeon.RandomCoordinates;
             ropelessHole.transform.position = new Vector3(holeCoords.x * dungeon.cellScale, holeCoords.y * dungeon.cellScale, 30);
 
             //Get all nearby colliders
@@ -110,7 +111,7 @@ public class DungeonPopulator : MonoBehaviour
         } while (looper);
     }
 
-    private void PlaceCollectables()
+    private void PlaceCollectables() //Places coins and collectables throughout the dungeon
     {
         for (int i = 0; i < 25 + (dungeon.DungeonLevel - 1); i++)
         {
@@ -127,9 +128,8 @@ public class DungeonPopulator : MonoBehaviour
         }
     }
 
-    private void PlacePotions()
+    private void PlacePotions() //Places a number of potions based on the dungeonLevel around the level
     {
-        print(dungeon.DungeonLevel / 5);
         for (int i = 0; i < (dungeon.DungeonLevel / 5) + 1; i++)
         {
             GameObject potion = (GameObject)Instantiate(potionPrefab);
@@ -143,5 +143,40 @@ public class DungeonPopulator : MonoBehaviour
                 i--;
             }
         }
+    }
+
+    private void PlaceWeapon() //Places a weapon with attack damage relative to the level
+    {
+        GameObject sword = (GameObject)Instantiate(swordPrefab);
+        sword.GetComponent<CollectWeaponScript>().attackDamage = (dungeon.DungeonLevel / 5) + 1;
+        int failCounter = 0;
+        bool looper = true;
+        do
+        {
+            IntVector2 coords = dungeon.RandomCoordinates;
+            sword.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)sword.transform.position, 1f);
+
+            if (failCounter < 5)
+            {
+                if (Vector2.Distance((Vector2)sword.transform.position, (Vector2)player.transform.position) > 50)
+                {
+                    if (colliders.Length <= 1)
+                    {
+                        looper = false;
+                    }
+                }
+            }
+            else
+            {
+                if (colliders.Length <= 1)
+                {
+                    looper = false;
+                }
+            }
+            failCounter++;
+
+        } while (looper);
+
     }
 }

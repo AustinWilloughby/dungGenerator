@@ -13,6 +13,7 @@ public class Dungeon : MonoBehaviour
     public DungeonDoor doorPrefab;
     public DungeonRoomSettings[] roomSettings;
     public int cellScale = 5;
+    public int dungeonLevel = 0;
 
     [Range(0f, 1f)]
     public float doorProbability;
@@ -21,7 +22,6 @@ public class Dungeon : MonoBehaviour
     private DungeonCell[,] cells;
     private List<DungeonRoom> rooms = new List<DungeonRoom>();
     private DungeonPopulator populator;
-    private int dungeonLevel = 0;
 
     //Properties
     public int DungeonLevel
@@ -32,7 +32,6 @@ public class Dungeon : MonoBehaviour
     //Methods
     public void Generate() //Main method for dungeon generation
     {
-        dungeonLevel++;
         cells = new DungeonCell[size.x, size.y];
         List<DungeonCell> activeCells = new List<DungeonCell>();
         DoFirstGenStep(activeCells);

@@ -10,14 +10,11 @@ public class PlayerController : MonoBehaviour
     private float speed = .05f;
     private GameObject weapon;
     private float arrowTimer;
-    private float lastAngle = 0f;
-    Vector2 lastDirection;
 
 
     // Use this for initialization
     void Start()
     {
-        lastDirection = Vector2.up;
         arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
     }
@@ -51,8 +48,6 @@ public class PlayerController : MonoBehaviour
             {
                 angleFromUp *= -1;
             }
-            lastAngle = angleFromUp;
-            lastDirection = moveDirection;
             transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
         }
     }
