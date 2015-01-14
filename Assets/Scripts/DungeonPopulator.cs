@@ -6,6 +6,7 @@ public class DungeonPopulator : MonoBehaviour
     //Fields
     //Public
     public GameObject ropePrefab;
+    public GameObject potionPrefab;
     public GameObject[] collectables;
 
     //Private
@@ -21,6 +22,7 @@ public class DungeonPopulator : MonoBehaviour
         GetInfo();
         PlaceRopeAndHole();
         PlaceCollectables();
+        PlacePotions();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -120,6 +122,24 @@ public class DungeonPopulator : MonoBehaviour
             if (colliders.Length > 1)
             {
                 GameObject.Destroy(collectable);
+                i--;
+            }
+        }
+    }
+
+    private void PlacePotions()
+    {
+        print(dungeon.DungeonLevel / 5);
+        for (int i = 0; i < (dungeon.DungeonLevel / 5) + 1; i++)
+        {
+            GameObject potion = (GameObject)Instantiate(potionPrefab);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            potion.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
+            potion.transform.parent = collectableHolder.transform;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)potion.transform.position, .16f);
+            if (colliders.Length > 1)
+            {
+                GameObject.Destroy(potion);
                 i--;
             }
         }
