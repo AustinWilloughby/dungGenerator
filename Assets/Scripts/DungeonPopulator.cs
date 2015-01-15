@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DungeonPopulator : MonoBehaviour
 {
@@ -111,19 +112,44 @@ public class DungeonPopulator : MonoBehaviour
         } while (looper);
     }
 
-    private void PlaceCollectables() //Places coins and collectables throughout the dungeon
+    private void PlaceCollectables() //Places coins and collectables throughout the dungeon in random clusters
     {
-        for (int i = 0; i < 25 + (dungeon.DungeonLevel - 1); i++)
+        List<GameObject> current = new List<GameObject>();
+        for (int i = 0; i < 100 + (dungeon.DungeonLevel - 1) * 5; i++)
         {
+            int random = Random.Range(0, 15);
             GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
-            IntVector2 coords = dungeon.RandomCoordinates;
-            collectable.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
-            collectable.transform.parent = collectableHolder.transform;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .16f);
-            if (colliders.Length > 1)
+            if (random == 0 || current.Count < 4)
+            {
+                IntVector2 coords = dungeon.RandomCoordinates;
+                collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 15);
+                collectable.transform.parent = collectableHolder.transform;
+            }
+            else
+            {
+                GameObject parentCoin = current[Random.Range(0, current.Count - 1)];
+                collectable.transform.position = new Vector3(parentCoin.transform.position.x + Random.Range(-1f, 1f),
+                                                            parentCoin.transform.position.y * dungeon.cellScale + Random.Range(-1f, 1f), 15);
+                collectable.transform.parent = collectableHolder.transform;
+            }
+            if (collectable.transform.position.x < 0 || collectable.transform.position.x > dungeon.size.x * dungeon.cellScale - 3
+                || collectable.transform.position.y < 0 || collectable.transform.position.y > dungeon.size.y * dungeon.cellScale - 3)
             {
                 GameObject.Destroy(collectable);
                 i--;
+            }
+            else
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
+                if (colliders.Length > 1)
+                {
+                    GameObject.Destroy(collectable);
+                    i--;
+                }
+                else
+                {
+                    current.Add(collectable);
+                }
             }
         }
     }
@@ -142,6 +168,7 @@ public class DungeonPopulator : MonoBehaviour
                 GameObject.Destroy(potion);
                 i--;
             }
+            potion.transform.parent = collectableHolder.transform;
         }
     }
 
@@ -177,6 +204,6 @@ public class DungeonPopulator : MonoBehaviour
             failCounter++;
 
         } while (looper);
-
+        sword.transform.parent = collectableHolder.transform;
     }
 }
