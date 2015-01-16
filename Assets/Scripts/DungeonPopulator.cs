@@ -10,12 +10,15 @@ public class DungeonPopulator : MonoBehaviour
     public GameObject potionPrefab;
     public GameObject swordPrefab;
     public GameObject[] collectables;
+    public GameObject spawnerPrefab;
+    public GameObject[] enemyTypes;
 
     //Private
     private Dungeon dungeon;
     private GameObject player;
     private GameObject ropelessHole;
     private GameObject collectableHolder;
+    private GameObject spawnerHolder;
 
 
     //Methods
@@ -26,6 +29,7 @@ public class DungeonPopulator : MonoBehaviour
         PlaceCollectables();
         PlacePotions();
         PlaceWeapon();
+        PlaceSpawners();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -34,6 +38,7 @@ public class DungeonPopulator : MonoBehaviour
         ropelessHole = GameObject.Find("EmptyDungeonHole");
         dungeon = gameObject.GetComponent<Dungeon>();
         collectableHolder = GameObject.Find("Collectables");
+        spawnerHolder = GameObject.Find("Spawners");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
@@ -205,5 +210,31 @@ public class DungeonPopulator : MonoBehaviour
 
         } while (looper);
         sword.transform.parent = collectableHolder.transform;
+    }
+
+    private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
+    {
+        for(int i = 0; i < 20; i++)
+        {
+            GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            spawner.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 10);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)spawner.transform.position, 4f);
+            if (colliders.Length != 0)
+            {
+                GameObject.Destroy(spawner);
+                i--;
+            }
+            else
+            {
+                if (enemyTypes.Length > 0)
+                {
+                    spawner.GetComponent<SpawnerHandler>().enemyPrefab = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                }
+                spawner.GetComponent<SpawnerHandler>().maxSpawns = Random.Range(5, 13);
+                spawner.GetComponent<SpawnerHandler>().spawnRate = Random.Range(10f, 25f);
+                spawner.transform.parent = spawnerHolder.transform;
+            }
+        }
     }
 }
