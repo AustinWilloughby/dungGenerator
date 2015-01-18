@@ -12,6 +12,7 @@ public class EnemyScript : Vehicle
     public SpawnerHandler spawner;
     public Vector2 direction;
     public LayerMask visibleLayers;
+    public GameObject coinPrefab;
 
     //Private
     private GameObject player;
@@ -30,7 +31,7 @@ public class EnemyScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        if (renderer.isVisible)
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 15)
         {
             direction = Vector2.zero;
             MovementHandler();
@@ -81,6 +82,12 @@ public class EnemyScript : Vehicle
         if (stats.health <= 0)
         {
             spawner.KillSpawn();
+            if (Random.Range(0, 5) == 0)
+            {
+                GameObject coinDrop = (GameObject)Instantiate(coinPrefab);
+                coinDrop.GetComponent<CollectableScript>().value = Random.Range(1, 3);
+                coinDrop.transform.position = transform.position;
+            }
             GameObject.Destroy(gameObject);
         }
     }
