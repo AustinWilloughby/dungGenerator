@@ -30,10 +30,13 @@ public class EnemyScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        direction = Vector2.zero;
-        MovementHandler();
-        SpriteRotator(direction);
-        DeathCheck();
+        if (renderer.isVisible)
+        {
+            direction = Vector2.zero;
+            MovementHandler();
+            SpriteRotator(direction);
+            DeathCheck();
+        }
     }
 
     //Methods
