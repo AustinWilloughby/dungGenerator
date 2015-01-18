@@ -16,6 +16,8 @@ public class DungeonHoleScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            GameObject playerSpawn = GameObject.Find("PlayerSpawn");
+            playerSpawn.transform.position = (Vector2)transform.position;
             transform.position = hidingSpot;
             //Collects all level specific things and removes them
             List<GameObject> deleteThese = new List<GameObject>();

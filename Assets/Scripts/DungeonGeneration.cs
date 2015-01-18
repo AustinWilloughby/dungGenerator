@@ -10,11 +10,15 @@ public class DungeonGeneration : MonoBehaviour
     //Private
     private Dungeon dungeonInstance;
     private int dungeonLevel;
+    private GameObject playerSpawn;
+    private GameObject player;
 
     //Events
     // Use this for initialization
     void Start()
     {
+        playerSpawn = GameObject.Find("PlayerSpawn");
+        player = GameObject.Find("Player");
         dungeonLevel = 0;
         Begin();
     }
@@ -31,6 +35,7 @@ public class DungeonGeneration : MonoBehaviour
     public void NewLevel()
     {
         Destroy(dungeonInstance.gameObject);
+        player.transform.position = (Vector2)playerSpawn.transform.position;
         Begin();
     }
 }

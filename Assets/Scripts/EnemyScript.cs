@@ -31,7 +31,7 @@ public class EnemyScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 15)
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 25)
         {
             direction = Vector2.zero;
             MovementHandler();
