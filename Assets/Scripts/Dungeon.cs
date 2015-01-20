@@ -129,6 +129,7 @@ public class Dungeon : MonoBehaviour
         {
             otherCell.Initialize(cell.room);
         }
+        passage = Instantiate(prefab) as DungeonPassage;
         passage.Initialize(otherCell, cell, direction.GetOpposite());
     }
 
@@ -137,6 +138,7 @@ public class Dungeon : MonoBehaviour
     {
         DungeonPassage passage = Instantiate(passagePrefab) as DungeonPassage;
         passage.Initialize(cell, otherCell, direction);
+        passage = Instantiate(passagePrefab) as DungeonPassage;
         passage.Initialize(otherCell, cell, direction.GetOpposite());
         if (cell.room != otherCell.room)
         {

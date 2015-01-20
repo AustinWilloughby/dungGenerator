@@ -19,6 +19,7 @@ public class DungeonPopulator : MonoBehaviour
     private GameObject ropelessHole;
     private GameObject collectableHolder;
     private GameObject spawnerHolder;
+    private GameObject boss;
 
 
     //Methods
@@ -30,6 +31,7 @@ public class DungeonPopulator : MonoBehaviour
         PlacePotions();
         PlaceWeapon();
         PlaceSpawners();
+        PlaceBoss();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -39,6 +41,7 @@ public class DungeonPopulator : MonoBehaviour
         dungeon = gameObject.GetComponent<Dungeon>();
         collectableHolder = GameObject.Find("Collectables");
         spawnerHolder = GameObject.Find("Spawners");
+        boss = GameObject.Find("Boss");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
@@ -214,7 +217,7 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
     {
-        for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 5 + dungeon.dungeonLevel; i++)
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
@@ -236,5 +239,10 @@ public class DungeonPopulator : MonoBehaviour
                 spawner.transform.parent = spawnerHolder.transform;
             }
         }
+    }
+
+    private void PlaceBoss() //Places the boss somewhere in the dungeon
+    {
+        boss.GetComponent<BossScript>().Setup(dungeon);
     }
 }
