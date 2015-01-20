@@ -44,7 +44,8 @@ public class BossScript : Vehicle
         this.dungeon = dungeon;
         IntVector2 coords = dungeon.RandomCoordinates;
         transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
-        currentTargetCell = dungeon.GetCell(coords).gameObject;
+        currentStartCell = dungeon.GetCell(coords).gameObject;
+        currentTargetCell = currentStartCell;
     }
 
     private void DeathCheck() //Checks if the boss is dead
@@ -70,41 +71,45 @@ public class BossScript : Vehicle
         List<GameObject> children = new List<GameObject>();
         for (int i = 0; i < currentTargetCell.transform.childCount; i++)
         {
-            if (currentTargetCell.transform.GetChild(i).gameObject.name == "DungeonPassage(Clone)" || 
-                currentTargetCell.transform.GetChild(i).gameObject.name == "DungeonDoor(Clone)")
+            if (currentTargetCell.transform.GetChild(i).gameObject.name == "DungeonPassage(Clone)" ||
+                currentTargetCell.transform.GetChild(i).gameObject.name == "Dungeon Door(Clone)")
             {
                 children.Add(currentTargetCell.transform.GetChild(i).gameObject);
             }
         }
 
-        if (children.Count == 1)
-        {
-            currentStartCell = currentTargetCell;
-            currentTargetCell = children[0];
-        }
-
-        else if(children.Count > 1)
+        if (children.Count > 1)
         {
             GameObject noPassage = null;
             foreach (GameObject passage in children)
             {
-                if (passage.GetComponent<DungeonPassage>().otherCell == currentStartCell || 
-                    passage.GetComponent<DungeonDoor>().otherCell == currentStartCell)
+                if (passage.name == "DungeonPassage(Clone)")
                 {
-                    noPassage = passage;
+                    if (passage.GetComponent<DungeonPassage>().otherCell == currentStartCell)
+                    {
+                        noPassage = passage;
+                    }
+                }
+                else if (passage.name == "Dungeon Door(Clone)")
+                {
+                    if (passage.GetComponent<DungeonDoor>().otherCell == currentStartCell)
+                    {
+                        noPassage = passage;
+                    }
                 }
             }
             children.Remove(noPassage);
-            currentStartCell = currentTargetCell;
-            GameObject newTarget = children[Random.Range(0, children.Count)];
-            if (newTarget.name == "DungeonPassage(Clone)")
-            {
-                currentTargetCell = newTarget.GetComponent<DungeonPassage>().otherCell.gameObject;
-            }
-            else if(newTarget.name == "DungeonDoor(Clone)")
-            {
-                currentTargetCell = newTarget.GetComponent<DungeonDoor>().otherCell.gameObject;
-            }
+        }
+
+        currentStartCell = currentTargetCell;
+        GameObject newTarget = children[Random.Range(0, children.Count)];
+        if (newTarget.name == "DungeonPassage(Clone)")
+        {
+            currentTargetCell = newTarget.GetComponent<DungeonPassage>().otherCell.gameObject;
+        }
+        else if (newTarget.name == "Dungeon Door(Clone)")
+        {
+            currentTargetCell = newTarget.GetComponent<DungeonDoor>().otherCell.gameObject;
         }
 
     }
