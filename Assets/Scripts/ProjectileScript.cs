@@ -65,6 +65,10 @@ public class ProjectileScript : MonoBehaviour
                 gameObject.transform.parent = other.gameObject.transform;
             }
         }
+        else if (other.gameObject.tag == "Unshootable")
+        {
+            GameObject.Destroy(gameObject);
+        }
         //Ignore if it is on layer9 "Entity"
         if (other.gameObject.layer == 11)
         {

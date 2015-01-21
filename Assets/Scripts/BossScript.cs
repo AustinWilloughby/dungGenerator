@@ -14,6 +14,8 @@ public class BossScript : Vehicle
     private GameObject player;
     private StatTracker stats;
     private Dungeon dungeon;
+    private GameObject dungeonHole;
+    private GameObject emptyDungeonHole;
 
     //Events
     // Use this for initialization
@@ -22,16 +24,15 @@ public class BossScript : Vehicle
         player = GameObject.FindGameObjectWithTag("Player");
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
+        dungeonHole = GameObject.Find("DungeonHole");
+        emptyDungeonHole = GameObject.Find("EmptyDungeonHole");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < 1f)
-        {
-            GetNewTarget();
-        }
         direction = Vector2.zero;
+        CheckDistances();
         MovementHandler();
         SpriteRotator(direction);
         DeathCheck();
@@ -39,11 +40,15 @@ public class BossScript : Vehicle
 
     //Methods
 
-    public void Setup(Dungeon dungeon)
+    public void Setup(Dungeon dungeon) //Collects all necessary information and sets the boss up for the level
     {
         this.dungeon = dungeon;
-        IntVector2 coords = dungeon.RandomCoordinates;
-        transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
+        IntVector2 coords;
+        do
+        {
+            coords = dungeon.RandomCoordinates;
+            transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
+        } while (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) < 20f);
         currentStartCell = dungeon.GetCell(coords).gameObject;
         currentTargetCell = currentStartCell;
     }
@@ -57,7 +62,7 @@ public class BossScript : Vehicle
         }
     }
 
-    private void MovementHandler()
+    private void MovementHandler() //Moves the boss around based on different influences
     {
         //if (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) > 15)
         {
@@ -66,7 +71,7 @@ public class BossScript : Vehicle
         transform.position += (Vector3)direction;
     }
 
-    private void GetNewTarget()
+    private void GetNewTarget() //Acquires a new local target based on the current cell
     {
         List<GameObject> children = new List<GameObject>();
         for (int i = 0; i < currentTargetCell.transform.childCount; i++)
@@ -112,5 +117,21 @@ public class BossScript : Vehicle
             currentTargetCell = newTarget.GetComponent<DungeonDoor>().otherCell.gameObject;
         }
 
+    }
+
+    private void CheckDistances()
+    {
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < 1.5f)
+        {
+            GetNewTarget();
+        }
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)dungeonHole.transform.position) < 5f)
+        {
+            GetNewTarget();
+        }
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)emptyDungeonHole.transform.position) < 5f)
+        {
+            GetNewTarget();
+        }
     }
 }
