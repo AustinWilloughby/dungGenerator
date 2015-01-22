@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />
      <Compile Include="Assets\Scripts\IntVector2.cs" />
      <Compile Include="Assets\Scripts\InventoryScript.cs" />
+     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PotionScript.cs" />
      <Compile Include="Assets\Scripts\ProjectileScript.cs" />
