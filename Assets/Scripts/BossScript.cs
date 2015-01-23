@@ -7,8 +7,12 @@ public class BossScript : Vehicle
     //Fields
     //Public
     public Vector2 direction;
+    public float viewDistance;
+    public float viewAngle;
+    public LayerMask visibleLayers;
 
     //Private
+    private bool playerVisible;
     private GameObject currentTargetCell;
     private GameObject currentStartCell;
     private GameObject player;
@@ -21,6 +25,7 @@ public class BossScript : Vehicle
     // Use this for initialization
     void Start()
     {
+        playerVisible = false;
         player = GameObject.FindGameObjectWithTag("Player");
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
@@ -31,11 +36,12 @@ public class BossScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        direction = Vector2.zero;
+        direction = Vector3.zero;
         CheckDistances();
         MovementHandler();
         SpriteRotator(direction);
         DeathCheck();
+        CheckViewFrustrum();
     }
 
     //Methods
@@ -64,9 +70,13 @@ public class BossScript : Vehicle
 
     private void MovementHandler() //Moves the boss around based on different influences
     {
-        //if (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) > 15)
+        if (playerVisible == false)
         {
             direction = Seek((Vector2)currentTargetCell.transform.position);
+        }
+        else
+        {
+            direction = Arrive((Vector2)player.transform.position, 2f);
         }
         transform.position += (Vector3)direction;
     }
@@ -119,7 +129,7 @@ public class BossScript : Vehicle
 
     }
 
-    private void CheckDistances()
+    private void CheckDistances() //Handles new targeting at specific points to prevent impossibilities
     {
         if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < 1.5f)
         {
@@ -132,6 +142,38 @@ public class BossScript : Vehicle
         if (Vector2.Distance((Vector2)transform.position, (Vector2)emptyDungeonHole.transform.position) < 5f)
         {
             GetNewTarget();
+        }
+    }
+
+    private void CheckViewFrustrum() //Checks the boss' view frustrum to see if the player is visible
+    {
+        Vector2 bossToPlayer = (Vector2)player.transform.position - (Vector2)transform.position;
+        if (bossToPlayer.magnitude < viewDistance)
+        {
+            speed = .05f;
+            if (Vector2.Angle(direction, bossToPlayer) < viewAngle)
+            {
+                RaycastHit2D sightLine = Physics2D.Raycast((Vector2)transform.position,
+                    (Vector2)player.transform.position - (Vector2)transform.position, viewDistance, visibleLayers);
+
+                if (sightLine.collider.gameObject.tag != "Wall")
+                {
+                    playerVisible = true;
+                }
+                else
+                {
+                    playerVisible = false;
+                }
+            }
+            else
+            {
+                playerVisible = false;
+            }
+        }
+        else
+        {
+            speed = .2f;
+            playerVisible = false;
         }
     }
 }
