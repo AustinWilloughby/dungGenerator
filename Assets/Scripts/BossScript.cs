@@ -13,6 +13,7 @@ public class BossScript : Vehicle
 
     //Private
     private bool playerVisible;
+    private bool alive;
     private GameObject currentTargetCell;
     private GameObject currentStartCell;
     private GameObject player;
@@ -25,6 +26,7 @@ public class BossScript : Vehicle
     // Use this for initialization
     void Start()
     {
+        alive = false;
         playerVisible = false;
         player = GameObject.FindGameObjectWithTag("Player");
         stats = this.GetComponent<StatTracker>();
@@ -36,18 +38,22 @@ public class BossScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        direction = Vector3.zero;
-        CheckDistances();
-        MovementHandler();
-        SpriteRotator(direction);
-        DeathCheck();
-        CheckViewFrustrum();
+        if (alive)
+        {
+            direction = Vector3.zero;
+            CheckDistances();
+            MovementHandler();
+            SpriteRotator(direction);
+            DeathCheck();
+            CheckViewFrustrum();
+        }
     }
 
     //Methods
 
     public void Setup(Dungeon dungeon) //Collects all necessary information and sets the boss up for the level
     {
+        alive = true;
         this.dungeon = dungeon;
         IntVector2 coords;
         do
@@ -64,7 +70,9 @@ public class BossScript : Vehicle
         //If their health drops to 0 or below, kill them
         if (stats.health <= 0)
         {
-            GameObject.Destroy(gameObject);
+            stats.health = 100;
+            alive = false;
+            transform.position = new Vector2(-20, -20);
         }
     }
 

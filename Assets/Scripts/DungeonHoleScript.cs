@@ -16,6 +16,7 @@ public class DungeonHoleScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            GameObject boss = GameObject.Find("Boss");
             GameObject playerSpawn = GameObject.Find("PlayerSpawn");
             playerSpawn.transform.position = (Vector2)transform.position;
             transform.position = hidingSpot;
@@ -25,6 +26,7 @@ public class DungeonHoleScript : MonoBehaviour
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Collectable"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("DeletePerLevel"));
+            deleteThese.Remove(boss);
             GameObject[] delete = deleteThese.ToArray();
             for(int i = 0; i < delete.Length; i++)
             {
