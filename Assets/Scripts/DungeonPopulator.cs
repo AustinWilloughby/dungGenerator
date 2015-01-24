@@ -125,9 +125,9 @@ public class DungeonPopulator : MonoBehaviour
         List<GameObject> current = new List<GameObject>();
         for (int i = 0; i < 100 + (dungeon.DungeonLevel - 1) * 5; i++)
         {
-            int random = Random.Range(0, 15);
+            int random = Random.Range(0, 2);
             GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
-            if (random == 0 || current.Count < 4)
+            if (random == 0 || current.Count < 10)
             {
                 IntVector2 coords = dungeon.RandomCoordinates;
                 collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 15);

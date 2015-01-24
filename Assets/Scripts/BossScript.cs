@@ -19,8 +19,8 @@ public class BossScript : Vehicle
     private GameObject player;
     private StatTracker stats;
     private Dungeon dungeon;
-    private GameObject dungeonHole;
-    private GameObject emptyDungeonHole;
+    public DungeonCell holeCell;
+
 
     //Events
     // Use this for initialization
@@ -31,8 +31,6 @@ public class BossScript : Vehicle
         player = GameObject.FindGameObjectWithTag("Player");
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
-        dungeonHole = GameObject.Find("DungeonHole");
-        emptyDungeonHole = GameObject.Find("EmptyDungeonHole");
     }
 
     // Update is called once per frame
@@ -49,8 +47,8 @@ public class BossScript : Vehicle
         }
     }
 
-    //Methods
 
+    //Methods
     public void Setup(Dungeon dungeon) //Collects all necessary information and sets the boss up for the level
     {
         alive = true;
@@ -63,6 +61,9 @@ public class BossScript : Vehicle
         } while (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) < 20f);
         currentStartCell = dungeon.GetCell(coords).gameObject;
         currentTargetCell = currentStartCell;
+        GameObject emptyDungeonHole = GameObject.Find("EmptyDungeonHole");
+        holeCell = dungeon.GetCell(new IntVector2((int)emptyDungeonHole.transform.position.x / dungeon.cellScale,
+            (int)emptyDungeonHole.transform.position.y / dungeon.cellScale));
     }
 
     private void DeathCheck() //Checks if the boss is dead
@@ -103,7 +104,8 @@ public class BossScript : Vehicle
 
         if (children.Count > 1)
         {
-            GameObject noPassage = null;
+            GameObject noPassage = null; //Prevents returning to the same cell
+            GameObject passageToHole = null; //Prevents going into the dungeon hole
             foreach (GameObject passage in children)
             {
                 if (passage.name == "DungeonPassage(Clone)")
@@ -112,6 +114,10 @@ public class BossScript : Vehicle
                     {
                         noPassage = passage;
                     }
+                    if (passage.GetComponent<DungeonPassage>().otherCell == holeCell)
+                    {
+                        passageToHole = passage;
+                    }
                 }
                 else if (passage.name == "Dungeon Door(Clone)")
                 {
@@ -119,9 +125,14 @@ public class BossScript : Vehicle
                     {
                         noPassage = passage;
                     }
+                    if (passage.GetComponent<DungeonDoor>().otherCell == holeCell)
+                    {
+                        passageToHole = passage;
+                    }
                 }
             }
             children.Remove(noPassage);
+            children.Remove(passageToHole);
         }
 
         currentStartCell = currentTargetCell;
@@ -140,14 +151,6 @@ public class BossScript : Vehicle
     private void CheckDistances() //Handles new targeting at specific points to prevent impossibilities
     {
         if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < 1.5f)
-        {
-            GetNewTarget();
-        }
-        if (Vector2.Distance((Vector2)transform.position, (Vector2)dungeonHole.transform.position) < 5f)
-        {
-            GetNewTarget();
-        }
-        if (Vector2.Distance((Vector2)transform.position, (Vector2)emptyDungeonHole.transform.position) < 5f)
         {
             GetNewTarget();
         }
