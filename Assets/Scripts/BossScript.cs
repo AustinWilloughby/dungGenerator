@@ -158,6 +158,7 @@ public class BossScript : Vehicle
 
     private void CheckViewFrustrum() //Checks the boss' view frustrum to see if the player is visible
     {
+        bool preVis = playerVisible;
         Vector2 bossToPlayer = (Vector2)player.transform.position - (Vector2)transform.position;
         if (bossToPlayer.magnitude < viewDistance)
         {
@@ -174,17 +175,35 @@ public class BossScript : Vehicle
                 else
                 {
                     playerVisible = false;
+                    if (preVis == true)
+                    {
+                        TargetCurrentCell();
+                    }
                 }
             }
             else
             {
                 playerVisible = false;
+                if (preVis == true)
+                {
+                    TargetCurrentCell();
+                }
             }
         }
         else
         {
             speed = .2f;
             playerVisible = false;
+            if (preVis == true)
+            {
+                TargetCurrentCell();
+            }
         }
+    }
+
+    private void TargetCurrentCell() //Makes boss target cell he is currently on, to prevent running through walls when losing the player
+    {
+        IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
+        currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
     }
 }

@@ -6,7 +6,6 @@ public class StatTracker : MonoBehaviour
     //Fields
     //Public
     public int health = 10;
-    public int energy = 10;
 
     //Private
     private int maxHealth;
