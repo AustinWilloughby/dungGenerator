@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     void FireArrow()
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-        arrowTimer = 2f;
+        arrowTimer = 1f;
     }
 
     void HandleInput() //Handles all player input

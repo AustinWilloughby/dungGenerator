@@ -10,12 +10,12 @@ public class MainMenuScript : MonoBehaviour
     //Events
     void OnMouseEnter()
     {
-        guiText.material.color = Color.black;
+        gameObject.renderer.material.color = Color.red;
     }
 
     void OnMouseExit()
     {
-        guiText.material.color = Color.red;
+        gameObject.renderer.material.color = Color.white;
     }
 
     void OnMouseUpAsButton()

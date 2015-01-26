@@ -9,7 +9,7 @@ public class ProjectileScript : MonoBehaviour
     private Vector2 direction;
     private float speed = .5f;
     private float timer = 10f;
-    private int damage = 5;
+    private int damage = 2;
 
     // Use this for initialization
     void Start()
