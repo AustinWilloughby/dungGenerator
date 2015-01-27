@@ -71,7 +71,7 @@ public class BossScript : Vehicle
         //If their health drops to 0 or below, kill them
         if (stats.health <= 0)
         {
-            stats.health = 100;
+            stats.health = 20;
             alive = false;
             transform.position = new Vector2(-20, -20);
         }
