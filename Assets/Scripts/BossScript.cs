@@ -10,6 +10,7 @@ public class BossScript : Vehicle
     public float viewDistance;
     public float viewAngle;
     public LayerMask visibleLayers;
+    public DungeonCell holeCell;
 
     //Private
     private bool playerVisible;
@@ -19,8 +20,7 @@ public class BossScript : Vehicle
     private GameObject player;
     private StatTracker stats;
     private Dungeon dungeon;
-    public DungeonCell holeCell;
-    private DungeonCell[,] dungeonCells;
+    private List<DungeonCell> cellList;
 
 
     //Events
@@ -52,7 +52,6 @@ public class BossScript : Vehicle
     //Methods
     public void Setup(Dungeon dungeon, DungeonCell[,] cells) //Collects all necessary information and sets the boss up for the level
     {
-        dungeonCells = cells;
         alive = true;
         this.dungeon = dungeon;
         IntVector2 coords;
@@ -66,6 +65,10 @@ public class BossScript : Vehicle
         GameObject emptyDungeonHole = GameObject.Find("EmptyDungeonHole");
         holeCell = dungeon.GetCell(new IntVector2((int)emptyDungeonHole.transform.position.x / dungeon.cellScale,
             (int)emptyDungeonHole.transform.position.y / dungeon.cellScale));
+        foreach (DungeonCell cell in cells)
+        {
+            cellList.Add(cell);
+        }
     }
 
     private void DeathCheck() //Checks if the boss is dead
@@ -207,5 +210,11 @@ public class BossScript : Vehicle
     {
         IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
         currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
+    }
+
+    private void FindPath() //Uses pathfinding to calculate a path for the boss to follow to his next point
+    {
+        IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
+        GameObject pathStart = dungeon.GetCell(currentCoords).gameObject;
     }
 }
