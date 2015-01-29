@@ -15,6 +15,7 @@ public class DungeonPopulator : MonoBehaviour
 
     //Private
     private Dungeon dungeon;
+    private DungeonCell[,] cells;
     private GameObject player;
     private GameObject ropelessHole;
     private GameObject collectableHolder;
@@ -23,8 +24,9 @@ public class DungeonPopulator : MonoBehaviour
 
 
     //Methods
-    public void Populate() //Main method for populating every entity into the dungeon
+    public void Populate(DungeonCell[,] dungeonCells) //Main method for populating every entity into the dungeon
     {
+        cells = dungeonCells;
         GetInfo();
         PlaceRopeAndHole();
         PlaceCollectables();
@@ -243,6 +245,6 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceBoss() //Places the boss somewhere in the dungeon
     {
-        boss.GetComponent<BossScript>().Setup(dungeon);
+        boss.GetComponent<BossScript>().Setup(dungeon, cells);
     }
 }

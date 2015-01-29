@@ -20,6 +20,7 @@ public class BossScript : Vehicle
     private StatTracker stats;
     private Dungeon dungeon;
     public DungeonCell holeCell;
+    private DungeonCell[,] dungeonCells;
 
 
     //Events
@@ -49,8 +50,9 @@ public class BossScript : Vehicle
 
 
     //Methods
-    public void Setup(Dungeon dungeon) //Collects all necessary information and sets the boss up for the level
+    public void Setup(Dungeon dungeon, DungeonCell[,] cells) //Collects all necessary information and sets the boss up for the level
     {
+        dungeonCells = cells;
         alive = true;
         this.dungeon = dungeon;
         IntVector2 coords;

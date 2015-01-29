@@ -42,7 +42,7 @@ public class Dungeon : MonoBehaviour
         CleanDungeon();
         transform.localScale = new Vector3(cellScale, cellScale, 1);
         populator = gameObject.GetComponent<DungeonPopulator>();
-        populator.Populate();
+        populator.Populate(cells);
     }
 
     public DungeonCell GetCell(IntVector2 coords) //Returns the cell at the given coordinates
