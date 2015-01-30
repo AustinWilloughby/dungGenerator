@@ -245,6 +245,6 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceBoss() //Places the boss somewhere in the dungeon
     {
-        boss.GetComponent<BossScript>().Setup(dungeon, cells);
+        boss.GetComponent<BossScript>().Setup(dungeon);
     }
 }

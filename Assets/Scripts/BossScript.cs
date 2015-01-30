@@ -20,7 +20,7 @@ public class BossScript : Vehicle
     private GameObject player;
     private StatTracker stats;
     private Dungeon dungeon;
-    private List<DungeonCell> cellList;
+    private List<GameObject> cellList;
 
 
     //Events
@@ -50,7 +50,7 @@ public class BossScript : Vehicle
 
 
     //Methods
-    public void Setup(Dungeon dungeon, DungeonCell[,] cells) //Collects all necessary information and sets the boss up for the level
+    public void Setup(Dungeon dungeon) //Collects all necessary information and sets the boss up for the level
     {
         alive = true;
         this.dungeon = dungeon;
@@ -60,15 +60,13 @@ public class BossScript : Vehicle
             coords = dungeon.RandomCoordinates;
             transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
         } while (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) < 20f);
+
         currentStartCell = dungeon.GetCell(coords).gameObject;
         currentTargetCell = currentStartCell;
         GameObject emptyDungeonHole = GameObject.Find("EmptyDungeonHole");
         holeCell = dungeon.GetCell(new IntVector2((int)emptyDungeonHole.transform.position.x / dungeon.cellScale,
             (int)emptyDungeonHole.transform.position.y / dungeon.cellScale));
-        foreach (DungeonCell cell in cells)
-        {
-            cellList.Add(cell);
-        }
+        cellList = new List<GameObject>();
     }
 
     private void DeathCheck() //Checks if the boss is dead
@@ -109,35 +107,41 @@ public class BossScript : Vehicle
 
         if (children.Count > 1)
         {
-            GameObject noPassage = null; //Prevents returning to the same cell
-            GameObject passageToHole = null; //Prevents going into the dungeon hole
+            List<GameObject> removalList = new List<GameObject>();
             foreach (GameObject passage in children)
             {
                 if (passage.name == "DungeonPassage(Clone)")
                 {
-                    if (passage.GetComponent<DungeonPassage>().otherCell == currentStartCell)
+                    //If the attempted passage brings player back to starting point, into the hole, or somewhere already visited
+                    if (passage.GetComponent<DungeonPassage>().otherCell == currentStartCell 
+                        || passage.GetComponent<DungeonPassage>().otherCell == holeCell
+                        || cellList.Contains(passage.GetComponent<DungeonPassage>().otherCell.gameObject))
                     {
-                        noPassage = passage;
-                    }
-                    if (passage.GetComponent<DungeonPassage>().otherCell == holeCell)
-                    {
-                        passageToHole = passage;
+                        removalList.Add(passage);
                     }
                 }
+                    //Same but with doors
                 else if (passage.name == "Dungeon Door(Clone)")
                 {
-                    if (passage.GetComponent<DungeonDoor>().otherCell == currentStartCell)
+                    if (passage.GetComponent<DungeonDoor>().otherCell == currentStartCell 
+                        || passage.GetComponent<DungeonDoor>().otherCell == holeCell
+                        || cellList.Contains(passage.GetComponent<DungeonDoor>().otherCell.gameObject))
                     {
-                        noPassage = passage;
-                    }
-                    if (passage.GetComponent<DungeonDoor>().otherCell == holeCell)
-                    {
-                        passageToHole = passage;
+                        removalList.Add(passage);
                     }
                 }
             }
-            children.Remove(noPassage);
-            children.Remove(passageToHole);
+            //Remove invalid moves from possible moves
+            for (int i = 0; i < removalList.Count; i++)
+            {
+                children.Remove(removalList[i]);
+            }
+            //If removal clears out possibility list, clear visited list, and target current cell so the program continues
+            if (children.Count == 0)
+            {
+                cellList.Clear();
+                children.Add(currentStartCell);
+            }
         }
 
         currentStartCell = currentTargetCell;
@@ -150,6 +154,7 @@ public class BossScript : Vehicle
         {
             currentTargetCell = newTarget.GetComponent<DungeonDoor>().otherCell.gameObject;
         }
+        cellList.Add(currentTargetCell);
 
     }
 
@@ -165,7 +170,7 @@ public class BossScript : Vehicle
     {
         bool preVis = playerVisible;
         Vector2 bossToPlayer = (Vector2)player.transform.position - (Vector2)transform.position;
-        if (bossToPlayer.magnitude < viewDistance)
+        if (bossToPlayer.magnitude < viewDistance) //If boss is close to player
         {
             speed = .05f;
             if (Vector2.Angle(direction, bossToPlayer) < viewAngle)
@@ -210,11 +215,5 @@ public class BossScript : Vehicle
     {
         IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
         currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
-    }
-
-    private void FindPath() //Uses pathfinding to calculate a path for the boss to follow to his next point
-    {
-        IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
-        GameObject pathStart = dungeon.GetCell(currentCoords).gameObject;
     }
 }
