@@ -160,7 +160,7 @@ public class BossScript : Vehicle
 
     private void CheckDistances() //Handles new targeting at specific points to prevent impossibilities
     {
-        if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < 1.5f)
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)currentTargetCell.transform.position) < .75f)
         {
             GetNewTarget();
         }
