@@ -26,15 +26,14 @@ public class LightFlicker : MonoBehaviour
 
     private void Flicker()
     {
-        float noise = Mathf.PerlinNoise(10, Time.time / 4); 
-        if (distanceToBoss > 15f)
+        float noise = Mathf.PerlinNoise(10, Time.time / 4);
+
+        light.intensity = Mathf.Lerp(.9f, 1f, noise);
+        light.spotAngle = Mathf.Lerp(13f, 17f, noise);
+        if (distanceToBoss < 15f)
         {
-            light.intensity = Mathf.Lerp(.9f, 1f, noise);
-            light.spotAngle = Mathf.Lerp(13f, 17f, noise);
-        }
-        else
-        {
-            light.spotAngle = distanceToBoss / 1.2f;
+            light.spotAngle = light.spotAngle / (15 / distanceToBoss);
+            light.intensity = light.intensity / (15 / distanceToBoss);
         }
     }
 
