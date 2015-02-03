@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float speed = .05f;
     private GameObject weapon;
     private float arrowTimer;
+    private GameObject pauseMenu;
 
 
     // Use this for initialization
@@ -17,20 +18,23 @@ public class PlayerController : MonoBehaviour
     {
         arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
+        pauseMenu = GameObject.Find("PauseMenu");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Calculates movement in x and y directions based on input
-        float xMovement = Input.GetAxis("Horizontal") * speed;
-        float yMovement = Input.GetAxis("Vertical") * speed;
+        if (Time.timeScale > 0)
+        {
+            //Calculates movement in x and y directions based on input
+            float xMovement = Input.GetAxis("Horizontal") * speed;
+            float yMovement = Input.GetAxis("Vertical") * speed;
 
-        //Edit the players transform
-        Vector2 translate = new Vector2(xMovement, yMovement);
-        transform.position = transform.position + (Vector3)translate;
-
-        SpriteRotator(translate);
+            //Edit the players transform
+            Vector2 translate = new Vector2(xMovement, yMovement);
+            transform.position = transform.position + (Vector3)translate;
+            SpriteRotator(translate);
+        }
         HandleInput();
         DeathCheck();
         arrowTimer -= Time.deltaTime;
@@ -83,6 +87,11 @@ public class PlayerController : MonoBehaviour
             {
                 FireArrow();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.GetComponent<PauseScript>().PauseGame();
         }
     }
 }

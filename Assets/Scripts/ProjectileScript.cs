@@ -32,23 +32,26 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer > 0) //If there is time left
+        if (Time.timeScale > 0)
         {
-            //Move, and slow down speed
-            transform.position += (Vector3)Vector2.ClampMagnitude(direction, speed);
-            if (speed > 0)
+            timer -= Time.deltaTime;
+            if (timer > 0) //If there is time left
             {
-                speed -= (.7f * Time.deltaTime);
+                //Move, and slow down speed
+                transform.position += (Vector3)Vector2.ClampMagnitude(direction, speed);
+                if (speed > 0)
+                {
+                    speed -= (.7f * Time.deltaTime);
+                }
+                else
+                {
+                    speed = 0;
+                }
             }
-            else
+            else //If out of time, destroy arrow
             {
-                speed = 0;
+                GameObject.Destroy(gameObject);
             }
-        }
-        else //If out of time, destroy arrow
-        {
-            GameObject.Destroy(gameObject);
         }
     }
 

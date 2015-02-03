@@ -37,7 +37,7 @@ public class BossScript : Vehicle
     // Update is called once per frame
     void Update()
     {
-        if (alive)
+        if (alive && Time.timeScale > 0)
         {
             direction = Vector3.zero;
             CheckDistances();
