@@ -24,17 +24,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale > 0)
-        {
-            //Calculates movement in x and y directions based on input
-            float xMovement = Input.GetAxis("Horizontal") * speed;
-            float yMovement = Input.GetAxis("Vertical") * speed;
-
-            //Edit the players transform
-            Vector2 translate = new Vector2(xMovement, yMovement);
-            transform.position = transform.position + (Vector3)translate;
-            SpriteRotator(translate);
-        }
+        PlayerMover();
         HandleInput();
         DeathCheck();
         arrowTimer -= Time.deltaTime;
@@ -92,6 +82,23 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseMenu.GetComponent<PauseScript>().PauseGame();
+        }
+    }
+
+    private void PlayerMover()
+    {
+        if (Time.timeScale > 0)
+        {
+            //Calculates movement in x and y directions based on input
+            float xMovement = Input.GetAxis("Horizontal");
+            float yMovement = Input.GetAxis("Vertical");
+
+            //Edit the players transform
+            Vector2 translate = new Vector2(xMovement, yMovement);
+            translate *= speed;
+            transform.position = transform.position + (Vector3)translate;
+
+            SpriteRotator(translate);
         }
     }
 }
