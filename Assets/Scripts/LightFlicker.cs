@@ -33,7 +33,7 @@ public class LightFlicker : MonoBehaviour
         if (distanceToBoss < 15f)
         {
             light.spotAngle = light.spotAngle / (15 / distanceToBoss) + 1;
-            light.intensity = light.intensity / (15 / distanceToBoss) + 1;
+            light.intensity = light.intensity / (15 / distanceToBoss);
         }
     }
 
