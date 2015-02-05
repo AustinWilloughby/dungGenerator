@@ -32,8 +32,8 @@ public class LightFlicker : MonoBehaviour
         light.spotAngle = Mathf.Lerp(13f, 17f, noise);
         if (distanceToBoss < 15f)
         {
-            light.spotAngle = light.spotAngle / (15 / distanceToBoss);
-            light.intensity = light.intensity / (15 / distanceToBoss);
+            light.spotAngle = light.spotAngle / (15 / distanceToBoss) + 1;
+            light.intensity = light.intensity / (15 / distanceToBoss) + 1;
         }
     }
 
