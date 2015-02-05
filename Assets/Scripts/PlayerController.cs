@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     void FireArrow()
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y, 97);
         arrowTimer = 1f;
     }
 

@@ -53,7 +53,7 @@ public class DungeonPopulator : MonoBehaviour
         do //Make a random location, and ensure it is far from player and hole
         {
             IntVector2 coords = dungeon.RandomCoordinates;
-            rope.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 29);
+            rope.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
             if (failCounter < 5)
             {
                 if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
@@ -82,7 +82,7 @@ public class DungeonPopulator : MonoBehaviour
         do
         {
             IntVector2 holeCoords = dungeon.RandomCoordinates;
-            ropelessHole.transform.position = new Vector3(holeCoords.x * dungeon.cellScale, holeCoords.y * dungeon.cellScale, 30);
+            ropelessHole.transform.position = new Vector3(holeCoords.x * dungeon.cellScale, holeCoords.y * dungeon.cellScale, 99);
 
             //Get all nearby colliders
             Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll((Vector2)ropelessHole.transform.position, 6f);
@@ -130,14 +130,14 @@ public class DungeonPopulator : MonoBehaviour
             if (random == 0 || current.Count < 10)
             {
                 IntVector2 coords = dungeon.RandomCoordinates;
-                collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 15);
+                collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
                 collectable.transform.parent = collectableHolder.transform;
             }
             else
             {
                 GameObject parentCoin = current[Random.Range(0, current.Count - 1)];
                 collectable.transform.position = new Vector3(parentCoin.transform.position.x + Random.Range(-1f, 1f),
-                                                            parentCoin.transform.position.y * dungeon.cellScale + Random.Range(-1f, 1f), 15);
+                                                            parentCoin.transform.position.y * dungeon.cellScale + Random.Range(-1f, 1f), 99);
                 collectable.transform.parent = collectableHolder.transform;
             }
             if (collectable.transform.position.x < 0 || collectable.transform.position.x > dungeon.size.x * dungeon.cellScale - 3
@@ -168,7 +168,7 @@ public class DungeonPopulator : MonoBehaviour
         {
             GameObject potion = (GameObject)Instantiate(potionPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
-            potion.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
+            potion.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
             potion.transform.parent = collectableHolder.transform;
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)potion.transform.position, .16f);
             if (colliders.Length > 1)
@@ -189,7 +189,7 @@ public class DungeonPopulator : MonoBehaviour
         do
         {
             IntVector2 coords = dungeon.RandomCoordinates;
-            sword.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 15);
+            sword.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)sword.transform.position, 1f);
 
             if (failCounter < 5)
@@ -221,7 +221,7 @@ public class DungeonPopulator : MonoBehaviour
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
-            spawner.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 10);
+            spawner.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 92);
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)spawner.transform.position, 4f);
             if (colliders.Length != 0)
             {
