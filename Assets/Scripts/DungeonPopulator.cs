@@ -96,9 +96,9 @@ public class DungeonPopulator : MonoBehaviour
                     break;
                 }
             }
-            if (failCounter < 5)
+            if (failCounter < 5) //Prevents game from locking up
             {
-                if (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) > 75)
+                if (Vector2.Distance((Vector2)ropelessHole.transform.position, (Vector2)player.transform.position) > 50)
                 {
                     if (wallCheck)
                     {
