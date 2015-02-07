@@ -9,6 +9,7 @@ public class StatTracker : MonoBehaviour
 
     //Private
     private int maxHealth;
+    private float redTimer;
 
 
     //Attributes
@@ -24,6 +25,18 @@ public class StatTracker : MonoBehaviour
         maxHealth = health;
     }
 
+    void Update()
+    {
+        if (redTimer > 0)
+        {
+            redTimer -= Time.deltaTime;
+        }
+        else
+        {
+            gameObject.renderer.material.color = Color.white;
+        }
+    }
+
 
     //Methods
     public void TakeDamage(int damage) //Appropriately removes player health
@@ -32,6 +45,8 @@ public class StatTracker : MonoBehaviour
         {
             damage *= -1;
         }
+        redTimer = .5f;
+        gameObject.renderer.material.color = Color.red;
         health -= damage;
     }
 
