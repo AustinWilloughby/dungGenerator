@@ -123,17 +123,17 @@ public class DungeonPopulator : MonoBehaviour
     private void PlaceCollectables() //Places coins and collectables throughout the dungeon in random clusters
     {
         List<GameObject> current = new List<GameObject>();
-        for (int i = 0; i < 100 + (dungeon.DungeonLevel - 1) * 5; i++)
+        for (int i = 0; i < 200 + (dungeon.DungeonLevel - 1) * 5; i++)
         {
             int random = Random.Range(0, 2);
             GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
-            if (random == 0 || current.Count < 10)
+            if (random == 0 || current.Count < 10) //New cloud seed coin
             {
                 IntVector2 coords = dungeon.RandomCoordinates;
                 collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
                 collectable.transform.parent = collectableHolder.transform;
             }
-            else
+            else //Cloud member
             {
                 GameObject parentCoin = current[Random.Range(0, current.Count - 1)];
                 collectable.transform.position = new Vector3(parentCoin.transform.position.x + Random.Range(-1f, 1f),
@@ -143,11 +143,13 @@ public class DungeonPopulator : MonoBehaviour
             if (collectable.transform.position.x < 0 || collectable.transform.position.x > dungeon.size.x * dungeon.cellScale - 3
                 || collectable.transform.position.y < 0 || collectable.transform.position.y > dungeon.size.y * dungeon.cellScale - 3)
             {
+                //If outside, destroy and retry
                 GameObject.Destroy(collectable);
                 i--;
             }
             else
             {
+                //Prevent overlap
                 Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
                 if (colliders.Length > 1)
                 {

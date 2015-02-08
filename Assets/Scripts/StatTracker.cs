@@ -27,11 +27,11 @@ public class StatTracker : MonoBehaviour
 
     void Update()
     {
-        if (redTimer > 0)
+        if (redTimer > 0) //Sustains shade change
         {
             redTimer -= Time.deltaTime;
         }
-        else
+        else //Resets default shade
         {
             gameObject.renderer.material.color = Color.white;
         }

@@ -19,18 +19,18 @@ public class DungeonCell : MonoBehaviour
         transform.GetChild(0).GetComponent<Renderer>().material = room.setting.floorMaterial;
     }
 
-    public DungeonCellEdge GetEdge(DungeonDirection direction)
+    public DungeonCellEdge GetEdge(DungeonDirection direction) //Returns cellEdge in a given direction
     {
         return edges[(int)direction];
     }
 
-    public void SetEdge(DungeonDirection direction, DungeonCellEdge edge)
+    public void SetEdge(DungeonDirection direction, DungeonCellEdge edge) //Sets a given cellEdge
     {
         edges[(int)direction] = edge;
         initializedEdgeCount += 1;
     }
 
-    public bool IsFullyInitialized
+    public bool IsFullyInitialized //Checks if all edges have been initialized
     {
         get
         {
