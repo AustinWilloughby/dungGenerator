@@ -24,16 +24,21 @@ public class LightFlicker : MonoBehaviour
         Flicker();
     }
 
-    private void Flicker()
+    private void Flicker() //Changes light intensity and spotAngle based on perlin noise and boss distance to resemble a torch
     {
         float noise = Mathf.PerlinNoise(10, Time.time / 4);
 
         light.intensity = Mathf.Lerp(.9f, 1f, noise);
         light.spotAngle = Mathf.Lerp(13f, 17f, noise);
-        if (distanceToBoss < 15f)
+        if (distanceToBoss < 15f && distanceToBoss > 6f)
         {
-            light.spotAngle = light.spotAngle / (15 / distanceToBoss) + 1;
+            light.spotAngle = light.spotAngle / (15 / distanceToBoss);
             light.intensity = light.intensity / (15 / distanceToBoss);
+        }
+        else if(distanceToBoss < 6f)
+        {
+            light.spotAngle = light.spotAngle / 2.5f;
+            light.intensity = light.intensity / 2.5f;
         }
     }
 
