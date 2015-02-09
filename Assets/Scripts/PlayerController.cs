@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private GameObject weapon;
     private float arrowTimer;
     private GameObject pauseMenu;
+    private bool mouse1Down = false;
+    private bool mouse2Down = false;
 
 
     // Use this for initialization
@@ -68,18 +70,34 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale > 0)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetAxis("Swing") > 0)
             {
-                weapon.SetActive(true);
-                weapon.GetComponent<SwordScript>().Attack();
+                if (mouse1Down == false)
+                {
+                    mouse1Down = true;
+                    weapon.SetActive(true);
+                    weapon.GetComponent<SwordScript>().Attack();
+                }
+            }
+            else
+            {
+                mouse1Down = false;
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetAxis("Shoot") > 0)
             {
-                if (arrowTimer < 0)
+                if (mouse2Down == false)
                 {
-                    FireArrow();
+                    if (arrowTimer < 0)
+                    {
+                        mouse2Down = true;
+                        FireArrow();
+                    }
                 }
+            }
+            else
+            {
+                mouse2Down = false;
             }
         }
 

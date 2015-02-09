@@ -82,11 +82,11 @@ public class EnemyScript : Vehicle
         if (stats.health <= 0)
         {
             spawner.KillSpawn();
-            if (Random.Range(0, 5) == 0)
+            if (Random.Range(0, 0) == 0)
             {
                 GameObject coinDrop = (GameObject)Instantiate(coinPrefab);
                 coinDrop.GetComponent<CollectableScript>().value = Random.Range(1, 3);
-                coinDrop.transform.position = transform.position;
+                coinDrop.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
             }
             GameObject.Destroy(gameObject);
         }
