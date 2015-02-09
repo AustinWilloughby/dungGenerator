@@ -12,6 +12,7 @@ public class DungeonPopulator : MonoBehaviour
     public GameObject[] collectables;
     public GameObject spawnerPrefab;
     public GameObject[] enemyTypes;
+    public GameObject camera;
 
     //Private
     private Dungeon dungeon;
@@ -20,12 +21,20 @@ public class DungeonPopulator : MonoBehaviour
     private GameObject collectableHolder;
     private GameObject spawnerHolder;
     private GameObject boss;
+    private GameObject playerSpawn;
 
 
     //Methods
     public void Populate() //Main method for populating every entity into the dungeon
     {
         GetInfo();
+        if (dungeon.dungeonLevel == 1) //Makes player spawn randomly on the first dungeon.
+        {
+            IntVector2 coords = dungeon.RandomCoordinates;
+            player.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
+            camera.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, -8);
+            playerSpawn.transform.position = player.transform.position;
+        }
         PlaceRopeAndHole();
         PlaceCollectables();
         PlacePotions();
@@ -42,6 +51,8 @@ public class DungeonPopulator : MonoBehaviour
         collectableHolder = GameObject.Find("Collectables");
         spawnerHolder = GameObject.Find("Spawners");
         boss = GameObject.Find("Boss");
+        camera = GameObject.Find("Main Camera");
+        playerSpawn = GameObject.Find("PlayerSpawn");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
@@ -54,7 +65,7 @@ public class DungeonPopulator : MonoBehaviour
         {
             IntVector2 coords = dungeon.RandomCoordinates;
             rope.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
-            if (failCounter < 5)
+            if (failCounter < 20)
             {
                 if (Vector2.Distance((Vector2)rope.transform.position, (Vector2)player.transform.position) > 50)
                 {
@@ -219,7 +230,7 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
     {
-        for(int i = 0; i < 5 + dungeon.dungeonLevel; i++)
+        for(int i = 0; i < 10 + dungeon.dungeonLevel; i++)
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
@@ -236,8 +247,8 @@ public class DungeonPopulator : MonoBehaviour
                 {
                     spawner.GetComponent<SpawnerHandler>().enemyPrefab = enemyTypes[Random.Range(0, enemyTypes.Length)];
                 }
-                spawner.GetComponent<SpawnerHandler>().maxSpawns = Random.Range(5, 13);
-                spawner.GetComponent<SpawnerHandler>().spawnRate = Random.Range(10f, 25f);
+                spawner.GetComponent<SpawnerHandler>().maxSpawns = Random.Range(3, 7);
+                spawner.GetComponent<SpawnerHandler>().spawnRate = Random.Range(10f, 15f);
                 spawner.transform.parent = spawnerHolder.transform;
             }
         }
