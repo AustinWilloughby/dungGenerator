@@ -66,17 +66,20 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput() //Handles all player input
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Time.timeScale > 0)
         {
-            weapon.SetActive(true);
-            weapon.GetComponent<SwordScript>().Attack();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (arrowTimer < 0)
+            if (Input.GetMouseButtonDown(0))
             {
-                FireArrow();
+                weapon.SetActive(true);
+                weapon.GetComponent<SwordScript>().Attack();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (arrowTimer < 0)
+                {
+                    FireArrow();
+                }
             }
         }
 
