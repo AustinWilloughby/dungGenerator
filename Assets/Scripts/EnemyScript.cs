@@ -18,6 +18,8 @@ public class EnemyScript : Vehicle
     private GameObject player;
     private StatTracker stats;
     private GameObject weapon;
+    private bool playerSeenLast = false;
+    private Vector2 playerSeenLoc = Vector2.zero;
 
     // Use this for initialization
     void Start()
@@ -45,32 +47,12 @@ public class EnemyScript : Vehicle
     {
         if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < viewDistance)
         {
-            //Cast a ray towards the player
-            RaycastHit2D sightLine = Physics2D.Raycast((Vector2)transform.position, (Vector2)player.transform.position - (Vector2)transform.position, viewDistance, visibleLayers);
-
-            //If the ray doesnt hit a wall, know about the player
-            if (sightLine.collider.gameObject.tag != "Wall")
-            {
-                //If the player is in attack range, hit them. Otherwise go after them
-                if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
-                {
-                    SpriteRotator(player.transform.position - transform.position);
-                    Attack();
-                }
-                else
-                {
-                    direction = (Vector3)Arrive(player.transform.position, 2f);
-                }
-            }
-            //Otherwise wander
-            else
-            {
-                direction = (Vector3)Wander();
-            }
+            ChasePlayer();
         }
         //Otherwise
         else
         {
+            playerSeenLast = false;
             direction = (Vector3)Wander();
         }
         transform.position += (Vector3)direction;
@@ -101,5 +83,49 @@ public class EnemyScript : Vehicle
             attackTimer = 2f;
         }
         attackTimer -= Time.deltaTime;
+    }
+
+    void ChasePlayer()
+    {
+        //Cast a ray towards the player
+        RaycastHit2D sightLine = Physics2D.Raycast((Vector2)transform.position, (Vector2)player.transform.position - (Vector2)transform.position, viewDistance, visibleLayers);
+
+        //If the ray doesnt hit a wall, know about the player
+        if (sightLine.collider.gameObject.tag != "Wall")
+        {
+            playerSeenLast = true;
+            playerSeenLoc = player.transform.position;
+            //If the player is in attack range, hit them. Otherwise go after them
+            if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
+            {
+                SpriteRotator(player.transform.position - transform.position);
+                Attack();
+            }
+            else
+            {
+                direction = (Vector3)Arrive(player.transform.position, 2f);
+            }
+        }
+        //Otherwise seek LastSeenPos
+        else
+        {
+            if (playerSeenLast)
+            {
+                if (Vector2.Distance(transform.position, playerSeenLoc) < 1)
+                {
+                    playerSeenLast = false;
+                    direction = (Vector3)Wander();
+                }
+                else
+                {
+                    direction = (Vector3)Seek(playerSeenLoc);
+                }
+            }
+            else
+            {
+                direction = (Vector3)Wander();
+            }
+        }
+
     }
 }
