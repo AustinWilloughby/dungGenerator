@@ -111,7 +111,7 @@ public class EnemyScript : Vehicle
         {
             if (playerSeenLast)
             {
-                if (Vector2.Distance(transform.position, playerSeenLoc) < 1)
+                if (Vector2.Distance(transform.position, playerSeenLoc) < .2f)
                 {
                     playerSeenLast = false;
                     direction = (Vector3)Wander();
