@@ -28,16 +28,9 @@ public class DungeonPopulator : MonoBehaviour
     public void Populate() //Main method for populating every entity into the dungeon
     {
         GetInfo();
-        if (dungeon.dungeonLevel == 1) //Makes player spawn randomly on the first dungeon.
-        {
-            IntVector2 coords = dungeon.RandomCoordinates;
-            player.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 0);
-            camera.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, -8);
-            playerSpawn.transform.position = player.transform.position;
-        }
         PlaceRopeAndHole();
         PlaceCollectables();
-        PlacePotions();
+        PlacePotion();
         PlaceWeapon();
         PlaceSpawners();
         PlaceBoss();
@@ -134,8 +127,7 @@ public class DungeonPopulator : MonoBehaviour
     private void PlaceCollectables() //Places coins and collectables throughout the dungeon in random clusters
     {
         List<GameObject> current = new List<GameObject>();
-        int failCount = 0;
-        for (int i = 0; i < 200 + (dungeon.DungeonLevel - 1) * 5; i++)
+        for (int i = 0; i < 200; i++)
         {
             int random = Random.Range(0, 2);
             GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
@@ -163,9 +155,8 @@ public class DungeonPopulator : MonoBehaviour
             {
                 //Prevent overlap
                 Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
-                if (colliders.Length > 1 || failCount < 300)
+                if (colliders.Length > 1)
                 {
-                    failCount++;
                     GameObject.Destroy(collectable);
                     i--;
                 }
@@ -177,22 +168,14 @@ public class DungeonPopulator : MonoBehaviour
         }
     }
 
-    private void PlacePotions() //Places a number of potions based on the dungeonLevel around the level
+    private void PlacePotion() //Places a number of potions based on the dungeonLevel around the level
     {
-        for (int i = 0; i < (dungeon.DungeonLevel / 5) + 1; i++)
-        {
-            GameObject potion = (GameObject)Instantiate(potionPrefab);
-            IntVector2 coords = dungeon.RandomCoordinates;
-            potion.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
-            potion.transform.parent = collectableHolder.transform;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)potion.transform.position, .16f);
-            if (colliders.Length > 1)
-            {
-                GameObject.Destroy(potion);
-                i--;
-            }
-            potion.transform.parent = collectableHolder.transform;
-        }
+        GameObject potion = (GameObject)Instantiate(potionPrefab);
+        IntVector2 coords = dungeon.RandomCoordinates;
+        potion.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
+        potion.transform.parent = collectableHolder.transform;
+        potion.transform.parent = collectableHolder.transform;
+
     }
 
     private void PlaceWeapon() //Places a weapon with attack damage relative to the level
@@ -234,7 +217,7 @@ public class DungeonPopulator : MonoBehaviour
     {
         List<GameObject> spawners = new List<GameObject>();
         int failCount = 0;
-        for(int i = 0; i < 10 + dungeon.dungeonLevel; i++)
+        for (int i = 0; i < 10; i++)
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
@@ -259,7 +242,7 @@ public class DungeonPopulator : MonoBehaviour
                 {
                     foreach (GameObject s in spawners)
                     {
-                        if (Vector2.Distance((Vector2)spawner.transform.position, (Vector2)s.transform.position) < (20f / dungeon.dungeonLevel))
+                        if (Vector2.Distance((Vector2)spawner.transform.position, (Vector2)s.transform.position) < 20)
                         {
                             GameObject.Destroy(spawner);
                             i--;
@@ -268,6 +251,7 @@ public class DungeonPopulator : MonoBehaviour
                         }
                     }
                 }
+                spawners.Add(spawner);
             }
         }
     }

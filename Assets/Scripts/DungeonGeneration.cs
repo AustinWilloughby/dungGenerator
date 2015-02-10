@@ -26,10 +26,20 @@ public class DungeonGeneration : MonoBehaviour
     //Methods
     private void Begin()
     {
-        dungeonLevel++;
+        if(dungeonLevel > 10)
+        {
+            dungeonLevel++;
+        }
         dungeonInstance = Instantiate(dungeonPrefab) as Dungeon;
         dungeonInstance.dungeonLevel = dungeonLevel;
         dungeonInstance.Generate();
+        if (dungeonLevel == 1)
+        {
+            IntVector2 coords = dungeonInstance.RandomCoordinates;
+            player.transform.position = new Vector3(coords.x * dungeonInstance.cellScale, coords.y * dungeonInstance.cellScale, 0);
+            camera.transform.position = new Vector3(coords.x * dungeonInstance.cellScale, coords.y * dungeonInstance.cellScale, -8);
+            playerSpawn.transform.position = player.transform.position;
+        }
     }
 
     public void NewLevel()
