@@ -134,6 +134,7 @@ public class DungeonPopulator : MonoBehaviour
     private void PlaceCollectables() //Places coins and collectables throughout the dungeon in random clusters
     {
         List<GameObject> current = new List<GameObject>();
+        int failCount = 0;
         for (int i = 0; i < 200 + (dungeon.DungeonLevel - 1) * 5; i++)
         {
             int random = Random.Range(0, 2);
@@ -162,8 +163,9 @@ public class DungeonPopulator : MonoBehaviour
             {
                 //Prevent overlap
                 Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
-                if (colliders.Length > 1)
+                if (colliders.Length > 1 || failCount < 300)
                 {
+                    failCount++;
                     GameObject.Destroy(collectable);
                     i--;
                 }
@@ -230,6 +232,8 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
     {
+        List<GameObject> spawners = new List<GameObject>();
+        int failCount = 0;
         for(int i = 0; i < 10 + dungeon.dungeonLevel; i++)
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
@@ -239,6 +243,7 @@ public class DungeonPopulator : MonoBehaviour
             if (colliders.Length != 0)
             {
                 GameObject.Destroy(spawner);
+                failCount++;
                 i--;
             }
             else
@@ -250,6 +255,19 @@ public class DungeonPopulator : MonoBehaviour
                 spawner.GetComponent<SpawnerHandler>().maxSpawns = Random.Range(3, 7);
                 spawner.GetComponent<SpawnerHandler>().spawnRate = Random.Range(10f, 15f);
                 spawner.transform.parent = spawnerHolder.transform;
+                if (failCount < 300)
+                {
+                    foreach (GameObject s in spawners)
+                    {
+                        if (Vector2.Distance((Vector2)spawner.transform.position, (Vector2)s.transform.position) < (20f / dungeon.dungeonLevel))
+                        {
+                            GameObject.Destroy(spawner);
+                            i--;
+                            failCount++;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
