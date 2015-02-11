@@ -12,7 +12,7 @@ public class DungeonPopulator : MonoBehaviour
     public GameObject[] collectables;
     public GameObject spawnerPrefab;
     public GameObject[] enemyTypes;
-    public GameObject camera;
+    public GameObject playerCamera;
 
     //Private
     private Dungeon dungeon;
@@ -43,7 +43,7 @@ public class DungeonPopulator : MonoBehaviour
         collectableHolder = GameObject.Find("Collectables");
         spawnerHolder = GameObject.Find("Spawners");
         boss = GameObject.Find("Boss");
-        camera = GameObject.Find("Main Camera");
+        playerCamera = GameObject.Find("Main Camera");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon

@@ -12,7 +12,7 @@ public class DungeonGeneration : MonoBehaviour
     private int dungeonLevel;
     private GameObject playerSpawn;
     private GameObject player;
-    private GameObject camera;
+    private GameObject playerCamera;
 
     //Events
     // Use this for initialization
@@ -20,7 +20,7 @@ public class DungeonGeneration : MonoBehaviour
     {
         playerSpawn = GameObject.Find("PlayerSpawn");
         player = GameObject.Find("Player");
-        camera = GameObject.Find("Main Camera");
+        playerCamera = GameObject.Find("Main Camera");
         dungeonLevel = 0;
         Begin();
     }
@@ -39,7 +39,7 @@ public class DungeonGeneration : MonoBehaviour
         {
             IntVector2 coords = dungeonInstance.RandomCoordinates;
             player.transform.position = new Vector3(coords.x * dungeonInstance.cellScale, coords.y * dungeonInstance.cellScale, 0);
-            camera.transform.position = new Vector3(coords.x * dungeonInstance.cellScale, coords.y * dungeonInstance.cellScale, -8);
+            playerCamera.transform.position = new Vector3(coords.x * dungeonInstance.cellScale, coords.y * dungeonInstance.cellScale, -8);
             playerSpawn.transform.position = player.transform.position;
         }
     }
