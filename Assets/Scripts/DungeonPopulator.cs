@@ -29,10 +29,10 @@ public class DungeonPopulator : MonoBehaviour
     {
         GetInfo();
         PlaceRopeAndHole();
+        PlaceSpawners();
         PlaceCollectables();
         PlacePotion();
         PlaceWeapon();
-        PlaceSpawners();
         PlaceBoss();
     }
 
@@ -215,9 +215,7 @@ public class DungeonPopulator : MonoBehaviour
 
     private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
     {
-        List<GameObject> spawners = new List<GameObject>();
-        int failCount = 0;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             GameObject spawner = (GameObject)Instantiate(spawnerPrefab);
             IntVector2 coords = dungeon.RandomCoordinates;
@@ -226,7 +224,6 @@ public class DungeonPopulator : MonoBehaviour
             if (colliders.Length != 0)
             {
                 GameObject.Destroy(spawner);
-                failCount++;
                 i--;
             }
             else
@@ -238,20 +235,6 @@ public class DungeonPopulator : MonoBehaviour
                 spawner.GetComponent<SpawnerHandler>().maxSpawns = Random.Range(3, 7);
                 spawner.GetComponent<SpawnerHandler>().spawnRate = Random.Range(10f, 15f);
                 spawner.transform.parent = spawnerHolder.transform;
-                if (failCount < 300)
-                {
-                    foreach (GameObject s in spawners)
-                    {
-                        if (Vector2.Distance((Vector2)spawner.transform.position, (Vector2)s.transform.position) < 20)
-                        {
-                            GameObject.Destroy(spawner);
-                            i--;
-                            failCount++;
-                            break;
-                        }
-                    }
-                }
-                spawners.Add(spawner);
             }
         }
     }

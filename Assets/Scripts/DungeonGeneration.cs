@@ -12,6 +12,7 @@ public class DungeonGeneration : MonoBehaviour
     private int dungeonLevel;
     private GameObject playerSpawn;
     private GameObject player;
+    private GameObject camera;
 
     //Events
     // Use this for initialization
@@ -19,6 +20,7 @@ public class DungeonGeneration : MonoBehaviour
     {
         playerSpawn = GameObject.Find("PlayerSpawn");
         player = GameObject.Find("Player");
+        camera = GameObject.Find("Main Camera");
         dungeonLevel = 0;
         Begin();
     }
@@ -26,7 +28,7 @@ public class DungeonGeneration : MonoBehaviour
     //Methods
     private void Begin()
     {
-        if(dungeonLevel > 10)
+        if(dungeonLevel < 10)
         {
             dungeonLevel++;
         }
