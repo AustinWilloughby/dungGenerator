@@ -21,7 +21,6 @@ public class DungeonPopulator : MonoBehaviour
     private GameObject collectableHolder;
     private GameObject spawnerHolder;
     private GameObject boss;
-    private GameObject playerSpawn;
 
 
     //Methods
@@ -29,7 +28,7 @@ public class DungeonPopulator : MonoBehaviour
     {
         GetInfo();
         PlaceRopeAndHole();
-        //PlaceSpawners();
+        PlaceSpawners();
         PlaceCollectables();
         PlacePotion();
         PlaceWeapon();
@@ -45,7 +44,6 @@ public class DungeonPopulator : MonoBehaviour
         spawnerHolder = GameObject.Find("Spawners");
         boss = GameObject.Find("Boss");
         camera = GameObject.Find("Main Camera");
-        playerSpawn = GameObject.Find("PlayerSpawn");
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
@@ -221,7 +219,7 @@ public class DungeonPopulator : MonoBehaviour
             IntVector2 coords = dungeon.RandomCoordinates;
             spawner.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 92);
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)spawner.transform.position, 4f);
-            if (colliders.Length != 0)
+            if (colliders.Length > 1)
             {
                 GameObject.Destroy(spawner);
                 i--;
