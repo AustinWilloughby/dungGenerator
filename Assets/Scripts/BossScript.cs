@@ -201,7 +201,7 @@ public class BossScript : Vehicle
                     playerVisible = false;
                     if (preVis == true)
                     {
-                        TargetCurrentCell();
+                        TargetCurrentCell(player.transform.position);
                     }
                 }
             }
@@ -210,7 +210,7 @@ public class BossScript : Vehicle
                 playerVisible = false;
                 if (preVis == true)
                 {
-                    TargetCurrentCell();
+                    TargetCurrentCell(transform.position);
                 }
             }
         }
@@ -220,14 +220,13 @@ public class BossScript : Vehicle
             playerVisible = false;
             if (preVis == true)
             {
-                TargetCurrentCell();
+                TargetCurrentCell(transform.position);
             }
         }
     }
 
-    private void TargetCurrentCell() //Makes boss target cell he is currently on, to prevent running through walls when losing the player
+    private void TargetCurrentCell(Vector3 pos) //Makes boss target cell he is currently on, to prevent running through walls when losing the player
     {
-        Vector3 pos = transform.position;
         if (((int)(pos.x / dungeon.cellScale)) < (pos.x / dungeon.cellScale))
         {
             if (((pos.x / dungeon.cellScale) - ((int)(pos.x / dungeon.cellScale))) > 2.5)
