@@ -29,7 +29,7 @@ public class DungeonPopulator : MonoBehaviour
     {
         GetInfo();
         PlaceRopeAndHole();
-        PlaceSpawners();
+        //PlaceSpawners();
         PlaceCollectables();
         PlacePotion();
         PlaceWeapon();

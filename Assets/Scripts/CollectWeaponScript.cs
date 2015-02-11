@@ -26,11 +26,11 @@ public class CollectWeaponScript : MonoBehaviour
         if (other.gameObject == player) //If the gameobject is the player, then collect and destroy
         {
             //If the players current weapon is weaker than the collectable one
-            if (playersWeapon.GetComponent<SwordScript>().damage < attackDamage)
-            {
-                playersWeapon.GetComponent<SwordScript>().damage = attackDamage;
-                GameObject.Destroy(gameObject);
-            }
+            //if (playersWeapon.GetComponent<SwordScript>().damage < attackDamage)
+            //{
+            //    playersWeapon.GetComponent<SwordScript>().damage = attackDamage;
+            //    GameObject.Destroy(gameObject);
+            //}
         }
 
     }

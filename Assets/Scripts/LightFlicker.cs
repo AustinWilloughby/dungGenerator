@@ -28,17 +28,23 @@ public class LightFlicker : MonoBehaviour
     {
         float noise = Mathf.PerlinNoise(10, Time.time / 4);
 
-        light.intensity = Mathf.Lerp(.9f, 1f, noise);
+        light.intensity = Mathf.Lerp(1.1f, 1.3f, noise);
         light.spotAngle = Mathf.Lerp(15f, 19f, noise);
         if (distanceToBoss < 15f && distanceToBoss > 6f)
         {
             light.spotAngle = light.spotAngle / (15 / distanceToBoss);
-            light.intensity = light.intensity / (15 / distanceToBoss);
         }
         else if(distanceToBoss < 6f)
         {
             light.spotAngle = light.spotAngle / 2.5f;
-            light.intensity = light.intensity / 2.5f;
+        }
+        if (distanceToBoss < 10f && distanceToBoss > 6f)
+        {
+            light.intensity = light.intensity / (10 / distanceToBoss);
+        }
+        else if (distanceToBoss < 6f)
+        {
+            light.intensity = light.intensity / (10f / 6f);
         }
     }
 }
