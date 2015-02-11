@@ -21,6 +21,11 @@ public class BossScript : Vehicle
     private StatTracker stats;
     private Dungeon dungeon;
     private List<GameObject> cellList;
+    private GameObject sword;
+    private GameObject sheath;
+    private bool attacking;
+    private float attackTimer = .01f;
+    private float attackDelay = 0f;
 
 
     //Events
@@ -32,6 +37,10 @@ public class BossScript : Vehicle
         player = GameObject.FindGameObjectWithTag("Player");
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
+        sword = GameObject.Find("BossSword");
+        sheath = GameObject.Find("BossSheath");
+        sword.renderer.enabled = false;
+        attacking = false;
     }
 
     // Update is called once per frame
@@ -40,6 +49,7 @@ public class BossScript : Vehicle
         if (alive && Time.timeScale > 0)
         {
             direction = Vector3.zero;
+            SwordHandler();
             CheckDistances();
             MovementHandler();
             SpriteRotator(direction);
@@ -164,6 +174,10 @@ public class BossScript : Vehicle
         {
             GetNewTarget();
         }
+        if (playerVisible && Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 3f)
+        {
+            Attack();
+        }
     }
 
     private void CheckViewFrustrum() //Checks the boss' view frustrum to see if the player is visible
@@ -215,5 +229,40 @@ public class BossScript : Vehicle
     {
         IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
         currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
+    }
+
+    private void Attack()
+    {
+        if (attacking == false && attackDelay <= 0)
+        {
+            attacking = true;
+            sword.SetActive(true);
+            sword.renderer.enabled = true;
+            attackTimer = .375f;
+        }
+    }
+
+    private void SwordHandler()
+    {
+        if (attackTimer > 0)
+        {
+            attackTimer -= Time.deltaTime;
+            //Rotates sword in an arc in front of boss
+            sword.transform.RotateAround(transform.position, Vector3.forward, (270 * Time.deltaTime));
+            if (attackTimer < 0)
+            {
+                attacking = false;
+                //Moves sword back to starting position
+                sword.transform.position = sheath.transform.position;
+                sword.transform.rotation = sheath.transform.rotation;
+                sword.renderer.enabled = false;
+                sword.SetActive(false);
+                attackDelay = 1;
+            }
+        }
+        else
+        {
+            attackDelay -= Time.deltaTime;
+        }
     }
 }
