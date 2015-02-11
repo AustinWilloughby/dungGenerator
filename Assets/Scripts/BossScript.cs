@@ -227,7 +227,7 @@ public class BossScript : Vehicle
 
     private void TargetCurrentCell() //Makes boss target cell he is currently on, to prevent running through walls when losing the player
     {
-        IntVector2 currentCoords = new IntVector2((int)transform.position.x / dungeon.cellScale, (int)transform.position.y / dungeon.cellScale);
+        IntVector2 currentCoords = new IntVector2((int)((transform.position.x / dungeon.cellScale) + 2.5f), (int)((transform.position.y / dungeon.cellScale) + 2.5f));
         currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
     }
 
