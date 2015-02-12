@@ -33,10 +33,9 @@ public class SwordScript : MonoBehaviour
             if (attackTimer < 0)
             {
                 attacking = false;
-                //Moves sword back to starting position
+                gameObject.renderer.enabled = false;
                 transform.position = sheath.transform.position;
                 transform.rotation = sheath.transform.rotation;
-                gameObject.renderer.enabled = false;
                 gameObject.SetActive(false);
             }
         }

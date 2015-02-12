@@ -65,11 +65,13 @@ public class BossScript : Vehicle
         alive = true;
         this.dungeon = dungeon;
         IntVector2 coords;
+        float distToPlayer;
         do
         {
             coords = dungeon.RandomCoordinates;
             transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 98);
-        } while (Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position) < 20f);
+            distToPlayer = Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position);
+        } while (distToPlayer < 50f);
 
         currentStartCell = dungeon.GetCell(coords).gameObject;
         currentTargetCell = currentStartCell;
