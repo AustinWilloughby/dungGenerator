@@ -6,7 +6,7 @@ public class EnemyScript : Vehicle
 {
     //Fields
     //Public
-    public float viewDistance = 10f;
+    public float viewDistance = 15f;
     public float attackDistance = 2f;
     public float attackTimer = 2f;
     public SpawnerHandler spawner;
@@ -20,11 +20,13 @@ public class EnemyScript : Vehicle
     private GameObject weapon;
     private bool playerSeenLast = false;
     private Vector2 playerSeenLoc = Vector2.zero;
+    private Dungeon dungeon;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
         weapon = transform.GetChild(0).gameObject;
@@ -94,7 +96,7 @@ public class EnemyScript : Vehicle
         if (sightLine.collider.gameObject.tag != "Wall")
         {
             playerSeenLast = true;
-            playerSeenLoc = player.transform.position;
+            playerSeenLoc = GetLastCell(player.transform.position);
             //If the player is in attack range, hit them. Otherwise go after them
             if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
             {
@@ -127,5 +129,26 @@ public class EnemyScript : Vehicle
             }
         }
 
+    }
+
+    private Vector2 GetLastCell(Vector2 pos)
+    {
+        if (((int)(pos.x / dungeon.cellScale)) < (pos.x / dungeon.cellScale))
+        {
+            if (((pos.x / dungeon.cellScale) - ((int)(pos.x / dungeon.cellScale))) > 2.5)
+            {
+                pos.x += 5f;
+            }
+        }
+        if (((int)(pos.y / dungeon.cellScale)) < (pos.y / dungeon.cellScale))
+        {
+            if (((pos.y / dungeon.cellScale) - ((int)(pos.y / dungeon.cellScale))) > 2.5)
+            {
+                pos.y += 5f;
+            }
+        }
+        IntVector2 currentCoords = new IntVector2((int)(pos.x / dungeon.cellScale), (int)(pos.y / dungeon.cellScale));
+        GameObject currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
+        return (Vector2)currentTargetCell.transform.position;
     }
 }
