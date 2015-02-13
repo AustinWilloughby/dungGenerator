@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
         arrowTimer -= Time.deltaTime;
     }
 
-
     //Methods
     void SpriteRotator(Vector2 moveDirection) //Rotates sprite based off of movement direction
     {

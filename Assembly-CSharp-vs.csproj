@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\DungeonWall.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\EquipIdentifier.cs" />
+     <Compile Include="Assets\Scripts\GUIHandler.cs" />
      <Compile Include="Assets\Scripts\IntVector2.cs" />
      <Compile Include="Assets\Scripts\InventoryScript.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
