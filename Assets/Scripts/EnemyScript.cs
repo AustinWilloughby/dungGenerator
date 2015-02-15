@@ -108,7 +108,7 @@ public class EnemyScript : Vehicle
                 direction = (Vector3)Arrive(player.transform.position, 2f);
             }
         }
-        //Otherwise seek LastSeenPos
+        //Otherwise seek LastSeenPos or wander
         else
         {
             if (playerSeenLast)
@@ -131,7 +131,7 @@ public class EnemyScript : Vehicle
 
     }
 
-    private Vector2 GetLastCell(Vector2 pos)
+    private Vector2 GetLastCell(Vector2 pos) //Attempts to get players last seen cell
     {
         if (((int)(pos.x / dungeon.cellScale)) < (pos.x / dungeon.cellScale))
         {
@@ -147,6 +147,7 @@ public class EnemyScript : Vehicle
                 pos.y += 5f;
             }
         }
+        //Return the cell at those coords
         IntVector2 currentCoords = new IntVector2((int)(pos.x / dungeon.cellScale), (int)(pos.y / dungeon.cellScale));
         GameObject currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
         return (Vector2)currentTargetCell.transform.position;
