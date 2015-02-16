@@ -7,6 +7,7 @@ public class StatTracker : MonoBehaviour
     //Public
     public int health = 10;
 
+
     //Private
     private int maxHealth;
     private float redTimer;
