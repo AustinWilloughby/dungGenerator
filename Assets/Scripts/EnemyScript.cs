@@ -11,14 +11,15 @@ public class EnemyScript : Vehicle
     public float attackTimer = 2f;
     public SpawnerHandler spawner;
     public Vector2 direction;
+    public Vector2 obstacleAvoidVec;
     public LayerMask visibleLayers;
     public GameObject coinPrefab;
+    public bool playerSeenLast = false;
 
     //Private
     private GameObject player;
     private StatTracker stats;
     private GameObject weapon;
-    private bool playerSeenLast = false;
     private Vector2 playerSeenLoc = Vector2.zero;
     private Dungeon dungeon;
 
@@ -29,15 +30,17 @@ public class EnemyScript : Vehicle
         dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
+        obstacleAvoidVec = Vector2.zero;
         weapon = transform.GetChild(0).gameObject;
     }
-
+        
     // Update is called once per frame
     void Update()
     {
         if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 25 && Time.timeScale > 0)
         {
             direction = Vector2.zero;
+            //obstacleAvoidVec = Vector2.zero;
             MovementHandler();
             SpriteRotator(direction);
             DeathCheck();
@@ -55,8 +58,10 @@ public class EnemyScript : Vehicle
         else
         {
             playerSeenLast = false;
-            direction = (Vector3)Wander();
+            direction += (Vector2)Wander();
         }
+        direction.Normalize();
+        direction *= speed;
         transform.position += (Vector3)direction;
     }
 
@@ -105,7 +110,7 @@ public class EnemyScript : Vehicle
             }
             else
             {
-                direction = (Vector3)Arrive(player.transform.position, 2f);
+                direction += (Vector2)Arrive(player.transform.position, 2f);
             }
         }
         //Otherwise seek LastSeenPos or wander
@@ -116,16 +121,16 @@ public class EnemyScript : Vehicle
                 if (Vector2.Distance(transform.position, playerSeenLoc) < .2f)
                 {
                     playerSeenLast = false;
-                    direction = (Vector3)Wander();
+                    direction += (Vector2)Wander();
                 }
                 else
                 {
-                    direction = (Vector3)Seek(playerSeenLoc);
+                    direction += (Vector2)Seek(playerSeenLoc);
                 }
             }
             else
             {
-                direction = (Vector3)Wander();
+                direction += (Vector2)Wander();
             }
         }
 
@@ -133,19 +138,22 @@ public class EnemyScript : Vehicle
 
     private Vector2 GetLastCell(Vector2 pos) //Attempts to get players last seen cell
     {
-        if (((int)(pos.x / dungeon.cellScale)) < (pos.x / dungeon.cellScale))
+        if (((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
         {
-            if (((pos.x / dungeon.cellScale) - ((int)(pos.x / dungeon.cellScale))) > 2.5)
-            {
-                pos.x += 5f;
-            }
+            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
         }
-        if (((int)(pos.y / dungeon.cellScale)) < (pos.y / dungeon.cellScale))
+        else
         {
-            if (((pos.y / dungeon.cellScale) - ((int)(pos.y / dungeon.cellScale))) > 2.5)
-            {
-                pos.y += 5f;
-            }
+            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
+        }
+
+        if (((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
+        {
+            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
+        }
+        else
+        {
+            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
         }
         //Return the cell at those coords
         IntVector2 currentCoords = new IntVector2((int)(pos.x / dungeon.cellScale), (int)(pos.y / dungeon.cellScale));
