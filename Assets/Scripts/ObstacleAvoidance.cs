@@ -20,7 +20,7 @@ public class ObstacleAvoidance : MonoBehaviour
             if (other.gameObject.tag == "Wall")
             {
                 Vector2 avoid = parent.gameObject.transform.position - other.gameObject.transform.position;
-                avoid *= 200;
+                avoid *= 2000;
                 parent.direction += avoid;
             }
         }
