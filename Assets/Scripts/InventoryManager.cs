@@ -5,11 +5,15 @@ public class InventoryManager : MonoBehaviour
 {
     //Fields
     //Public
+    public Texture coin;
+    public Texture rope;
+    public Texture potion;
+    public Texture bag;
 
     //Private
     private int coinCount;
-    private GameObject[] inventory;
-    private int[] objectCount;
+    private int potionCount;
+    private bool ropeCollected;
 
 
     //Properties
@@ -23,7 +27,6 @@ public class InventoryManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -32,6 +35,10 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    public void OnGUI()
+    {
+        GUI.DrawTexture(new Rect(Screen.width - 300, Screen.height - 150, 300, 150), bag, ScaleMode.ScaleToFit);
+    }
 
     //Methods
     public void AddCoinValue(int addValue)
