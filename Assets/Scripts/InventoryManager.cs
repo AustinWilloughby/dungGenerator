@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     private int coinCount;
     private int potionCount;
     private bool ropeCollected;
+    private bool drawing;
 
 
     //Properties
@@ -27,17 +28,24 @@ public class InventoryManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        drawing = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            drawing = !drawing;
+        }
     }
 
     public void OnGUI()
     {
-        GUI.DrawTexture(new Rect(Screen.width - 300, Screen.height - 150, 300, 150), bag, ScaleMode.ScaleToFit);
+        if (drawing)
+        {
+            GUI.DrawTexture(new Rect(Screen.width - 300, Screen.height - 150, 300, 150), bag, ScaleMode.ScaleToFit);
+        }
     }
 
     //Methods
