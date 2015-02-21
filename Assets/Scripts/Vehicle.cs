@@ -64,4 +64,10 @@ public class Vehicle : MonoBehaviour
             transform.rotation = Quaternion.AngleAxis(angleFromUp, -Vector3.forward);
         }
     }
+    public void NewWanderTarget()
+    {
+        wanderTarget.x = Random.Range(transform.position.x - 15, transform.position.x + 15);
+        wanderTarget.y = Random.Range(transform.position.y - 15, transform.position.y + 15);
+        wanderTimer = Random.Range(5f, 8f);
+    }
 }

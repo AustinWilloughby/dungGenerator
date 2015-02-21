@@ -24,5 +24,13 @@ public class ObstacleAvoidance : MonoBehaviour
                 parent.direction += avoid;
             }
         }
+        parent.NewWanderTarget();
+    }
+    void OnTriggerStay(Collider other) 
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            parent.NewWanderTarget();
+        }
     }
 }
