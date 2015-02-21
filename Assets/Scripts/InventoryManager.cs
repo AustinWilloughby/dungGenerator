@@ -9,11 +9,11 @@ public class InventoryManager : MonoBehaviour
     public Texture rope;
     public Texture potion;
     public Texture bag;
+    public bool ropeCollected;
+    public int potionCount;
 
     //Private
     private int coinCount;
-    private int potionCount;
-    private bool ropeCollected;
     private bool drawing;
 
 
@@ -28,6 +28,7 @@ public class InventoryManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ropeCollected = false;
         drawing = false;
     }
 
@@ -45,6 +46,14 @@ public class InventoryManager : MonoBehaviour
         if (drawing)
         {
             GUI.DrawTexture(new Rect(Screen.width - 300, Screen.height - 150, 300, 150), bag, ScaleMode.ScaleToFit);
+            if (potionCount > 0)
+            {
+                GUI.DrawTexture(new Rect(Screen.width - 265, Screen.height - 90, 65, 65), potion, ScaleMode.ScaleToFit);
+            }
+            if (ropeCollected)
+            {
+                GUI.DrawTexture(new Rect(Screen.width - 100, Screen.height - 90, 65, 65), rope, ScaleMode.ScaleToFit);
+            }
         }
     }
 

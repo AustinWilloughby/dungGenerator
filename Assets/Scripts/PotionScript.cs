@@ -9,12 +9,13 @@ public class PotionScript : MonoBehaviour
 
     //Private
     private GameObject player;
-
+    private InventoryManager inventory;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryManager>();
     }
 
 
@@ -23,12 +24,8 @@ public class PotionScript : MonoBehaviour
     {
         if (other.gameObject == player) //If the gameobject is the player, then collect and destroy
         {
-            //If the player will benefit from healing
-            if (player.GetComponent<StatTracker>().health < player.GetComponent<StatTracker>().MaxHealth)
-            {
-                player.GetComponent<StatTracker>().ApplyHealing(healingDone);
-                GameObject.Destroy(gameObject);
-            }
+            inventory.potionCount++;
+            GameObject.Destroy(gameObject);
         }
 
     }
