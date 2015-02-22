@@ -229,19 +229,22 @@ public class BossScript : Vehicle
 
     private void TargetCurrentCell(Vector3 pos) //Makes boss target cell he is currently on, to prevent running through walls when losing the player
     {
-        if (((int)(pos.x / dungeon.cellScale)) < (pos.x / dungeon.cellScale))
+        if (((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
         {
-            if (((pos.x / dungeon.cellScale) - ((int)(pos.x / dungeon.cellScale))) > 2.5)
-            {
-                pos.x += 5f;
-            }
+            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
         }
-        if (((int)(pos.y / dungeon.cellScale)) < (pos.y / dungeon.cellScale))
+        else
         {
-            if (((pos.y / dungeon.cellScale) - ((int)(pos.y / dungeon.cellScale))) > 2.5)
-            {
-                pos.y += 5f;
-            }
+            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
+        }
+
+        if (((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
+        {
+            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
+        }
+        else
+        {
+            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
         }
         IntVector2 currentCoords = new IntVector2((int)(pos.x / dungeon.cellScale), (int)(pos.y / dungeon.cellScale));
         currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
