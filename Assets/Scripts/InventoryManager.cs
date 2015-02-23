@@ -15,6 +15,11 @@ public class InventoryManager : MonoBehaviour
     //Private
     private int coinCount;
     private bool drawing;
+    private float potionTimer;
+    private GameObject ropelessHole;
+    private GameObject ropeHole;
+    private Vector3 holdingCell = new Vector3(-20, -20, 30);
+    private GameObject player;
 
 
     //Properties
@@ -30,6 +35,9 @@ public class InventoryManager : MonoBehaviour
     {
         ropeCollected = false;
         drawing = false;
+        ropelessHole = GameObject.Find("EmptyDungeonHole");
+        ropeHole = GameObject.Find("DungeonHole");
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -39,20 +47,51 @@ public class InventoryManager : MonoBehaviour
         {
             drawing = !drawing;
         }
+        if (potionTimer > 0)
+        {
+            potionTimer -= Time.deltaTime;
+        }
     }
 
     public void OnGUI()
     {
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 20;
+        style.normal.textColor = Color.white;
+        GUI.backgroundColor = Color.clear;
         if (drawing)
         {
             GUI.DrawTexture(new Rect(Screen.width - 300, Screen.height - 150, 300, 150), bag, ScaleMode.ScaleToFit);
             if (potionCount > 0)
             {
-                GUI.DrawTexture(new Rect(Screen.width - 265, Screen.height - 90, 65, 65), potion, ScaleMode.ScaleToFit);
+                GUI.Label(new Rect(Screen.width - 258, Screen.height - 90, 65, 65), potionCount.ToString(), style);
+                Rect r = new Rect(Screen.width - 260, Screen.height - 90, 65, 65);
+                GUI.DrawTexture(r, potion, ScaleMode.ScaleToFit);
+                if (r.Contains(Event.current.mousePosition) && Input.GetMouseButtonDown(0))
+                {
+                    if (potionTimer <= 0)
+                    {
+                        GameObject.Find("Player").GetComponent<StatTracker>().ApplyHealing(5);
+                        potionCount--;
+                        potionTimer = 1;
+                    }
+                }
+
             }
             if (ropeCollected)
             {
-                GUI.DrawTexture(new Rect(Screen.width - 100, Screen.height - 90, 65, 65), rope, ScaleMode.ScaleToFit);
+                Rect r = new Rect(Screen.width - 100, Screen.height - 90, 65, 65);
+                GUI.DrawTexture(r, rope, ScaleMode.ScaleToFit);
+                if (r.Contains(Event.current.mousePosition) && Input.GetMouseButtonDown(0))
+                {
+                    if (Vector2.Distance(player.transform.position, ropelessHole.transform.position) < 5)
+                    {
+                        ropeCollected = false;
+                        Vector3 holePos = ropelessHole.transform.position;
+                        ropelessHole.transform.position = holdingCell;
+                        ropeHole.transform.position = holePos;
+                    }
+                }
             }
         }
     }
