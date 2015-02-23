@@ -23,7 +23,7 @@ public class CollectableScript : MonoBehaviour
     {
         if (other.gameObject == player) //If the gameobject is the player, then collect and destroy
         {
-            //player.GetComponent<InventoryScript>().purseValue += value;
+            player.GetComponent<InventoryManager>().AddCoinValue(value);
             GameObject.Destroy(gameObject);
         }
 

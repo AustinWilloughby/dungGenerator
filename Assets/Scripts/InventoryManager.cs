@@ -69,7 +69,7 @@ public class InventoryManager : MonoBehaviour
                 GUI.DrawTexture(r, potion, ScaleMode.ScaleToFit);
                 if (r.Contains(Event.current.mousePosition) && Input.GetMouseButtonDown(0))
                 {
-                    if (potionTimer <= 0)
+                    if (potionTimer <= 0 && (player.GetComponent<StatTracker>().health < player.GetComponent<StatTracker>().MaxHealth))
                     {
                         GameObject.Find("Player").GetComponent<StatTracker>().ApplyHealing(5);
                         potionCount--;
@@ -93,7 +93,10 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
             }
+            GUI.DrawTexture(new Rect(Screen.width - 190, Screen.height - 136, 25, 25), coin, ScaleMode.ScaleToFit);
+            GUI.Label(new Rect(Screen.width - 165, Screen.height - 135, 25, 25), " x " + coinCount.ToString(), style);
         }
+
     }
 
     //Methods
