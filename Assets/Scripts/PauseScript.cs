@@ -5,8 +5,12 @@ using System.Collections.Generic;
 public class PauseScript : MonoBehaviour
 {
     //Fields
+    //Public
+    public bool drawing;
+
     //Private
     private List<GameObject> children;
+    private InventoryManager inventory;
 
     // Use this for initialization
     void Start()
@@ -16,6 +20,8 @@ public class PauseScript : MonoBehaviour
         {
             children.Add(child.gameObject);
         }
+        drawing = false;
+        inventory = GameObject.Find("Player").GetComponent<InventoryManager>();
     }
 
     // Update is called once per frame
@@ -27,21 +33,37 @@ public class PauseScript : MonoBehaviour
     {
         if (Time.timeScale == 0f)
         {
-            Time.timeScale = 1f;
-            renderer.enabled = false;
-            foreach (GameObject child in children)
+            if (!inventory.Drawing)
             {
-                child.SetActive(false);
+                Time.timeScale = 1f;
+                renderer.enabled = false;
+                drawing = false;
+                foreach (GameObject child in children)
+                {
+                    child.SetActive(false);
+                }
+            }
+            else
+            {
+                renderer.enabled = true;
+                drawing = true;
+                foreach (GameObject child in children)
+                {
+                    child.SetActive(true);
+                }
             }
         }
         else
         {
-            Time.timeScale = 0f;
+            Time.timeScale = 0;
             renderer.enabled = true;
+            drawing = true;
             foreach (GameObject child in children)
             {
                 child.SetActive(true);
             }
         }
+
+
     }
 }
