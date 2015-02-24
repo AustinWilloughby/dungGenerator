@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\InventoryManager.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts\MusicScript.cs" />
      <Compile Include="Assets\Scripts\ObstacleAvoidance.cs" />
      <Compile Include="Assets\Scripts\PauseMenuItem.cs" />
      <Compile Include="Assets\Scripts\PauseScript.cs" />
