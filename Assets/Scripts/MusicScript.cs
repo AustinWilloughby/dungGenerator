@@ -12,12 +12,14 @@ public class MusicScript : MonoBehaviour
     private GameObject pause;
     private bool lastFramePause;
     private int songIndex;
+    private float songTimer;
 
 
     // Use this for initialization
     void Start()
     {
-        songIndex = 1;
+        songTimer = Random.Range(30, 50);
+        songIndex = 0;
         lastFramePause = true;
         pause = GameObject.Find("PauseMenu");
     }
@@ -30,8 +32,13 @@ public class MusicScript : MonoBehaviour
     }
 
     //Methods
-    private void PlayMusic()
+    private void PlayMusic() //handles music, and when it should be playing
     {
+        if (lastFramePause && !pause.renderer.enabled)
+        {
+            backgroundMusic[songIndex].Play();
+        }
+
         if (pause.renderer.enabled)
         {
             if (backgroundMusic[songIndex].isPlaying)
@@ -39,15 +46,27 @@ public class MusicScript : MonoBehaviour
                 backgroundMusic[songIndex].Pause();
             }
         }
-        if (lastFramePause && !pause.renderer.enabled)
+        else
         {
-            backgroundMusic[songIndex].Play();
+            if (!backgroundMusic[songIndex].isPlaying)
+            {
+                if (songTimer >= 0)
+                {
+                    songTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    songTimer = Random.Range(30, 50);
+                    backgroundMusic[songIndex].Stop();
+                    backgroundMusic[songIndex].Play();
+                }
+            }
         }
 
         lastFramePause = pause.renderer.enabled;
     }
 
-    private void PlayRoomTone()
+    private void PlayRoomTone() //Plays roomtone randomly if it is not playing
     {
         if (!roomTone.isPlaying)
         {
@@ -56,5 +75,12 @@ public class MusicScript : MonoBehaviour
                 roomTone.Play();
             }
         }
+    }
+
+    public void NextSong() //Goes to next song
+    {
+        backgroundMusic[songIndex].Stop();
+        songIndex = (songIndex + 1) % backgroundMusic.Length;
+        backgroundMusic[songIndex].Play();
     }
 }

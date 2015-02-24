@@ -21,6 +21,7 @@ public class DungeonPopulator : MonoBehaviour
     private GameObject collectableHolder;
     private GameObject spawnerHolder;
     private GameObject boss;
+    private MusicScript music;
 
 
     //Methods
@@ -33,6 +34,7 @@ public class DungeonPopulator : MonoBehaviour
         PlacePotion();
         PlaceWeapon();
         PlaceBoss();
+        music.NextSong();
     }
 
     private void GetInfo() //Gets field info in place of a start event
@@ -44,6 +46,7 @@ public class DungeonPopulator : MonoBehaviour
         spawnerHolder = GameObject.Find("Spawners");
         boss = GameObject.Find("Boss");
         playerCamera = GameObject.Find("Main Camera");
+        music = playerCamera.GetComponent<MusicScript>();
     }
 
     private void PlaceRopeAndHole() //Handles placing the rope and hole in the dungeon
