@@ -75,7 +75,7 @@ public class EnemyScript : Vehicle
             {
                 GameObject coinDrop = (GameObject)Instantiate(coinPrefab);
                 coinDrop.GetComponent<CollectableScript>().value = Random.Range(1, 3);
-                coinDrop.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+                coinDrop.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 7.9f);
             }
             GameObject.Destroy(gameObject);
         }
