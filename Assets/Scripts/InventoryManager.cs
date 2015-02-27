@@ -20,6 +20,7 @@ public class InventoryManager : MonoBehaviour
     private Vector3 holdingCell = new Vector3(-20, -20, 30);
     private GameObject player;
     private PauseScript pause;
+    private FxHandler soundFX;
 
 
     //Properties
@@ -43,6 +44,7 @@ public class InventoryManager : MonoBehaviour
         ropeHole = GameObject.Find("DungeonHole");
         player = GameObject.Find("Player");
         pause = GameObject.Find("PauseMenu").GetComponent<PauseScript>();
+        soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
     }
 
     // Update is called once per frame
@@ -57,6 +59,10 @@ public class InventoryManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 drawing = !drawing;
+                if (drawing)
+                {
+                    soundFX.bagSound.Play();
+                }
             }
         }
         if (drawing || pause.drawing)
@@ -92,6 +98,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (player.GetComponent<StatTracker>().health < player.GetComponent<StatTracker>().MaxHealth)
                     {
+                        soundFX.potionSound.Play();
                         GameObject.Find("Player").GetComponent<StatTracker>().ApplyHealing(5);
                         potionCount--;
                     }

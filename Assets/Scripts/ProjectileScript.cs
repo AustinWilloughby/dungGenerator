@@ -7,7 +7,7 @@ public class ProjectileScript : MonoBehaviour
     //Private
     private GameObject player;
     private Vector2 direction;
-    private float speed = .5f;
+    private float speed = 1f;
     private float timer = 10f;
     private int damage = 2;
 
@@ -41,7 +41,7 @@ public class ProjectileScript : MonoBehaviour
                 transform.position += (Vector3)Vector2.ClampMagnitude(direction, speed);
                 if (speed > 0)
                 {
-                    speed -= (.7f * Time.deltaTime);
+                    speed -= (2.4f * Time.deltaTime);
                 }
                 else
                 {

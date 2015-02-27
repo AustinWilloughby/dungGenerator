@@ -9,12 +9,14 @@ public class CollectableScript : MonoBehaviour
 
     //Private
     private GameObject player;
+    private FxHandler soundFX;
 
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
     }
 
 
@@ -24,6 +26,7 @@ public class CollectableScript : MonoBehaviour
         if (other.gameObject == player) //If the gameobject is the player, then collect and destroy
         {
             player.GetComponent<InventoryManager>().AddCoinValue(value);
+            soundFX.coinSound.Play();
             GameObject.Destroy(gameObject);
         }
 

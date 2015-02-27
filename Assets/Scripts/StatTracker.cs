@@ -11,6 +11,7 @@ public class StatTracker : MonoBehaviour
     //Private
     private int maxHealth;
     private float redTimer;
+    private FxHandler soundFX;
 
 
     //Attributes
@@ -24,6 +25,7 @@ public class StatTracker : MonoBehaviour
     void Start()
     {
         maxHealth = health;
+        soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
     }
 
     void Update()
@@ -45,6 +47,14 @@ public class StatTracker : MonoBehaviour
         if (damage < 0)
         {
             damage *= -1;
+        }
+        if(gameObject.name == "Enemy(Clone)")
+        {
+            soundFX.enemySound.Play();
+        }
+        if (gameObject.name == "Boss")
+        {
+            soundFX.bossSound.Play();
         }
         redTimer = .5f;
         gameObject.renderer.material.color = Color.red;

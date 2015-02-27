@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private GameObject pauseMenu;
     private bool mouse1Down = false;
     private bool mouse2Down = false;
+    private FxHandler soundFX;
 
 
     // Use this for initialization
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
         arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
         pauseMenu = GameObject.Find("PauseMenu");
+        soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
         arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y, 97);
         arrowTimer = 1f;
+        soundFX.arrowSound.Play();
     }
 
     void HandleInput() //Handles all player input
@@ -76,6 +79,7 @@ public class PlayerController : MonoBehaviour
                     mouse1Down = true;
                     weapon.SetActive(true);
                     weapon.GetComponent<SwordScript>().Attack();
+                    soundFX.swordSound.Play();
                 }
             }
             else
