@@ -160,7 +160,7 @@ public class Dungeon : MonoBehaviour
         }
         //Stagger walls z value to prevent lighting glitch
         Vector3 wallTrans = wall.transform.position;
-        wallTrans.z += Random.RandomRange(-.5f, .5f);
+        wallTrans.z += Random.Range(-.5f, .5f);
         wall.transform.position = wallTrans;
     }
 

@@ -7,6 +7,7 @@ public class IntroSequenceScript : MonoBehaviour
     //Public
     public float timeTillMenu;
     public float transitionTime;
+    public AudioSource mainMusic;
 
     //Private
     private float timePerScreen;
@@ -20,6 +21,7 @@ public class IntroSequenceScript : MonoBehaviour
         timePerScreen = (timeTillMenu - (5*transitionTime))/4;
         nextEventTimer = transitionTime;
         textWheel = GameObject.Find("TextWheel");
+        mainMusic.Play();
     }
 
     // Update is called once per frame
