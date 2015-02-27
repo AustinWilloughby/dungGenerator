@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\FxHandler.cs" />
      <Compile Include="Assets\Scripts\GUIHandler.cs" />
      <Compile Include="Assets\Scripts\IntVector2.cs" />
+     <Compile Include="Assets\Scripts\IntroSequenceScript.cs" />
      <Compile Include="Assets\Scripts\InventoryManager.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MainMenuScript.cs" />
