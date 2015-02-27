@@ -158,6 +158,10 @@ public class Dungeon : MonoBehaviour
         {
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
+        //Stagger walls z value to prevent lighting glitch
+        Vector3 wallTrans = wall.transform.position;
+        wallTrans.z += Random.RandomRange(-.5f, .5f);
+        wall.transform.position = wallTrans;
     }
 
     private DungeonRoom CreateRoom(int indexToExclude) //Creates a room
