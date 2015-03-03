@@ -17,7 +17,7 @@ public class SwordScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gameObject.renderer.enabled = false;
+        gameObject.GetComponent<Renderer>().enabled = false;
         inWall = false;
         attacking = false;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -31,11 +31,11 @@ public class SwordScript : MonoBehaviour
         {
             if (inWall)
             {
-                gameObject.renderer.enabled = false;
+                gameObject.GetComponent<Renderer>().enabled = false;
             }
             else
             {
-                gameObject.renderer.enabled = true;
+                gameObject.GetComponent<Renderer>().enabled = true;
             }
             attackTimer -= Time.deltaTime;
             //Rotates sword in an arc in front of player
@@ -43,7 +43,7 @@ public class SwordScript : MonoBehaviour
             if (attackTimer < 0)
             {
                 attacking = false;
-                gameObject.renderer.enabled = false;
+                gameObject.GetComponent<Renderer>().enabled = false;
                 transform.position = sheath.transform.position;
                 transform.rotation = sheath.transform.rotation;
                 gameObject.SetActive(false);
@@ -62,7 +62,7 @@ public class SwordScript : MonoBehaviour
         }
         if (other.gameObject.tag == "Wall")
         {
-            gameObject.renderer.enabled = false;
+            gameObject.GetComponent<Renderer>().enabled = false;
             inWall = true;
         }
     }
@@ -71,12 +71,12 @@ public class SwordScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Wall")
         {
-            gameObject.renderer.enabled = false;
+            gameObject.GetComponent<Renderer>().enabled = false;
             inWall = true;
         }
         else
         {
-            gameObject.renderer.enabled = true;
+            gameObject.GetComponent<Renderer>().enabled = true;
             inWall = false;
         }
     }
@@ -90,7 +90,7 @@ public class SwordScript : MonoBehaviour
             attacking = true;
             if (!inWall)
             {
-                gameObject.renderer.enabled = true;
+                gameObject.GetComponent<Renderer>().enabled = true;
             }
             attackTimer = .167f;
         }

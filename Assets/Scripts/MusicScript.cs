@@ -34,12 +34,12 @@ public class MusicScript : MonoBehaviour
     //Methods
     private void PlayMusic() //handles music, and when it should be playing
     {
-        if (lastFramePause && !pause.renderer.enabled)
+        if (lastFramePause && !pause.GetComponent<Renderer>().enabled)
         {
             backgroundMusic[songIndex].Play();
         }
 
-        if (pause.renderer.enabled)
+        if (pause.GetComponent<Renderer>().enabled)
         {
             if (backgroundMusic[songIndex].isPlaying)
             {
@@ -63,7 +63,7 @@ public class MusicScript : MonoBehaviour
             }
         }
 
-        lastFramePause = pause.renderer.enabled;
+        lastFramePause = pause.GetComponent<Renderer>().enabled;
     }
 
     private void PlayRoomTone() //Plays roomtone randomly if it is not playing

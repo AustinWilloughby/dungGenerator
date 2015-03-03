@@ -15,7 +15,7 @@ public class SpearScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gameObject.renderer.enabled = false;
+        gameObject.GetComponent<Renderer>().enabled = false;
         attacking = false;
     }
 
@@ -28,7 +28,7 @@ public class SpearScript : MonoBehaviour
         if (attackLength <= 0)
         {
             attacking = false;
-            gameObject.renderer.enabled = false;
+            gameObject.GetComponent<Renderer>().enabled = false;
             gameObject.SetActive(false);
         }
 
@@ -53,7 +53,7 @@ public class SpearScript : MonoBehaviour
         if (attacking == false)
         {
             attacking = true;
-            gameObject.renderer.enabled = true;
+            gameObject.GetComponent<Renderer>().enabled = true;
             attackLength = .2f;
         }
     }

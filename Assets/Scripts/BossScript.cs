@@ -39,7 +39,7 @@ public class BossScript : Vehicle
         direction = Vector2.zero;
         sword = GameObject.Find("BossSword");
         sheath = GameObject.Find("BossSheath");
-        sword.renderer.enabled = false;
+        sword.GetComponent<Renderer>().enabled = false;
         attacking = false;
     }
 
@@ -256,7 +256,7 @@ public class BossScript : Vehicle
         {
             attacking = true;
             sword.SetActive(true);
-            sword.renderer.enabled = true;
+            sword.GetComponent<Renderer>().enabled = true;
             attackTimer = .375f;
         }
     }
@@ -274,7 +274,7 @@ public class BossScript : Vehicle
                 //Moves sword back to starting position
                 sword.transform.position = sheath.transform.position;
                 sword.transform.rotation = sheath.transform.rotation;
-                sword.renderer.enabled = false;
+                sword.GetComponent<Renderer>().enabled = false;
                 sword.SetActive(false);
                 attackDelay = 1;
             }

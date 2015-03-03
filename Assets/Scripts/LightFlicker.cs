@@ -13,7 +13,7 @@ public class LightFlicker : MonoBehaviour
     {
         float noise = Mathf.PerlinNoise(10, Time.time / 4);
 
-        light.intensity = Mathf.Lerp(1.0f, 1.2f, noise);
-        light.spotAngle = Mathf.Lerp(15f, 19f, noise);
+        GetComponent<Light>().intensity = Mathf.Lerp(1.6f, 1.9f, noise);
+        GetComponent<Light>().spotAngle = Mathf.Lerp(15f, 19f, noise);
     }
 }

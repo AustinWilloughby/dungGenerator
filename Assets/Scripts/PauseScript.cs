@@ -36,7 +36,7 @@ public class PauseScript : MonoBehaviour
             if (!inventory.Drawing)
             {
                 Time.timeScale = 1f;
-                renderer.enabled = false;
+                GetComponent<Renderer>().enabled = false;
                 drawing = false;
                 foreach (GameObject child in children)
                 {
@@ -45,7 +45,7 @@ public class PauseScript : MonoBehaviour
             }
             else
             {
-                renderer.enabled = true;
+                GetComponent<Renderer>().enabled = true;
                 drawing = true;
                 foreach (GameObject child in children)
                 {
@@ -56,7 +56,7 @@ public class PauseScript : MonoBehaviour
         else
         {
             Time.timeScale = 0;
-            renderer.enabled = true;
+            GetComponent<Renderer>().enabled = true;
             drawing = true;
             foreach (GameObject child in children)
             {

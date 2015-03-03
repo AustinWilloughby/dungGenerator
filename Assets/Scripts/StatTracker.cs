@@ -36,7 +36,7 @@ public class StatTracker : MonoBehaviour
         }
         else //Resets default shade
         {
-            gameObject.renderer.material.color = Color.white;
+            gameObject.GetComponent<Renderer>().material.color = Color.white;
         }
     }
 
@@ -57,7 +57,7 @@ public class StatTracker : MonoBehaviour
             soundFX.bossSound.Play();
         }
         redTimer = .5f;
-        gameObject.renderer.material.color = Color.red;
+        gameObject.GetComponent<Renderer>().material.color = Color.red;
         health -= damage;
     }
 
@@ -68,7 +68,7 @@ public class StatTracker : MonoBehaviour
             healing *= -1;
         }
         redTimer = .5f;
-        gameObject.renderer.material.color = Color.yellow;
+        gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         health += healing;
         if (health > maxHealth)
         {

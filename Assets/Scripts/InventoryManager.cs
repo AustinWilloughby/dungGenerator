@@ -50,7 +50,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pause.gameObject.renderer.enabled == true)
+        if (pause.gameObject.GetComponent<Renderer>().enabled == true)
         {
             drawing = false;
         }

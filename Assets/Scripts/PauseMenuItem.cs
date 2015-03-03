@@ -15,12 +15,12 @@ public class PauseMenuItem : MonoBehaviour
 
     void OnMouseEnter()
     {
-        gameObject.renderer.material.color = Color.red;
+        gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     void OnMouseExit()
     {
-        gameObject.renderer.material.color = Color.white;
+        gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 
     void OnMouseUpAsButton()
