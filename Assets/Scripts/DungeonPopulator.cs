@@ -128,10 +128,10 @@ public class DungeonPopulator : MonoBehaviour
     private void PlaceCollectables() //Places coins and collectables throughout the dungeon in random clusters
     {
         List<GameObject> current = new List<GameObject>();
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 150; i++)
         {
             int random = Random.Range(0, 2);
-            GameObject collectable = (GameObject)Instantiate(collectables[Random.Range(0, collectables.Length)]);
+            GameObject collectable = (GameObject)Instantiate(collectables[0]);
             if (random == 0 || current.Count < 10) //New cloud seed coin
             {
                 IntVector2 coords = dungeon.RandomCoordinates;
@@ -167,6 +167,50 @@ public class DungeonPopulator : MonoBehaviour
                 }
             }
         }
+        for (int i = 0; i < 5; i++) //Sapphires
+        {
+            GameObject collectable = (GameObject)Instantiate(collectables[1]);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
+            collectable.transform.parent = collectableHolder.transform;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
+            if (colliders.Length > 1)
+            {
+                GameObject.Destroy(collectable);
+                i--;
+            }
+        }
+        for (int i = 0; i < 3; i++) //Emeralds
+        {
+            GameObject collectable = (GameObject)Instantiate(collectables[2]);
+            IntVector2 coords = dungeon.RandomCoordinates;
+            collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
+            collectable.transform.parent = collectableHolder.transform;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
+            if (colliders.Length > 1)
+            {
+                GameObject.Destroy(collectable);
+                i--;
+            }
+        }
+
+        for (int i = 0; i < 1; i++) //Diamonds
+        {
+            GameObject collectable = (GameObject)Instantiate(collectables[3]);
+            do
+            {
+                IntVector2 coords = dungeon.RandomCoordinates;
+                collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
+                collectable.transform.parent = collectableHolder.transform;
+            } while (Vector2.Distance(player.transform.position, collectable.transform.position) > 30f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
+            if (colliders.Length > 1)
+            {
+                GameObject.Destroy(collectable);
+                i--;
+            }
+        }
+
     }
 
     private void PlacePotion() //Places a number of potions based on the dungeonLevel around the level
