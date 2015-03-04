@@ -73,9 +73,13 @@ public class ProjectileScript : MonoBehaviour
             GameObject.Destroy(gameObject);
         }
         //Ignore if it is on layer9 "Entity"
-        if (other.gameObject.layer == 11)
+        if (other.gameObject.layer == 11 || other.gameObject.layer == 12)
         {
             speed = 0;
+            if (other.gameObject.layer == 12)
+            {
+                gameObject.transform.parent = other.gameObject.transform;
+            }
         }
     }
 }
