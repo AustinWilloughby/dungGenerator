@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     //Fields
     public GameObject arrowPrefab;
+    public bool walking;
 
     //Private
     private float speed = .05f;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        walking = false;
         arrowTimer = 0f;
         weapon = GameObject.FindGameObjectWithTag("Weapon");
         pauseMenu = GameObject.Find("PauseMenu");
@@ -122,7 +124,14 @@ public class PlayerController : MonoBehaviour
             Vector2 translate = new Vector2(xMovement, yMovement);
             translate *= speed;
             transform.position = transform.position + (Vector3)translate;
-
+            if (translate.magnitude > 0)
+            {
+                walking = true;
+            }
+            else
+            {
+                walking = false;
+            }
             SpriteRotator(translate);
         }
     }
