@@ -10,26 +10,30 @@ public class SpearScript : MonoBehaviour
     //Private
     private float attackLength = .01f;
     private bool attacking;
+    private GameObject sheath;
+    private GameObject point;
 
 
     // Use this for initialization
     void Start()
     {
-        gameObject.GetComponent<Renderer>().enabled = false;
         attacking = false;
+        sheath = gameObject.transform.parent.FindChild("SpearSheath").gameObject;
+        point = gameObject.transform.parent.FindChild("SpearPoint").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        attackLength -= Time.deltaTime;
-
         //If they are done attacking, stop
         if (attackLength <= 0)
         {
+            transform.position = sheath.transform.position;
             attacking = false;
-            gameObject.GetComponent<Renderer>().enabled = false;
-            gameObject.SetActive(false);
+        }
+        else
+        {
+            attackLength -= Time.deltaTime;
         }
 
     }
@@ -53,7 +57,7 @@ public class SpearScript : MonoBehaviour
         if (attacking == false)
         {
             attacking = true;
-            gameObject.GetComponent<Renderer>().enabled = true;
+            transform.position = point.transform.position;
             attackLength = .2f;
         }
     }

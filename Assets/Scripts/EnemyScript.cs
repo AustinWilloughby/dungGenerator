@@ -85,7 +85,6 @@ public class EnemyScript : Vehicle
     {
         if (attackTimer < 0)
         {
-            weapon.SetActive(true);
             weapon.GetComponent<SpearScript>().Attack();
             attackTimer = 2f;
         }
