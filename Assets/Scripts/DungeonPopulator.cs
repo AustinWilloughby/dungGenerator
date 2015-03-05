@@ -32,7 +32,7 @@ public class DungeonPopulator : MonoBehaviour
         PlaceSpawners();
         PlaceCollectables();
         PlacePotion();
-        PlaceWeapon();
+        //PlaceWeapon();
         PlaceBoss();
         music.NextSong();
     }
