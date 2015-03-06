@@ -10,10 +10,12 @@ public class ProjectileScript : MonoBehaviour
     private float speed = 1f;
     private float timer = 10f;
     private int damage = 2;
+    private FxHandler soundFX;
 
     // Use this for initialization
     void Start()
     {
+        soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
         player = GameObject.FindGameObjectWithTag("Player");
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,6 +80,7 @@ public class ProjectileScript : MonoBehaviour
             speed = 0;
             if (other.gameObject.layer == 12)
             {
+                soundFX.shieldSound.Play();
                 gameObject.transform.parent = other.gameObject.transform;
             }
         }

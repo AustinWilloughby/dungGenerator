@@ -12,4 +12,7 @@ public class FxHandler : MonoBehaviour
     public AudioSource enemySound;
     public AudioSource bossSound;
     public AudioSource bagSound;
+    public AudioSource shieldSound;
+    public AudioSource spearSound;
+    public AudioSource ropeSound;
 }

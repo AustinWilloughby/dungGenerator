@@ -116,6 +116,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (Vector2.Distance(player.transform.position, ropelessHole.transform.position) < 5)
                     {
+                        soundFX.ropeSound.Play();
                         ropeCollected = false;
                         Vector3 holePos = ropelessHole.transform.position;
                         ropelessHole.transform.position = holdingCell;
