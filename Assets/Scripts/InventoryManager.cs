@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public Texture bag;
     public bool ropeCollected;
     public int potionCount;
+    public Font font;
 
     //Private
     private int coinCount;
@@ -79,6 +80,7 @@ public class InventoryManager : MonoBehaviour
     {
         //Text styling
         GUIStyle style = new GUIStyle();
+        style.font = font;
         style.fontSize = 40;
         style.normal.textColor = Color.white;
         GUI.backgroundColor = Color.clear;
@@ -125,9 +127,9 @@ public class InventoryManager : MonoBehaviour
             //Draw coin display
             GUI.DrawTexture(new Rect(Screen.width / 2 - 170, Screen.height / 2 - 105, 30, 30), coin, ScaleMode.ScaleToFit);
             GUI.DrawTexture(new Rect(Screen.width / 2 + 140, Screen.height / 2 - 105, 30, 30), coin, ScaleMode.ScaleToFit);
-            style.fontSize = 30;
+            style.fontSize = 50;
             style.alignment = TextAnchor.MiddleCenter;
-            GUI.Label(new Rect(Screen.width / 2 - 12.5f, Screen.height / 2 - 103, 25, 25), coinCount.ToString(), style);
+            GUI.Label(new Rect(Screen.width / 2 - 12.5f, Screen.height / 2 - 98, 25, 25), coinCount.ToString(), style);
         }
 
     }
