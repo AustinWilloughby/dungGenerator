@@ -29,8 +29,11 @@ public class CollectableScript : MonoBehaviour
             soundFX.coinSound.Play();
             if (value > 1)
             {
-                GameObject spawner = gameObject.transform.GetChild(0).gameObject;
-                spawner.transform.parent = GameObject.Find("Spawners").transform;
+                if (gameObject.transform.childCount > 0)
+                {
+                    GameObject spawner = gameObject.transform.GetChild(0).gameObject;
+                    spawner.transform.parent = GameObject.Find("Spawners").transform;
+                }
             }
             GameObject.Destroy(gameObject);
         }
