@@ -45,4 +45,5 @@ public enum MenuElement
 {
     Start,
     Options,
+    Credits
 };

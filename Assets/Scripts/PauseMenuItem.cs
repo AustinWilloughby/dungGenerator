@@ -29,7 +29,7 @@ public class PauseMenuItem : MonoBehaviour
         switch (gameObject.name)
         {
             case "MainMenu":
-                Application.LoadLevel(0);
+                Application.LoadLevel(5);
                 break;
 
             case "Options":

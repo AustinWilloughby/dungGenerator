@@ -18,7 +18,10 @@ public class PauseScript : MonoBehaviour
         children = new List<GameObject>();
         foreach (Transform child in transform)
         {
-            children.Add(child.gameObject);
+            if (child.gameObject.name != "Options")
+            {
+                children.Add(child.gameObject);
+            }
         }
         drawing = false;
         inventory = GameObject.Find("Player").GetComponent<InventoryManager>();
