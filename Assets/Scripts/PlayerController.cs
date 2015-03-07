@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject arrowPrefab;
     public bool walking;
     public PlayerClass role;
+    public bool alive = true;
 
     //Private
     private float speed = .05f;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool mouse1Down = false;
     private bool mouse2Down = false;
     private FxHandler soundFX;
+    private GameObject deathMenu;
 
 
     // Use this for initialization
@@ -26,15 +28,20 @@ public class PlayerController : MonoBehaviour
         weapon = GameObject.FindGameObjectWithTag("Weapon");
         pauseMenu = GameObject.Find("PauseMenu");
         soundFX = GameObject.Find("Main Camera").GetComponent<FxHandler>();
+        deathMenu = GameObject.Find("DeathMenu");
+        deathMenu.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMover();
-        HandleInput();
-        DeathCheck();
-        arrowTimer -= Time.deltaTime;
+        if (alive)
+        {
+            PlayerMover();
+            HandleInput();
+            DeathCheck();
+            arrowTimer -= Time.deltaTime;
+        }
     }
 
     //Methods
@@ -56,10 +63,19 @@ public class PlayerController : MonoBehaviour
     {
         if (gameObject.GetComponent<StatTracker>().health <= 0)
         {
-            gameObject.GetComponent<StatTracker>().TakeDamage(-10);
-            GameObject playerSpawn = GameObject.Find("PlayerSpawn");
-            gameObject.GetComponent<StatTracker>().ApplyHealing(100000);
-            transform.position = playerSpawn.transform.position;
+            AudioSource[] allAudio = GameObject.FindObjectsOfType<AudioSource>();
+            for (int i = 0; i < allAudio.Length; i++)
+            {
+                if (allAudio[i].isPlaying)
+                {
+                    allAudio[i].Stop();
+                }
+            }
+            soundFX.deathSound.Play();
+            Time.timeScale = 0;
+            alive = false;
+            deathMenu.SetActive(true);
+            GameObject.Find("Value Text").GetComponent<TextMesh>().text = "Loot Value: " + gameObject.GetComponent<InventoryManager>().CoinCount;
         }
     }
 
@@ -75,7 +91,14 @@ public class PlayerController : MonoBehaviour
         {
             arrowTimer = .5f;
         }
-        soundFX.arrowSound.Play();
+        if (arrowPrefab.name == "Arrow")
+        {
+            soundFX.arrowSound.Play();
+        }
+        else
+        {
+            soundFX.starSound.Play();
+        }
     }
 
     void HandleInput() //Handles all player input

@@ -28,6 +28,10 @@ public class MainMenuScript : MonoBehaviour
             case MenuElement.Start:
                 Application.LoadLevel(1);
                 break;
+
+            case MenuElement.Credits:
+                Application.LoadLevel(6);
+                break;
         }
     }
 

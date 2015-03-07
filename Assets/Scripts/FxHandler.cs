@@ -14,4 +14,7 @@ public class FxHandler : MonoBehaviour
     public AudioSource bagSound;
     public AudioSource shieldSound;
     public AudioSource ropeSound;
+    public AudioSource starSound;
+    public AudioSource damageSound;
+    public AudioSource deathSound;
 }

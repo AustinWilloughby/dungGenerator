@@ -72,7 +72,10 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1;
+            if (player.GetComponent<PlayerController>().alive)
+            {
+                Time.timeScale = 1;
+            }
         }
     }
 

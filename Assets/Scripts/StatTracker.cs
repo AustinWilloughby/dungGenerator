@@ -56,6 +56,10 @@ public class StatTracker : MonoBehaviour
         {
             soundFX.bossSound.Play();
         }
+        if (gameObject.name == "Player")
+        {
+            soundFX.damageSound.Play();
+        }
         redTimer = .5f;
         gameObject.GetComponent<Renderer>().material.color = Color.red;
         health -= damage;
