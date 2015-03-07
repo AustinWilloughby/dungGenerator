@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\SmoothCameraFollow.cs" />
      <Compile Include="Assets\Scripts\SpawnerHandler.cs" />
      <Compile Include="Assets\Scripts\SpearScript.cs" />
+     <Compile Include="Assets\Scripts\StarSpinner.cs" />
      <Compile Include="Assets\Scripts\StatTracker.cs" />
      <Compile Include="Assets\Scripts\SwordScript.cs" />
      <Compile Include="Assets\Scripts\Vehicle.cs" />

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     //Fields
     public GameObject arrowPrefab;
     public bool walking;
+    public PlayerClass role;
 
     //Private
     private float speed = .05f;
@@ -66,7 +67,14 @@ public class PlayerController : MonoBehaviour
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
         arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y, 97);
-        arrowTimer = 1f;
+        if (role != PlayerClass.Assassin)
+        {
+            arrowTimer = 1f;
+        }
+        else
+        {
+            arrowTimer = .5f;
+        }
         soundFX.arrowSound.Play();
     }
 
@@ -78,10 +86,21 @@ public class PlayerController : MonoBehaviour
             {
                 if (mouse1Down == false)
                 {
-                    mouse1Down = true;
-                    weapon.SetActive(true);
-                    weapon.GetComponent<SwordScript>().Attack();
-                    soundFX.swordSound.Play();
+                    if (role != PlayerClass.Assassin)
+                    {
+                        mouse1Down = true;
+                        weapon.SetActive(true);
+                        weapon.GetComponent<SwordScript>().Attack();
+                        soundFX.swordSound.Play();
+                    }
+                    else
+                    {
+                        if (arrowTimer < 0)
+                        {
+                            mouse2Down = true;
+                            FireArrow();
+                        }
+                    }
                 }
             }
             else
@@ -89,20 +108,23 @@ public class PlayerController : MonoBehaviour
                 mouse1Down = false;
             }
 
-            if (Input.GetAxis("Shoot") > 0)
+            if (role == PlayerClass.Knight)
             {
-                if (mouse2Down == false)
+                if (Input.GetAxis("Shoot") > 0)
                 {
-                    if (arrowTimer < 0)
+                    if (mouse2Down == false)
                     {
-                        mouse2Down = true;
-                        FireArrow();
+                        if (arrowTimer < 0)
+                        {
+                            mouse2Down = true;
+                            FireArrow();
+                        }
                     }
                 }
-            }
-            else
-            {
-                mouse2Down = false;
+                else
+                {
+                    mouse2Down = false;
+                }
             }
         }
 
@@ -136,3 +158,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+public enum PlayerClass
+{
+    Knight,
+    Adventurer,
+    Assassin
+};

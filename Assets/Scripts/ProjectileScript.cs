@@ -4,12 +4,14 @@ using System.Collections;
 public class ProjectileScript : MonoBehaviour
 {
     //Fields
+    //Public
+    public float speed = 1f;
+    public int damage = 1;
+
     //Private
     private GameObject player;
     private Vector2 direction;
-    private float speed = 1f;
     private float timer = 10f;
-    private int damage = 2;
     private FxHandler soundFX;
 
     // Use this for initialization
