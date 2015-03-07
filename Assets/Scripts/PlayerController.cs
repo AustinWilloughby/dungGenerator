@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
     public bool walking;
     public PlayerClass role;
     public bool alive = true;
+    public float speed = .05f;
 
     //Private
-    private float speed = .05f;
     private GameObject weapon;
     private float arrowTimer;
     private GameObject pauseMenu;
