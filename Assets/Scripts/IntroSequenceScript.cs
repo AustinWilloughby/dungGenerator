@@ -135,6 +135,10 @@ public class IntroSequenceScript : MonoBehaviour
                     {
                         currentEvent++;
                         nextEventTimer = timePerScreen;
+                        for (int i = 1; i < menu.Length; i++)
+                        {
+                            menu[i].GetComponent<BoxCollider>().enabled = true;
+                        }
                     }
                     break;
 
@@ -142,6 +146,7 @@ public class IntroSequenceScript : MonoBehaviour
                 case 9:
                     if (nextEventTimer > 0)
                     {
+
                         nextEventTimer -= Time.deltaTime;
                         for (int i = 0; i < menu.Length; i++)
                         {
@@ -155,13 +160,6 @@ public class IntroSequenceScript : MonoBehaviour
                         currentEvent++;
                     }
                     break;
-            }
-        }
-        else
-        {
-            for(int i = 1; i < menu.Length; i++)
-            {
-                menu[i].GetComponent<BoxCollider>().enabled = true;
             }
         }
     }
