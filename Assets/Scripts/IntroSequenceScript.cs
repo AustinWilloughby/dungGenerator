@@ -13,6 +13,7 @@ public class IntroSequenceScript : MonoBehaviour
     public TextMesh chrisC;
     public TextMesh marisaC;
     public GameObject[] menu;
+    public GUIStyle style;
 
     //Private
     private float timePerScreen;
@@ -30,6 +31,22 @@ public class IntroSequenceScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentEvent < 9)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Color disappear = new Color(0, 0, 0, 0);
+                austinW.color = disappear;
+                chrisC.color = disappear;
+                marisaC.color = disappear;
+                currentEvent = 9;
+                nextEventTimer = timePerScreen - 1;
+                for (int i = 1; i < menu.Length; i++)
+                {
+                    menu[i].GetComponent<BoxCollider>().enabled = true;
+                }
+            }
+        }
         if (currentEvent < 10)
         {
             switch (currentEvent)
@@ -163,4 +180,24 @@ public class IntroSequenceScript : MonoBehaviour
             }
         }
     }
+
+    public void OnGUI()
+    {
+        if (currentEvent == 0)
+        {
+            Color change = new Color(255, 255, 255, Mathf.Lerp(.5f, 0, nextEventTimer / transitionTime));
+            style.normal.textColor = change;
+        }
+        if (currentEvent == 9)
+        {
+            Color change = new Color(255, 255, 255, Mathf.Lerp(0,.5f, nextEventTimer / transitionTime));
+            style.normal.textColor = change;
+        }
+        if (currentEvent < 9)
+        {
+            GUI.Label(new Rect(Screen.width - 200, Screen.height - 50, 500, 500), "press 'E' to skip", style);
+        }
+    }
+
+    
 }
