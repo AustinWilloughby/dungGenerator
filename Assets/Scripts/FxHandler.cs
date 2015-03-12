@@ -17,4 +17,5 @@ public class FxHandler : MonoBehaviour
     public AudioSource starSound;
     public AudioSource damageSound;
     public AudioSource deathSound;
+    public AudioSource achievementTone;
 }
