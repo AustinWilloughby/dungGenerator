@@ -71,7 +71,7 @@ public class BossScript : Vehicle
             coords = dungeon.RandomCoordinates;
             transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 98);
             distToPlayer = Vector2.Distance((Vector2)player.transform.position, (Vector2)transform.position);
-        } while (distToPlayer < 50f);
+        } while (distToPlayer < 100f);
 
         currentStartCell = dungeon.GetCell(coords).gameObject;
         currentTargetCell = currentStartCell;
@@ -218,7 +218,7 @@ public class BossScript : Vehicle
         }
         else
         {
-            speed = .2f;
+            speed = .15f;
             playerVisible = false;
             if (preVis == true)
             {

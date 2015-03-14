@@ -11,6 +11,13 @@ public class DungeonCell : MonoBehaviour
     //Private
     private DungeonCellEdge[] edges = new DungeonCellEdge[DungeonDirections.Count];
     private int initializedEdgeCount;
+    private bool visited = false;
+
+    //Properties
+    public bool Visited
+    {
+        get { return visited; }
+    }
 
     //Methods
     public void Initialize(DungeonRoom room)
