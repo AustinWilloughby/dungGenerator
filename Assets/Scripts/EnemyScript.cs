@@ -7,7 +7,7 @@ public class EnemyScript : Vehicle
     //Fields
     //Public
     public float viewDistance = 15f;
-    public float attackDistance = 2f;
+    public float attackDistance = 3f;
     public float attackTimer = 2f;
     public SpawnerHandler spawner;
     public Vector2 direction;
@@ -85,8 +85,13 @@ public class EnemyScript : Vehicle
     {
         if (attackTimer < 0)
         {
+            weapon.GetComponent<BoxCollider2D>().enabled = true;
             weapon.GetComponent<SpearScript>().Attack();
             attackTimer = 2f;
+        }
+        if (attackTimer < 1)
+        {
+            weapon.GetComponent<BoxCollider2D>().enabled = false;
         }
         attackTimer -= Time.deltaTime;
     }
