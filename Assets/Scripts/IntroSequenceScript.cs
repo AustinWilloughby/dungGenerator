@@ -33,6 +33,7 @@ public class IntroSequenceScript : MonoBehaviour
     {
         if (currentEvent < 9)
         {
+            //Handles the E pressing
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Color disappear = new Color(0, 0, 0, 0);
@@ -49,6 +50,8 @@ public class IntroSequenceScript : MonoBehaviour
         }
         if (currentEvent < 10)
         {
+            //The uglist code you've ever seen
+            //To make things fade in and out from the screen
             switch (currentEvent)
             {
                 case 0:
@@ -183,6 +186,7 @@ public class IntroSequenceScript : MonoBehaviour
 
     public void OnGUI()
     {
+        //Handles the drawing of the "Press E To Skip" text on the intro
         if (currentEvent == 0)
         {
             Color change = new Color(255, 255, 255, Mathf.Lerp(.5f, 0, nextEventTimer / transitionTime));
