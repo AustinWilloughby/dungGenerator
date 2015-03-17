@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FireArrow()
+    void FireArrow() //Fires an arrow
     {
         GameObject arrow = (GameObject)Instantiate(arrowPrefab, transform.position, Quaternion.identity);
         arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y, 97);
@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour
     }
 }
 
+//The three playable classes for the player
 public enum PlayerClass
 {
     Knight,

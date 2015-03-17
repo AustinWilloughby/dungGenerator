@@ -8,12 +8,12 @@ public class MainMenuScript : MonoBehaviour
     public MenuElement button;
 
     //Events
-    void OnMouseEnter()
+    void OnMouseEnter() //If highlighting
     {
         gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
-    void OnMouseExit()
+    void OnMouseExit() //If not
     {
         gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
@@ -45,6 +45,7 @@ public class MainMenuScript : MonoBehaviour
     }
 }
 
+//Different menu options
 public enum MenuElement
 {
     Start,
