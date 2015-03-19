@@ -100,7 +100,7 @@ public class BossScript : Vehicle
         }
         else
         {
-            direction = Arrive((Vector2)player.transform.position, 2f);
+            direction = Arrive((Vector2)player.transform.position, 3f);
         }
         transform.position += (Vector3)direction;
     }
