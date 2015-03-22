@@ -176,7 +176,7 @@ public class BossScript : Vehicle
         {
             GetNewTarget();
         }
-        if (playerVisible && Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 3f)
+        if (playerVisible && Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < 4f)
         {
             Attack();
         }
