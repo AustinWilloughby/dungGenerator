@@ -104,8 +104,10 @@ public class EnemyScript : Vehicle
         //If the ray doesnt hit a wall, know about the player
         if (sightLine.collider.gameObject.tag != "Wall")
         {
-            playerSeenLast = true;
-            playerSeenLoc = GetLastCell(player.transform.position);
+            if (!playerSeenLast)
+            {
+                playerSeenLoc = GetLastPosition(player.transform.position);
+            }
             //If the player is in attack range, hit them. Otherwise go after them
             if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
             {
@@ -140,28 +142,9 @@ public class EnemyScript : Vehicle
 
     }
 
-    private Vector2 GetLastCell(Vector2 pos) //Attempts to get players last seen cell
+    private Vector2 GetLastPosition(Vector2 pos) //Attempts to get players last seen cell
     {
-        if (((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
-        {
-            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
-        }
-        else
-        {
-            pos.x = (int)((pos.x + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
-        }
-
-        if (((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale) - (int)(pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) > 0)
-        {
-            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale)) + 1;
-        }
-        else
-        {
-            pos.y = (int)((pos.y + ((float)dungeon.cellScale / 2f) / (float)dungeon.cellScale));
-        }
-        //Return the cell at those coords
-        IntVector2 currentCoords = new IntVector2((int)(pos.x / dungeon.cellScale), (int)(pos.y / dungeon.cellScale));
-        GameObject currentTargetCell = dungeon.GetCell(currentCoords).gameObject;
-        return (Vector2)currentTargetCell.transform.position;
+        playerSeenLast = true;
+        return (Vector2)player.transform.position;
     }
 }
