@@ -81,4 +81,9 @@ public class DungeonCell : MonoBehaviour
     {
         transform.GetChild(0).GetComponent<Renderer>().material = room.setting.floorMaterial;
     }
+
+    public void SetFloorTile(Material floorMat)
+    {
+        transform.GetChild(0).GetComponent<Renderer>().material = floorMat;
+    }
 }

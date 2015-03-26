@@ -12,6 +12,7 @@ public class Dungeon : MonoBehaviour
     public DungeonWall wallPrefab;
     public DungeonDoor doorPrefab;
     public DungeonRoomSettings[] roomSettings;
+    public Material[] floorVariations;
     public int cellScale = 5;
     public int dungeonLevel = 0;
 
@@ -40,6 +41,7 @@ public class Dungeon : MonoBehaviour
             DoNextGenStep(activeCells);
         }
         CleanDungeon();
+        RandomizeFloorTiles();
         transform.localScale = new Vector3(cellScale, cellScale, 1);
         populator = gameObject.GetComponent<DungeonPopulator>();
         populator.Populate();
@@ -215,6 +217,7 @@ public class Dungeon : MonoBehaviour
                 }
             }
         }
+
         //Combines island room into surrounding room
         DungeonRoom[] combineArray = combineThese.ToArray();
         for (int i = 0; i < intoThese.Count; i++)
@@ -222,6 +225,17 @@ public class Dungeon : MonoBehaviour
             intoThese[i].Combine(combineArray[i]);
             rooms.Remove(combineArray[i]);
             Destroy(combineArray[i]);
+        }
+    }
+
+    private void RandomizeFloorTiles()
+    {
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                cells[x, y].SetFloorTile(floorVariations[Random.Range(0, floorVariations.Length)]);
+            }
         }
     }
 }
