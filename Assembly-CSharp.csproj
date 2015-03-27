@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\KeepInsideScript.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts\MapHandler.cs" />
      <Compile Include="Assets\Scripts\MusicScript.cs" />
      <Compile Include="Assets\Scripts\MusicStarter.cs" />
      <Compile Include="Assets\Scripts\ObstacleAvoidance.cs" />

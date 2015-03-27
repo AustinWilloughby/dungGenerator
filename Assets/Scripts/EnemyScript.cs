@@ -21,13 +21,11 @@ public class EnemyScript : Vehicle
     private StatTracker stats;
     private GameObject weapon;
     private Vector2 playerSeenLoc = Vector2.zero;
-    private Dungeon dungeon;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();
         stats = this.GetComponent<StatTracker>();
         direction = Vector2.zero;
         obstacleAvoidVec = Vector2.zero;
