@@ -7,6 +7,7 @@ public class MapHandler : MonoBehaviour
     //Fields
     //Private
     private List<DungeonCell> visitedCells;
+    private DungeonCell holeCell;
     private GameObject player;
     private Dungeon dungeon;
 
@@ -15,6 +16,7 @@ public class MapHandler : MonoBehaviour
     {
         visitedCells = new List<DungeonCell>();
         player = GameObject.Find("Player");
+        //holeCell = the cell containing the hole.
     }
 
     // Update is called once per frame
@@ -33,4 +35,12 @@ public class MapHandler : MonoBehaviour
             visitedCells.Add(dungeon.GetCell(playerCoords));
         }
     }
+
+    //Draw map
+    //Loops through tiles and determines which cells to fill on the map, including ajoined walls.
+    //Then pauses the game, and draws the map to the screen.
+
+    //Clear map
+    //If dungeon level changes, clear the map and find the hole location again.
+
 }

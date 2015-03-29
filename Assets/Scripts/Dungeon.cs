@@ -228,7 +228,7 @@ public class Dungeon : MonoBehaviour
         }
     }
 
-    private void RandomizeFloorTiles()
+    private void RandomizeFloorTiles() //Randomly assigns each cell a tile from the variations arrayS
     {
         for (int x = 0; x < size.x; x++)
         {

@@ -7,17 +7,17 @@ public class CharSelector : MonoBehaviour
     //Public
     public PlayerClass button;
 
-    void Start()
+    void Start() //Default color
     {
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
 
-    void OnMouseEnter()
+    void OnMouseEnter() //Mouse over to white
     {
         gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 
-    void OnMouseExit()
+    void OnMouseExit() //No mouse over to gray
     {
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
