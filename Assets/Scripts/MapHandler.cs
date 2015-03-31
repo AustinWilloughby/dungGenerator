@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class MapHandler : MonoBehaviour
 {
     //Fields
+    //Public
+    public bool drawing = false;
+
     //Private
     private List<DungeonCell> visitedCells;
     private DungeonCell holeCell;
@@ -36,11 +39,21 @@ public class MapHandler : MonoBehaviour
         }
     }
 
-    //Draw map
-    //Loops through tiles and determines which cells to fill on the map, including ajoined walls.
-    //Then pauses the game, and draws the map to the screen.
+    private void DrawMap()
+    {
+        if (drawing)
+        {
+            //draw each cell at appropriate location
+        }
+    }
 
-    //Clear map
-    //If dungeon level changes, clear the map and find the hole location again.
+    public void ClearMap()
+    {
+        for (int i = 0; i < visitedCells.Count; i++)
+        {
+            visitedCells.Remove(visitedCells[i]);
+        }
+        //Set new hole cell
+    }
 
 }
