@@ -23,6 +23,7 @@ public class MainMenuScript : MonoBehaviour
         switch (button)
         {
             case MenuElement.Options:
+                Application.LoadLevel(7);
                 break;
 
             case MenuElement.Start:
