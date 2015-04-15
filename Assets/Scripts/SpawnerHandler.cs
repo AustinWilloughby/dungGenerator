@@ -21,6 +21,10 @@ public class SpawnerHandler : MonoBehaviour
     {
         timeUntilSpawn = Random.Range(5f, 15f);
         player = GameObject.FindGameObjectWithTag("Player");
+        if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) > 15f)
+        {
+            InitialSpawn();
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +58,20 @@ public class SpawnerHandler : MonoBehaviour
         if (liveSpawns > 0)
         {
             liveSpawns--;
+        }
+    }
+
+    private void InitialSpawn() //Spawns a few enemies independant of the timer so the dungeon is populated at the start
+    {
+        int number = maxSpawns / 2 - 1;
+        for (int i = 0; i < number; i++)
+        {
+            liveSpawns++;
+            GameObject tempEnemy = (GameObject)Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            tempEnemy.GetComponent<EnemyScript>().spawner = this;
+            Vector3 randMove = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
+            transform.position += randMove;
+            tempEnemy.transform.parent = transform;
         }
     }
 }
