@@ -6,6 +6,7 @@ public class SwordScript : MonoBehaviour
     //Fields
     //Public
     public int damage = 2;
+    public bool isWhip = false;
 
     //Private
     private GameObject player;
@@ -39,7 +40,23 @@ public class SwordScript : MonoBehaviour
             }
             attackTimer -= Time.deltaTime;
             //Rotates sword in an arc in front of player
-            transform.RotateAround(player.transform.position, Vector3.forward, (720 * Time.deltaTime));
+            if (!isWhip)
+            {
+                transform.RotateAround(player.transform.position, Vector3.forward, (720 * Time.deltaTime));
+            }
+            else
+            {
+                if (attackTimer > .0835f)
+                {
+                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                    transform.RotateAround(player.transform.position, Vector3.forward, (720 * Time.deltaTime * 2));
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                    transform.RotateAround(player.transform.position, Vector3.forward, (-720 * Time.deltaTime * 2));
+                }
+            }
             if (attackTimer < 0)
             {
                 attacking = false;
