@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            arrowTimer = .5f;
+            arrowTimer = .7f;
         }
         if (arrowPrefab.name == "Arrow")
         {
