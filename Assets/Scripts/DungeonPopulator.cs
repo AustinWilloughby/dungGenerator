@@ -32,7 +32,6 @@ public class DungeonPopulator : MonoBehaviour
         PlaceSpawners();
         PlaceCollectables();
         PlacePotion();
-        //PlaceWeapon();
         PlaceBoss();
         music.NextSong();
     }
@@ -145,8 +144,8 @@ public class DungeonPopulator : MonoBehaviour
                                                             parentCoin.transform.position.y * dungeon.cellScale + Random.Range(-1f, 1f), 99);
                 collectable.transform.parent = collectableHolder.transform;
             }
-            if (collectable.transform.position.x < 0 || collectable.transform.position.x > dungeon.size.x * dungeon.cellScale - 3
-                || collectable.transform.position.y < 0 || collectable.transform.position.y > dungeon.size.y * dungeon.cellScale - 3)
+            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
+            if(colliders.Length < 1)
             {
                 //If outside, destroy and retry
                 GameObject.Destroy(collectable);
@@ -155,7 +154,6 @@ public class DungeonPopulator : MonoBehaviour
             else
             {
                 //Prevent overlap
-                Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
                 if (colliders.Length > 1)
                 {
                     GameObject.Destroy(collectable);
@@ -174,7 +172,7 @@ public class DungeonPopulator : MonoBehaviour
             collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
             collectable.transform.parent = collectableHolder.transform;
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
-            if (colliders.Length > 1)
+            if (colliders.Length != 1)
             {
                 GameObject.Destroy(collectable);
                 i--;
@@ -187,7 +185,7 @@ public class DungeonPopulator : MonoBehaviour
             collectable.transform.position = new Vector3(coords.x * dungeon.cellScale + Random.Range(-3f, 3f), coords.y * dungeon.cellScale + Random.Range(-3f, 3f), 99);
             collectable.transform.parent = collectableHolder.transform;
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
-            if (colliders.Length > 1)
+            if (colliders.Length != 1)
             {
                 GameObject.Destroy(collectable);
                 i--;
@@ -204,7 +202,7 @@ public class DungeonPopulator : MonoBehaviour
                 collectable.transform.parent = collectableHolder.transform;
             } while (Vector2.Distance(player.transform.position, collectable.transform.position) > 30f);
             Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)collectable.transform.position, .5f);
-            if (colliders.Length > 1)
+            if (colliders.Length != 1)
             {
                 GameObject.Destroy(collectable);
                 i--;
