@@ -104,7 +104,7 @@ public class EnemyScript : Vehicle
         {
             if (!playerSeenLast)
             {
-                playerSeenLoc = GetLastPosition(player.transform.position);
+                playerSeenLoc = GetLastPosition().transform.position;
             }
             //If the player is in attack range, hit them. Otherwise go after them
             if (Vector2.Distance((Vector2)transform.position, (Vector2)player.transform.position) < attackDistance)
@@ -140,9 +140,22 @@ public class EnemyScript : Vehicle
 
     }
 
-    private Vector2 GetLastPosition(Vector2 pos) //Attempts to get players last seen cell
+    private DungeonCell GetLastPosition() //Attempts to get players last seen cell
     {
         playerSeenLast = true;
-        return (Vector2)player.transform.position;
+        Dungeon dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();
+
+        int playerX = (int)(player.transform.position.x + (dungeon.cellScale / 2));
+        int playerY = (int)(player.transform.position.y + (dungeon.cellScale / 2));
+
+        playerX = playerX / dungeon.cellScale;
+        playerY = playerY / dungeon.cellScale;
+
+        IntVector2 coords = new IntVector2(playerX, playerY);
+        if (dungeon.ContainsCoords(coords))
+        {
+            return dungeon.GetCell(coords);
+        }
+        return null;
     }
 }
