@@ -19,7 +19,7 @@ public class MapHandler : MonoBehaviour
     {
         visitedCells = new List<DungeonCell>();
         player = GameObject.Find("Player");
-        //holeCell = the cell containing the hole.
+        GetHoleCell();
     }
 
     // Update is called once per frame
@@ -30,13 +30,23 @@ public class MapHandler : MonoBehaviour
 
     private void CheckCurrentCell() //Determines the current player cell and adds it to the list of visited cells if needed
     {
-        dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();
-        IntVector2 playerCoords = new IntVector2((int)((player.transform.position.x + (dungeon.cellScale / 2)) / dungeon.cellScale), 
-            (int)((player.transform.position.x + (dungeon.cellScale / 2)) / dungeon.cellScale));
-        if (!visitedCells.Contains(dungeon.GetCell(playerCoords)))
+        dungeon = GameObject.Find("Dungeon(Clone)").GetComponent<Dungeon>();    
+
+        int playerX = (int)(player.transform.position.x + (dungeon.cellScale / 2)); 
+        int playerY = (int)(player.transform.position.y + (dungeon.cellScale / 2));
+
+        playerX = playerX / dungeon.cellScale;
+        playerY = playerY / dungeon.cellScale;
+
+        IntVector2 coords = new IntVector2(playerX, playerY);
+        DungeonCell currentCell = dungeon.GetCell(coords);
+
+        if (!visitedCells.Contains(currentCell))
         {
-            visitedCells.Add(dungeon.GetCell(playerCoords));
+            visitedCells.Add(currentCell);
         }
+
+        print(visitedCells.Count);
     }
 
     private void DrawMap()
@@ -54,6 +64,21 @@ public class MapHandler : MonoBehaviour
             visitedCells.Remove(visitedCells[i]);
         }
         //Set new hole cell
+    }
+
+    private void GetHoleCell()
+    {
+        GameObject hole = GameObject.Find("DungeonHole");
+        int holeX = (int)(hole.transform.position.x + (dungeon.cellScale / 2));
+        int holeY = (int)(hole.transform.position.y + (dungeon.cellScale / 2));
+
+        IntVector2 coords = new IntVector2(holeX, holeY);
+        DungeonCell currentCell = dungeon.GetCell(coords);
+
+        if (!visitedCells.Contains(currentCell))
+        {
+            visitedCells.Add(currentCell);
+        }
     }
 
 }

@@ -49,7 +49,7 @@ public class Dungeon : MonoBehaviour
 
     public DungeonCell GetCell(IntVector2 coords) //Returns the cell at the given coordinates
     {
-        return cells[coords.x, coords.y];
+            return cells[coords.x, coords.y];
     }
 
     public DungeonCell CreateCell(IntVector2 coords) //Creates an individual cell of the dungeon
