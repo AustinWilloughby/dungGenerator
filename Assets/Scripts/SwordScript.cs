@@ -48,12 +48,12 @@ public class SwordScript : MonoBehaviour
             {
                 if (attackTimer > .0835f)
                 {
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(1.44f, transform.localScale.y, transform.localScale.z);
                     transform.RotateAround(player.transform.position, Vector3.forward, (720 * Time.deltaTime * 2));
                 }
                 else
                 {
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(-1.44f, transform.localScale.y, transform.localScale.z);
                     transform.RotateAround(player.transform.position, Vector3.forward, (-720 * Time.deltaTime * 2));
                 }
             }

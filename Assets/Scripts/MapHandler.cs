@@ -83,12 +83,12 @@ public class MapHandler : MonoBehaviour
         IntVector2 coords = new IntVector2(holeX, holeY);
         if (dungeon.ContainsCoords(coords))
         {
-            DungeonCell currentCell = dungeon.GetCell(coords);
+            holeCell = dungeon.GetCell(coords);
 
-            if (!visitedCells.Contains(currentCell))
-            {
-                visitedCells.Add(currentCell);
-            }
+            //if (!visitedCells.Contains(holeCell))
+            //{
+            //    visitedCells.Add(holeCell);
+            //}
         }
     }
 
