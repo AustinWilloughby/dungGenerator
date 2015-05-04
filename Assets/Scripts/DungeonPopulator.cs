@@ -33,6 +33,7 @@ public class DungeonPopulator : MonoBehaviour
         PlaceCollectables();
         PlacePotion();
         PlaceBoss();
+        player.GetComponent<MapHandler>().ClearMap();
         music.NextSong();
     }
 
