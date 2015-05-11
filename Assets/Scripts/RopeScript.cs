@@ -19,9 +19,13 @@ public class RopeScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            soundFX.ropeSound.Play();
-            inventory.ropeCollected = true;
-            GameObject.Destroy(gameObject);
+            try
+            {
+                soundFX.ropeSound.Play();
+                inventory.ropeCollected = true;
+                GameObject.Destroy(gameObject);
+            }
+            catch { }
         }
     }
 }
