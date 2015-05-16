@@ -27,7 +27,7 @@ public class MapHandler : MonoBehaviour
         CheckCurrentCell();
         if (holeCell == null)
         {
-            GetHoleCell();
+            //GetHoleCell();
         }
     }
 
@@ -67,7 +67,7 @@ public class MapHandler : MonoBehaviour
         {
             visitedCells.Remove(visitedCells[i]);
         }
-        GetHoleCell();
+        //GetHoleCell();
     }
 
     private void GetHoleCell()
