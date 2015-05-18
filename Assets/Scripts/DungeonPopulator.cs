@@ -221,41 +221,6 @@ public class DungeonPopulator : MonoBehaviour
 
     }
 
-    private void PlaceWeapon() //Places a weapon with attack damage relative to the level
-    {
-        GameObject sword = (GameObject)Instantiate(swordPrefab);
-        sword.GetComponent<CollectWeaponScript>().attackDamage = (dungeon.DungeonLevel / 5) + 1;
-        int failCounter = 0;
-        bool looper = true;
-        do
-        {
-            IntVector2 coords = dungeon.RandomCoordinates;
-            sword.transform.position = new Vector3(coords.x * dungeon.cellScale, coords.y * dungeon.cellScale, 99);
-            Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)sword.transform.position, 1f);
-
-            if (failCounter < 5)
-            {
-                if (Vector2.Distance((Vector2)sword.transform.position, (Vector2)player.transform.position) > 50)
-                {
-                    if (colliders.Length <= 1)
-                    {
-                        looper = false;
-                    }
-                }
-            }
-            else
-            {
-                if (colliders.Length <= 1)
-                {
-                    looper = false;
-                }
-            }
-            failCounter++;
-
-        } while (looper);
-        sword.transform.parent = collectableHolder.transform;
-    }
-
     private void PlaceSpawners() //Places spawners that spawn random enemies around the dungeon
     {
         for (int i = 0; i < 20; i++)

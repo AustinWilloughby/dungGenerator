@@ -50,7 +50,6 @@
      <Compile Include="Assets\Scripts\BossScript.cs" />
      <Compile Include="Assets\Scripts\BossSwordScript.cs" />
      <Compile Include="Assets\Scripts\CharSelector.cs" />
-     <Compile Include="Assets\Scripts\CollectWeaponScript.cs" />
      <Compile Include="Assets\Scripts\CollectableScript.cs" />
      <Compile Include="Assets\Scripts\CreditHandler.cs" />
      <Compile Include="Assets\Scripts\DeathItemScript.cs" />
