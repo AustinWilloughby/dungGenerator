@@ -35,7 +35,7 @@ public class DungeonGeneration : MonoBehaviour
         dungeonInstance = Instantiate(dungeonPrefab) as Dungeon;
         dungeonInstance.dungeonLevel = dungeonLevel;
         dungeonInstance.Generate();
-        player.GetComponent<MapHandler>().ClearMap();
+        //player.GetComponent<MapHandler>().ClearMap();
         if (dungeonLevel == 1)
         {
             IntVector2 coords = dungeonInstance.RandomCoordinates;
