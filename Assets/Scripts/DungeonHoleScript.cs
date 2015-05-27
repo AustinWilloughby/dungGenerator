@@ -22,7 +22,6 @@ public class DungeonHoleScript : MonoBehaviour
             transform.position = hidingSpot;
             //Collects all level specific things and removes them
             List<GameObject> deleteThese = new List<GameObject>();
-            deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Equipable")); 
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Collectable"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("DeletePerLevel"));
