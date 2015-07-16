@@ -25,14 +25,21 @@ public class DungeonHoleScript : MonoBehaviour
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Collectable"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
             deleteThese.AddRange(GameObject.FindGameObjectsWithTag("DeletePerLevel"));
-            deleteThese.Remove(boss);
-            GameObject[] delete = deleteThese.ToArray();
-            for(int i = 0; i < delete.Length; i++)
+            try
             {
-                GameObject.Destroy(delete[i]);
-                delete[i] = null;
+                deleteThese.Remove(boss);
+                GameObject[] delete = deleteThese.ToArray();
+                for (int i = 0; i < delete.Length; i++)
+                {
+                    GameObject.Destroy(delete[i]);
+                    delete[i] = null;
+                }
             }
-            dungeonGenerator.NewLevel();
+            catch { }
+            finally
+            {
+                dungeonGenerator.NewLevel();
+            }
         }
     }
 }
